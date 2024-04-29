@@ -6,21 +6,153 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       Int    @id @default(autoincrement())
-  username String @unique
-  password String
-  tasks    Task[]
+enum AssetType {
+  SAVINGS
+  CHECKING
+  INVESTMENT
+  IRA
+  ROTH_IRA
+  FOUR01K
 }
 
-model Task {
-  id          Int     @id @default(autoincrement())
-  description String
-  done        Boolean @default(false)
+enum PhysMon {
+  PHYSICAL
+  MONETARY
+}
+
+enum IncomeType {
+  SALARY
+  BONUS
+  COMMISSION
+  DIVIDENDS
+  INTEREST
+  RENTAL_INCOME
+  SIDE_HUSTLE
+  OTHER
+}
+
+enum LiabilityType {
+  CREDIT_CARD
+  STUDENT_LOAN
+  MORTGAGE
+  AUTO_LOAN
+  PERSONAL_LOAN
+  MEDICAL_DEBT
+  TAXES_OWNED
+  OTHER
+}
+
+enum GoalType {
+  SAVINGS
+  INVESTMENT
+  RETIREMENT
+  EDUCATION
+  DEBT_REDUCTION
+  EMERGENCY_FUND
+  TRAVEL
+  HOME_PURCHASE
+  OTHER
+}
+
+enum GoalPriority {
+  ASPIRATIONAL
+  IMPORTANT
+  NECESSARY
+}
+
+enum ExpenseType {
+  HOUSING
+  TRANSPORTATION
+  FOOD
+  UTILITIES
+  HEALTHCARE
+  INSURANCE
+  ENTERTAINMENT
+  EDUCATION
+  DEBT_PAYMENTS
+  PERSONAL_CARE
+  OTHER
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  username    String        @unique
+  password    String
+  name        String
+  age         Int
+  married     Boolean
+  retired     Boolean
+  retage      Int
+  retincome   Int
+  lifeexpect  Int
+  Income      Income[]
+  Assets      Assets[]
+  Liabilities Liabilities[]
+  Goals       Goals[]
+  Expenses    Expenses[]
+  Debt        Debt[]
+}
+
+model Assets {
+  id            Int       @id @default(autoincrement())
+  User          User      @relation(fields: [userId], references: [id])
+  userId        Int
+  name          String
+  createdAt     DateTime  @default(now())
+  assetType     AssetType
+  balance       Int
+  interest      Int
+  contributions Int
+  physMon       PhysMon
+}
+
+model Income {
+  id             Int        @id @default(autoincrement())
+  User           User       @relation(fields: [userId], references: [id])
+  userId         Int
+  name           String
+  createdAt      DateTime   @default(now())
+  incomeType     IncomeType
+  amount         Int
+  yearlyIncrease Int
+}
+
+model Liabilities {
+  id             Int           @id @default(autoincrement())
+  User           User          @relation(fields: [userId], references: [id])
+  userId         Int
+  name           String
+  createdAt      DateTime      @default(now())
+  interest       Int
+  liabilityType  LiabilityType
+  monthlyPayment Int
+  amount         Int
+}
+
+model Goals {
+  id                  Int          @id @default(autoincrement())
+  User                User         @relation(fields: [userId], references: [id])
+  userId              Int
+  name                String
+  createdAt           DateTime     @default(now())
+  goalType            GoalType
+  targetDate          DateTime
+  targetAmount        Int
+  goalPriority        GoalPriority
+  savingsTowardAmount Int
+}
+
+model Expenses {
+  id          Int         @id @default(autoincrement())
+  User        User        @relation(fields: [userId], references: [id])
   userId      Int
-  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  createdAt   DateTime    @default(now())
+  expenseType ExpenseType
+  monthlyCost Int
+  interest    Int
 }
