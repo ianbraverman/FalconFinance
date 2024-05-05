@@ -10,6 +10,8 @@ import AuthForm from "./features/auth/AuthForm";
 import Tasks from "./features/tasks/Tasks";
 import Root from "./layout/Root.jsx";
 import Assets from "./features/userform/Assets.jsx";
+import Expenses from "./features/userform/Expenses.jsx";
+import Incomes from "./features/userform/Incomes.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const router = createBrowserRouter([
@@ -21,6 +23,8 @@ const router = createBrowserRouter([
       { path: "/tasks", element: <Tasks /> },
       { path: "/login", element: <AuthForm /> },
       { path: "/userform/assets", element: <Assets /> },
+      { path: "/userform/expenses", element: <Expenses /> },
+      { path: "/userform/incomes", element: <Incomes /> },
     ],
   },
 ]);

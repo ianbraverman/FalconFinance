@@ -5,18 +5,18 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useGetUserQuery } from "./accountSlice";
 import "./userform.css";
 
-export default function Expenses() {
+export default function Incomes() {
   const { data: me } = useGetUserQuery();
   const token = useSelector(selectToken);
 
-  function ExistingExpenseItem({ expense }) {
-    //delete button will on click delete that expense and send a delete request to delete it
+  function ExistingExpenseItem({ income }) {
+    //delete button will on click delete that Income and send a delete request to delete it
     return (
       <section>
-        <p> Name: {expense?.name}</p>
-        <p> Type: {expense?.expenseType}</p>
-        <p> Interest Cost: {expense?.interest}</p>
-        <p> Monthly Cost: {expense?.monthlyCost}</p>
+        <p> Name: {income?.name}</p>
+        <p> Type: {income?.incomeType}</p>
+        <p> Income Amount: {income?.amount}</p>
+        <p> Yearly Increase: {income?.yearlyIncrease}</p>
         <button>Delete</button>
       </section>
     );
@@ -30,11 +30,11 @@ export default function Expenses() {
             Hello {me?.firstname} {me?.lastname}
           </p>
           <p>Please Fill Out The Following Information</p>
-          <p>Page 3/6</p>
-          <h1>Expenses</h1>
+          <p>Page 4/6</p>
+          <h1>Incomes</h1>
           <section>
-            {me?.Expenses.map((expense) => (
-              <ExistingExpenseItem key={expense.id} expense={expense} />
+            {me?.Income.map((income) => (
+              <ExistingExpenseItem key={income.id} income={income} />
             ))}
           </section>
         </>
