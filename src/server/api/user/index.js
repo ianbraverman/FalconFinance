@@ -14,11 +14,11 @@ router.get("/me", async (req, res, next) => {
     const user = await prisma.user.findUnique({
       where: { id: +id },
       include: {
-        Income,
-        Assets,
-        Liabilities,
-        Goals,
-        Expenses,
+        Income: true,
+        Assets: true,
+        Liabilities: true,
+        Goals: true,
+        Expenses: true,
       },
     });
     if (!user) {
