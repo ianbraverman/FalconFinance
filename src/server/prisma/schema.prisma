@@ -94,6 +94,7 @@ model User {
   retage      Int?
   retincome   Int?
   lifeexpect  Int?
+  inflation   Int?
   Income      Income[]
   Assets      Assets[]
   Liabilities Liabilities[]

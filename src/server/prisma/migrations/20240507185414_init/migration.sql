@@ -32,6 +32,7 @@ CREATE TABLE "User" (
     "retage" INTEGER,
     "retincome" INTEGER,
     "lifeexpect" INTEGER,
+    "inflation" INTEGER,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
