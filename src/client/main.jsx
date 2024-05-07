@@ -14,6 +14,7 @@ import Expenses from "./features/userform/Expenses.jsx";
 import Incomes from "./features/userform/Incomes.jsx";
 import PersonalInfo from "./features/userform/PersonalInfo.jsx";
 import Goals from "./features/userform/Goals.jsx";
+import Liabilities from "./features/userform/Liabilities.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
       { path: "/userform/incomes", element: <Incomes /> },
       { path: "/userform/personalinfo", element: <PersonalInfo /> },
       { path: "/userform/goals", element: <Goals /> },
+      { path: "/userform/liabilities", element: <Liabilities /> },
     ],
   },
 ]);
