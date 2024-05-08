@@ -11,7 +11,14 @@ const accountApi = api.injectEndpoints({
       query: () => "/user/me",
       providesTags: ["User"],
     }),
+    deleteInfo: builder.mutation({
+      query: ({ id, table }) => ({
+        url: `/${table}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useGetUserQuery } = accountApi;
+export const { useGetUserQuery, useDeleteInfoMutation } = accountApi;
