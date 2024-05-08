@@ -12,31 +12,31 @@ router.delete("/:id", async (req, res, next) => {
       });
     }
     const userId = res.locals.user.id;
-    const searchedAsset = await prisma.assets.findFirst({
+    const searchedIncome = await prisma.income.findFirst({
       where: {
         id: +id,
       },
     });
-    if (!searchedAsset) {
+    if (!searchedIncome) {
       return next({
         status: 401,
-        message: "This asset does not exist. Please try again",
+        message: "This income does not exist. Please try again",
       });
     }
 
-    if (searchedAsset.userId !== userId) {
+    if (searchedIncome.userId !== userId) {
       return next({
         status: 401,
         message:
-          "You are not the user of this asset. You cannot delete this asset.",
+          "You are not the user of this income. You cannot delete this income.",
       });
     }
-    const deletedAsset = await prisma.assets.delete({
+    const deletedIncome = await prisma.income.delete({
       where: {
         id: +id,
       },
     });
-    res.json(deletedAsset);
+    res.json(deletedIncome);
   } catch (e) {
     next(e);
   }
