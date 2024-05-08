@@ -2,12 +2,25 @@ import React, { useState } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
-import { useGetUserQuery } from "./accountSlice";
+import { useGetUserQuery, useDeleteInfoMutation } from "./accountSlice";
 import "./userform.css";
 
 export default function Expenses() {
   const { data: me } = useGetUserQuery();
+  let [deleteExpense] = useDeleteInfoMutation();
   const token = useSelector(selectToken);
+
+  const deleteAnExpense = async (expense, evt) => {
+    evt.preventDefault();
+    try {
+      await deleteExpense({
+        id: expense.id,
+        table: "expenses",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   function ExistingExpenseItem({ expense }) {
     //delete button will on click delete that expense and send a delete request to delete it
@@ -17,7 +30,9 @@ export default function Expenses() {
         <p> Type: {expense?.expenseType}</p>
         <p> Interest Cost: {expense?.interest}</p>
         <p> Monthly Cost: {expense?.monthlyCost}</p>
-        <button>Delete</button>
+        <form onSubmit={(evt) => deleteAnExpense(expense, evt)}>
+          <button>Delete</button>
+        </form>
       </section>
     );
   }

@@ -2,12 +2,25 @@ import React, { useState } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
-import { useGetUserQuery } from "./accountSlice";
+import { useGetUserQuery, useDeleteInfoMutation } from "./accountSlice";
 import "./userform.css";
 
 export default function Assets() {
   const { data: me } = useGetUserQuery();
+  let [deleteAsset] = useDeleteInfoMutation();
   const token = useSelector(selectToken);
+
+  const deleteAnAsset = async (asset, evt) => {
+    evt.preventDefault();
+    try {
+      await deleteAsset({
+        id: asset.id,
+        table: "assets",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   function ExistingAssetItem({ asset }) {
     //delete button will on click delete that asset and send a delete request to delete it
@@ -19,7 +32,9 @@ export default function Assets() {
         <p> Contributions: {asset?.contributions}</p>
         <p> Physical Or Monetary: {asset?.physMon}</p>
         <p> Balance: {asset?.balance}</p>
-        <button>Delete</button>
+        <form onSubmit={(evt) => deleteAnAsset(asset, evt)}>
+          <button>Delete</button>
+        </form>
       </section>
     );
   }
