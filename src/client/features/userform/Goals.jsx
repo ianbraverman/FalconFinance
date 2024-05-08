@@ -2,12 +2,25 @@ import React, { useState } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
-import { useGetUserQuery } from "./accountSlice";
+import { useGetUserQuery, useDeleteInfoMutation } from "./accountSlice";
 import "./userform.css";
 
 export default function Goals() {
   const { data: me } = useGetUserQuery();
+  let [deleteGoal] = useDeleteInfoMutation();
   const token = useSelector(selectToken);
+
+  const deleteAGoal = async (goal, evt) => {
+    evt.preventDefault();
+    try {
+      await deleteGoal({
+        id: goal.id,
+        table: "goals",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   function ExistingGoalItem({ goal }) {
     //delete button will on click delete that goal and send a delete request to delete it
@@ -19,7 +32,9 @@ export default function Goals() {
         <p> Target Amount: {goal?.targetAmount}</p>
         <p> goalPriority: {goal?.goalPriority}</p>
         <p> Savings Toward Goal: {goal?.savingsTowardAmount}</p>
-        <button>Delete</button>
+        <form onSubmit={(evt) => deleteAGoal(goal, evt)}>
+          <button>Delete</button>
+        </form>
       </section>
     );
   }
