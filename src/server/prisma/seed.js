@@ -47,6 +47,7 @@ const seed = async () => {
         retage: Math.floor(Math.random() * 5) + 60,
         retincome: Math.floor(Math.random() * 100000) + 60000,
         lifeexpect: Math.floor(Math.random() * 10) + 90,
+        inflation: Math.floor(Math.random() * 5) + 1,
         Income: {
           create: [
             {

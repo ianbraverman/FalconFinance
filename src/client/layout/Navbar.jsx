@@ -21,10 +21,13 @@ export default function Navbar() {
 
   return (
     <nav className="top">
-      <h1>Task Tracker</h1>
+      <h1>Budgeting Website</h1>
       <menu>
         <li>
           <NavLink to="/">Home</NavLink>
+        </li>
+        <li>
+          <NavLink to="/userform/assets">User Information Form</NavLink>
         </li>
         {token ? (
           <li>
