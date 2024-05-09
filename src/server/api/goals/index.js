@@ -41,3 +41,38 @@ router.delete("/:id", async (req, res, next) => {
     next(e);
   }
 });
+router.post("/", async (req, res, next) => {
+  try {
+    const {
+      name,
+      goalType,
+      targetAge,
+      targetAmount,
+      goalPriority,
+      savingsTowardAmount,
+    } = req.body;
+
+    if (!res.locals.user) {
+      return next({
+        status: 400,
+        message: "You are not logged into the correct account",
+      });
+    }
+    const userId = res.locals.user.id;
+
+    const newGoal = await prisma.goals.create({
+      data: {
+        userId: userId,
+        name: name,
+        goalType: goalType,
+        targetAge: +targetAge,
+        targetAmount: +targetAmount,
+        goalPriority: goalPriority,
+        savingsTowardAmount: +savingsTowardAmount,
+      },
+    });
+    res.json(newGoal);
+  } catch (err) {
+    next(err);
+  }
+});

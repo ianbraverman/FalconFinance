@@ -41,3 +41,30 @@ router.delete("/:id", async (req, res, next) => {
     next(e);
   }
 });
+
+router.post("/", async (req, res, next) => {
+  try {
+    const { name, expenseType, monthlyCost, interest } = req.body;
+
+    if (!res.locals.user) {
+      return next({
+        status: 400,
+        message: "You are not logged into the correct account",
+      });
+    }
+    const userId = res.locals.user.id;
+
+    const newExpense = await prisma.expenses.create({
+      data: {
+        userId: userId,
+        name: name,
+        expenseType: expenseType,
+        monthlyCost: +monthlyCost,
+        interest: +interest,
+      },
+    });
+    res.json(newExpense);
+  } catch (err) {
+    next(err);
+  }
+});
