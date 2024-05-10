@@ -49,7 +49,7 @@ export default function Assets() {
   const handleAddNewAsset = () => {
     setNewAssets([
       ...newAssets,
-      { id: generateUniqueId(), name: "", type: "" },
+      { id: generateUniqueId(), name: "", type: "", balance: 0 },
     ]);
   };
 
@@ -70,17 +70,18 @@ export default function Assets() {
   };
 
   function NewAssetItem({ asset }) {
-    const { id, name, type } = asset;
+    const { id, name, type, balance, interest, contributions, physMon } = asset;
     const inputRef = useRef(null);
 
     const handleFocus = () => {
       setFocusedInputId(id);
     };
-    useEffect(() => {
-      if (focusedInputId === id && inputRef.current) {
-        inputRef.current.focus();
-      }
-    }, [focusedInputId, id]);
+
+    // useEffect(() => {
+    //   if (focusedInputId === id && inputRef.current) {
+    //     inputRef.current.focus();
+    //   }
+    // }, [focusedInputId, id]);
 
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -104,6 +105,54 @@ export default function Assets() {
             onFocus={handleFocus}
             ref={focusedInputId === id ? inputRef : null} // Add the ref here
           />
+        </label>
+        <label>
+          Balance:
+          <input
+            className="input"
+            type="text"
+            name="balance"
+            value={balance}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            ref={focusedInputId === id ? inputRef : null} // Add the ref here
+          />
+        </label>
+        <label>
+          Yearly Interest Percentage:
+          <input
+            className="input"
+            type="text"
+            name="interest"
+            value={interest}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            ref={focusedInputId === id ? inputRef : null} // Add the ref here
+          />
+        </label>
+        <label>
+          Yearly Contributions:
+          <input
+            className="input"
+            type="text"
+            name="contributions"
+            value={contributions}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            ref={focusedInputId === id ? inputRef : null} // Add the ref here
+          />
+        </label>
+        <label>
+          Physical Or Monetary Asset?
+          <select
+            className="input"
+            name="physMon"
+            value={physMon}
+            onChange={handleChange}
+          >
+            <option value="PHYSICAL">Physical</option>
+            <option value="MONETARY">Monetary</option>
+          </select>
         </label>
         <label>
           Type Of Asset:
