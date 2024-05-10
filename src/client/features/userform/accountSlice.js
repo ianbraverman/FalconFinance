@@ -1,3 +1,4 @@
+import { PhysMon } from "@prisma/client";
 import api from "../../store/api";
 
 const accountApi = api.injectEndpoints({
@@ -18,7 +19,30 @@ const accountApi = api.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    addAsset: builder.mutation({
+      query: ({
+        name,
+        assetType,
+        balance,
+        interest,
+        contributions,
+        physMon,
+      }) => ({
+        url: `/assets`,
+        method: "POST",
+        body: {
+          name: name,
+          assetType: assetType,
+          balance: balance,
+          interest: interest,
+          contributions: contributions,
+          physMon: physMon,
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useGetUserQuery, useDeleteInfoMutation } = accountApi;
+export const { useGetUserQuery, useDeleteInfoMutation, useAddAssetMutation } =
+  accountApi;
