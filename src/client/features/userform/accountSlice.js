@@ -41,8 +41,25 @@ const accountApi = api.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    addExpense: builder.mutation({
+      query: ({ name, expenseType, monthlyCost, interest }) => ({
+        url: `/expenses`,
+        method: "POST",
+        body: {
+          name: name,
+          expenseType: expenseType,
+          monthlyCost: monthlyCost,
+          interest: interest,
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useGetUserQuery, useDeleteInfoMutation, useAddAssetMutation } =
-  accountApi;
+export const {
+  useGetUserQuery,
+  useDeleteInfoMutation,
+  useAddAssetMutation,
+  useAddExpenseMutation,
+} = accountApi;
