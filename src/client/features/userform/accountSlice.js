@@ -54,6 +54,28 @@ const accountApi = api.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    addGoals: builder.mutation({
+      query: ({
+        name,
+        goalType,
+        targetAge,
+        targetAmount,
+        goalPriority,
+        savingsTowardAmount,
+      }) => ({
+        url: `/goals`,
+        method: "POST",
+        body: {
+          name: name,
+          goalType: goalType,
+          targetAge: targetAge,
+          targetAmount: targetAmount,
+          goalPriority: goalPriority,
+          savingsTowardAmount: savingsTowardAmount,
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -62,4 +84,5 @@ export const {
   useDeleteInfoMutation,
   useAddAssetMutation,
   useAddExpenseMutation,
+  useAddGoalsMutation,
 } = accountApi;
