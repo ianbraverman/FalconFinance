@@ -27,6 +27,9 @@ export default function Navbar() {
           <NavLink to="/">Home</NavLink>
         </li>
         <li>
+          <NavLink to="/about">About Us</NavLink>
+        </li>
+        <li>
           <NavLink to="/userform/assets">User Information Form</NavLink>
         </li>
         {token ? (
