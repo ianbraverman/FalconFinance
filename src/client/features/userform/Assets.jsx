@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import {
   useGetUserQuery,
   useDeleteInfoMutation,
@@ -128,6 +128,7 @@ export default function Assets() {
   const { data: me } = useGetUserQuery();
   let [deleteAsset] = useDeleteInfoMutation();
   let [addAsset] = useAddAssetMutation();
+  const navigate = useNavigate();
   const token = useSelector(selectToken);
   const [newAssets, setNewAssets] = useState([]);
 
@@ -144,6 +145,7 @@ export default function Assets() {
           physMon: newAssets[i]["physMon"],
         });
       }
+      navigate(`/userform/liabilities`);
     } catch (error) {
       console.log(error);
     }

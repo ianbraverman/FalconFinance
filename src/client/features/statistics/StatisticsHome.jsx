@@ -94,14 +94,29 @@ export default function StatisticsHome() {
   return (
     <>
       {token ? (
-        <>
-          <h1>
-            Here is a breakdown of some of the key aspects of your financial
-            wellness
-          </h1>
-          {me && <YearlyIncomeExpenses me={me} />}
-          {me && <CurrentAssetsLiabilities me={me} />}
-        </>
+        me ? (
+          me.Expenses.length > 0 &&
+          me.Assets.length > 0 &&
+          me.Goals.length > 0 &&
+          me.Income.length > 0 &&
+          me.Liabilities.length > 0 ? (
+            <>
+              <h1>
+                Here is a breakdown of some of the key aspects of your financial
+                wellness
+              </h1>
+              <YearlyIncomeExpenses me={me} />
+              <CurrentAssetsLiabilities me={me} />
+            </>
+          ) : (
+            <p>
+              Please Fill Out The User Form For A Full Statistical Breakdown Of
+              Your Finances
+            </p>
+          )
+        ) : (
+          <p>Loading...</p>
+        )
       ) : (
         <p>Please Log In</p>
       )}

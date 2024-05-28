@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import {
   useGetUserQuery,
   useDeleteInfoMutation,
@@ -103,6 +103,7 @@ export default function Incomes() {
   let [deleteIncome] = useDeleteInfoMutation();
   let [addIncome] = useAddIncomeMutation();
   const token = useSelector(selectToken);
+  const navigate = useNavigate();
   const [newIncomes, setNewIncomes] = useState([]);
 
   const submitIncomesAndLink = async (evt) => {
@@ -116,6 +117,7 @@ export default function Incomes() {
           yearlyIncrease: newIncomes[i]["yearlyIncrease"],
         });
       }
+      navigate(`/userform/expenses`);
     } catch (error) {
       console.log(error);
     }
@@ -191,7 +193,7 @@ export default function Incomes() {
             />
           ))}
           <button onClick={handleAddNewIncome}> Add New Income </button>
-          <button onClick={submitIncomesAndLink}>To Liabilites</button>
+          <button onClick={submitIncomesAndLink}>To Expenses</button>
         </>
       ) : (
         <p>Please Log In</p>

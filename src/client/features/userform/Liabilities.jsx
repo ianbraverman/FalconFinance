@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import {
   useGetUserQuery,
   useDeleteInfoMutation,
@@ -119,6 +119,7 @@ export default function Liabilities() {
   let [deleteLiability] = useDeleteInfoMutation();
   let [addLiability] = useAddLiabilityMutation();
   const token = useSelector(selectToken);
+  const navigate = useNavigate();
   const [newLiabilities, setNewLiabilities] = useState([]);
 
   const submitLiabilitiesAndLink = async (evt) => {
@@ -133,6 +134,7 @@ export default function Liabilities() {
           amount: newLiabilities[i]["amount"],
         });
       }
+      navigate(`/userform/incomes`);
     } catch (error) {
       console.log(error);
     }
@@ -192,7 +194,7 @@ export default function Liabilities() {
             Hello {me?.firstname} {me?.lastname}
           </p>
           <p>Please Fill Out The Following Information</p>
-          <p>Page 2/6</p>
+          <p>Page 3/6</p>
           <h1>Liabilities</h1>
           <section>
             {me?.Liabilities.map((liability) => (
@@ -212,7 +214,7 @@ export default function Liabilities() {
             />
           ))}
           <button onClick={handleAddNewLiability}> Add New Liability </button>
-          <button onClick={submitLiabilitiesAndLink}>To Liabilites</button>
+          <button onClick={submitLiabilitiesAndLink}>To Incomes</button>
         </>
       ) : (
         <p>Please Log In</p>
