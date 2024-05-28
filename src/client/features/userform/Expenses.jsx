@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import {
   useGetUserQuery,
   useDeleteInfoMutation,
@@ -108,6 +108,7 @@ export default function Expenses() {
   let [deleteExpense] = useDeleteInfoMutation();
   let [addExpense] = useAddExpenseMutation();
   const token = useSelector(selectToken);
+  const navigate = useNavigate();
   const [newExpenses, setNewExpenses] = useState([]);
 
   const submitExpensesAndLink = async (evt) => {
@@ -121,6 +122,7 @@ export default function Expenses() {
           interest: newExpenses[i]["interest"],
         });
       }
+      navigate(`/userform/goals`);
     } catch (error) {
       console.log(error);
     }
@@ -144,7 +146,7 @@ export default function Expenses() {
       {
         id: generateUniqueId(),
         name: "",
-        expenseType: "",
+        expenseType: "HOUSING",
         monthlyCost: 0,
         interest: 0,
       },
@@ -175,7 +177,7 @@ export default function Expenses() {
             Hello {me?.firstname} {me?.lastname}
           </p>
           <p>Please Fill Out The Following Information</p>
-          <p>Page 3/6</p>
+          <p>Page 5/6</p>
           <h1>Expenses</h1>
           <section>
             {me?.Expenses.map((expense) => (
@@ -194,7 +196,7 @@ export default function Expenses() {
               />
             ))}
             <button onClick={handleAddNewExpense}> Add New Expense </button>
-            <button onClick={submitExpensesAndLink}>To Liabilites</button>
+            <button onClick={submitExpensesAndLink}>To Goals</button>
           </section>
         </>
       ) : (

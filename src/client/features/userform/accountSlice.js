@@ -76,6 +76,59 @@ const accountApi = api.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    addIncome: builder.mutation({
+      query: ({ name, incomeType, amount, yearlyIncrease }) => ({
+        url: `/incomes`,
+        method: "POST",
+        body: {
+          name: name,
+          incomeType: incomeType,
+          amount: amount,
+          yearlyIncrease: yearlyIncrease,
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
+    addLiability: builder.mutation({
+      query: ({ name, interest, liabilityType, monthlyPayment, amount }) => ({
+        url: `/liabilities`,
+        method: "POST",
+        body: {
+          name: name,
+          interest: interest,
+          liabilityType: liabilityType,
+          monthlyPayment: monthlyPayment,
+          amount: amount,
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
+    updatePersonalInfo: builder.mutation({
+      query: ({
+        firstname,
+        lastname,
+        age,
+        retired,
+        retage,
+        retincome,
+        lifeexpect,
+        inflation,
+      }) => ({
+        url: `/user/me`,
+        method: "PATCH",
+        body: {
+          firstname: firstname,
+          lastname: lastname,
+          age: age,
+          retired: retired,
+          retage: retage,
+          retincome: retincome,
+          lifeexpect: lifeexpect,
+          inflation: inflation,
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -85,4 +138,7 @@ export const {
   useAddAssetMutation,
   useAddExpenseMutation,
   useAddGoalsMutation,
+  useAddIncomeMutation,
+  useAddLiabilityMutation,
+  useUpdatePersonalInfoMutation,
 } = accountApi;
