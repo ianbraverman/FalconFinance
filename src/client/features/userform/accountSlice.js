@@ -103,6 +103,32 @@ const accountApi = api.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    updatePersonalInfo: builder.mutation({
+      query: ({
+        firstname,
+        lastname,
+        age,
+        retired,
+        retage,
+        retincome,
+        lifeexpect,
+        inflation,
+      }) => ({
+        url: `/user/me`,
+        method: "PATCH",
+        body: {
+          firstname: firstname,
+          lastname: lastname,
+          age: age,
+          retired: retired,
+          retage: retage,
+          retincome: retincome,
+          lifeexpect: lifeexpect,
+          inflation: inflation,
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -114,4 +140,5 @@ export const {
   useAddGoalsMutation,
   useAddIncomeMutation,
   useAddLiabilityMutation,
+  useUpdatePersonalInfoMutation,
 } = accountApi;

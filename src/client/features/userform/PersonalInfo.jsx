@@ -2,22 +2,41 @@ import React, { useState, useEffect } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
-import { useGetUserQuery } from "./accountSlice";
+import { useGetUserQuery, useUpdatePersonalInfoMutation } from "./accountSlice";
 import "./userform.css";
 
 export default function PersonalInfo() {
   const { data: me } = useGetUserQuery();
   const token = useSelector(selectToken);
+  const [updatePersonalInfo] = useUpdatePersonalInfoMutation();
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
     age: "",
     retired: "",
     retage: "",
-    retinc: "",
-    lifeexp: "",
+    retincome: "",
+    lifeexpect: "",
     inflation: "",
   });
+
+  const submitPersonalInfoAndLink = async (evt) => {
+    evt.preventDefault();
+    try {
+      await updatePersonalInfo({
+        firstname: formData["firstname"],
+        lastname: formData["lastname"],
+        age: formData["age"],
+        retired: formData.retired === "TRUE",
+        retage: formData["retage"],
+        retincome: formData["retincome"],
+        lifeexpect: formData["lifeexpect"],
+        inflation: formData["inflation"],
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (me) {
@@ -25,10 +44,10 @@ export default function PersonalInfo() {
         firstname: me.firstname || "",
         lastname: me.lastname || "",
         age: me.age || "",
-        retired: me.retired ? "Yes" : "No",
+        retired: me.retired ? "TRUE" : "FALSE",
         retage: me.retage || "",
-        retinc: me.retincome || "",
-        lifeexp: me.lifeexpect || "",
+        retincome: me.retincome || "",
+        lifeexpect: me.lifeexpect || "",
         inflation: me.inflation || "",
       });
     }
@@ -86,14 +105,16 @@ export default function PersonalInfo() {
               </label>
               <label>
                 Are you currently retired?
-                <input
+                <select
                   className="input"
-                  type="text"
                   value={formData.retired}
                   onChange={(e) =>
                     setFormData({ ...formData, retired: e.target.value })
                   }
-                />
+                >
+                  <option value="TRUE">True</option>
+                  <option value="FALSE">False</option>
+                </select>
               </label>
               <label>
                 What is your estimated retirement age?
@@ -111,9 +132,9 @@ export default function PersonalInfo() {
                 <input
                   className="input"
                   type="text"
-                  value={formData.retinc}
+                  value={formData.retincome}
                   onChange={(e) =>
-                    setFormData({ ...formData, retinc: e.target.value })
+                    setFormData({ ...formData, retincome: e.target.value })
                   }
                 />
               </label>
@@ -122,9 +143,9 @@ export default function PersonalInfo() {
                 <input
                   className="input"
                   type="text"
-                  value={formData.lifeexp}
+                  value={formData.lifeexpect}
                   onChange={(e) =>
-                    setFormData({ ...formData, lifeexp: e.target.value })
+                    setFormData({ ...formData, lifeexpect: e.target.value })
                   }
                 />
               </label>
@@ -141,6 +162,7 @@ export default function PersonalInfo() {
               </label>
             </section>
           </form>
+          <button onClick={submitPersonalInfoAndLink}>To Liabilities</button>
         </>
       ) : (
         <p>Please Log In</p>
