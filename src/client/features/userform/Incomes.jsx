@@ -139,7 +139,7 @@ export default function Incomes() {
       {
         id: generateUniqueId(),
         name: "",
-        incomeType: "",
+        incomeType: "SALARY",
         amount: 0,
         yearlyIncrease: 0,
       },

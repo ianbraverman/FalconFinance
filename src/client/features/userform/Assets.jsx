@@ -167,11 +167,11 @@ export default function Assets() {
       {
         id: generateUniqueId(),
         name: "",
-        type: "",
+        type: "SAVINGS",
         balance: 0,
         interest: 0,
         contributions: 0,
-        physMon: "",
+        physMon: "PHYSICAL",
       },
     ]);
   };

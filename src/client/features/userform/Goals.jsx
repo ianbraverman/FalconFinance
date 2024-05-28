@@ -174,10 +174,10 @@ export default function Goals() {
       {
         id: generateUniqueId(),
         name: "",
-        goalType: "",
+        goalType: "SAVINGS",
         targetAge: 0,
         targetAmount: 0,
-        goalPriority: "",
+        goalPriority: "ASPIRATIONAL",
         savingsTowardAmount: 0,
       },
     ]);

@@ -89,6 +89,20 @@ const accountApi = api.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    addLiability: builder.mutation({
+      query: ({ name, interest, liabilityType, monthlyPayment, amount }) => ({
+        url: `/liabilities`,
+        method: "POST",
+        body: {
+          name: name,
+          interest: interest,
+          liabilityType: liabilityType,
+          monthlyPayment: monthlyPayment,
+          amount: amount,
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -99,4 +113,5 @@ export const {
   useAddExpenseMutation,
   useAddGoalsMutation,
   useAddIncomeMutation,
+  useAddLiabilityMutation,
 } = accountApi;

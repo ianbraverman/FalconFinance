@@ -144,7 +144,7 @@ export default function Expenses() {
       {
         id: generateUniqueId(),
         name: "",
-        expenseType: "",
+        expenseType: "HOUSING",
         monthlyCost: 0,
         interest: 0,
       },
