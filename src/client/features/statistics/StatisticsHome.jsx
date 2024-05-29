@@ -87,7 +87,70 @@ function CurrentAssetsLiabilities({ me }) {
   }
 }
 
-function OverallProgressGoals({ me }) {}
+function OverallProgressGoals({ me }) {
+  const baseWeights = {
+    necessary: 0.5,
+    important: 0.3,
+    aspirational: 0.2,
+  };
+
+  const necessaryGoals = me.Goals.filter(
+    (goal) => goal.goalPriority === "NECESSARY"
+  );
+  console.log(necessaryGoals);
+  const importantGoals = me.Goals.filter(
+    (goal) => goal.goalPriority === "IMPORTANT"
+  );
+  console.log(importantGoals);
+  const aspirationalGoals = me.Goals.filter(
+    (goal) => goal.goalPriority === "ASPIRATIONAL"
+  );
+  console.log(aspirationalGoals);
+
+  const calculateProgress = (goals) => {
+    return (
+      goals.reduce((acc, goal) => {
+        // Here, we use only `alreadySaved` to calculate the current progress.
+        const progress = goal.alreadySaved / goal.targetAmount;
+        return acc + progress; // Sum up progress across goals
+      }, 0) / goals.length
+    ); // Average progress per goal type
+  };
+  const totalProgress =
+    ((necessaryGoals.length
+      ? calculateProgress(necessaryGoals) * baseWeights.necessary
+      : 0) +
+      (importantGoals.length
+        ? calculateProgress(importantGoals) * baseWeights.important
+        : 0) +
+      (aspirationalGoals.length
+        ? calculateProgress(aspirationalGoals) * baseWeights.aspirational
+        : 0)) *
+    100;
+  console.log(
+    necessaryGoals.length
+      ? calculateProgress(necessaryGoals) * baseWeights.necessary
+      : 0
+  );
+  console.log(
+    importantGoals.length
+      ? calculateProgress(importantGoals) * baseWeights.important
+      : 0
+  );
+  console.log(
+    aspirationalGoals.length
+      ? calculateProgress(aspirationalGoals) * baseWeights.aspirational
+      : 0
+  );
+  return (
+    <>
+      <p>
+        You are overall {totalProgress.toFixed(2)}% toward achieving your
+        financial goals. This number is weighted based off each goals importance
+      </p>
+    </>
+  );
+}
 
 export default function StatisticsHome() {
   const { data: me } = useGetUserQuery();
@@ -109,6 +172,7 @@ export default function StatisticsHome() {
               </h1>
               <YearlyIncomeExpenses me={me} />
               <CurrentAssetsLiabilities me={me} />
+              <OverallProgressGoals me={me} />
             </>
           ) : (
             <p>
