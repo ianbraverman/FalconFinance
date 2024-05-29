@@ -62,6 +62,7 @@ const accountApi = api.injectEndpoints({
         targetAmount,
         goalPriority,
         savingsTowardAmount,
+        alreadySaved,
       }) => ({
         url: `/goals`,
         method: "POST",
@@ -72,6 +73,7 @@ const accountApi = api.injectEndpoints({
           targetAmount: targetAmount,
           goalPriority: goalPriority,
           savingsTowardAmount: savingsTowardAmount,
+          alreadySaved: alreadySaved,
         },
       }),
       invalidatesTags: ["User"],

@@ -87,6 +87,8 @@ function CurrentAssetsLiabilities({ me }) {
   }
 }
 
+function OverallProgressGoals({ me }) {}
+
 export default function StatisticsHome() {
   const { data: me } = useGetUserQuery();
   const token = useSelector(selectToken);
