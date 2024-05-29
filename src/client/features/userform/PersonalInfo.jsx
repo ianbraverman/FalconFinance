@@ -164,7 +164,9 @@ export default function PersonalInfo() {
               </label>
             </section>
           </form>
-          <button onClick={submitPersonalInfoAndLink}>To Assets</button>
+          <button onClick={submitPersonalInfoAndLink}>
+            Save And Continue To Assets
+          </button>
         </>
       ) : (
         <p>Please Log In</p>

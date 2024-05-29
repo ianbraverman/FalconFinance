@@ -196,7 +196,12 @@ export default function Expenses() {
               />
             ))}
             <button onClick={handleAddNewExpense}> Add New Expense </button>
-            <button onClick={submitExpensesAndLink}>To Goals</button>
+            <button onClick={submitExpensesAndLink}>
+              Save And Continue To Goals
+            </button>
+            <button>
+              <Link to={"/userform/incomes"}>Return To Incomes</Link>
+            </button>
           </section>
         </>
       ) : (

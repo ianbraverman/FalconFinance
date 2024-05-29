@@ -232,7 +232,12 @@ export default function Goals() {
               Great job, after completing this page you can see your financial
               breakdown
             </p>
-            <button onClick={submitGoalsAndLink}>To Statistics</button>
+            <button onClick={submitGoalsAndLink}>
+              Save And Continue To Statistics
+            </button>
+            <button>
+              <Link to={"/userform/expenses"}>Return To Expenses</Link>
+            </button>
           </section>
         </>
       ) : (

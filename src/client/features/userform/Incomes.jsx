@@ -193,7 +193,12 @@ export default function Incomes() {
             />
           ))}
           <button onClick={handleAddNewIncome}> Add New Income </button>
-          <button onClick={submitIncomesAndLink}>To Expenses</button>
+          <button onClick={submitIncomesAndLink}>
+            Save And Continue To Expenses
+          </button>
+          <button>
+            <Link to={"/userform/liabilities"}>Return To Liabilities</Link>
+          </button>
         </>
       ) : (
         <p>Please Log In</p>
