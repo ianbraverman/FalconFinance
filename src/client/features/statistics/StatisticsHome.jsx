@@ -97,15 +97,14 @@ function OverallProgressGoals({ me }) {
   const necessaryGoals = me.Goals.filter(
     (goal) => goal.goalPriority === "NECESSARY"
   );
-  console.log(necessaryGoals);
+
   const importantGoals = me.Goals.filter(
     (goal) => goal.goalPriority === "IMPORTANT"
   );
-  console.log(importantGoals);
+
   const aspirationalGoals = me.Goals.filter(
     (goal) => goal.goalPriority === "ASPIRATIONAL"
   );
-  console.log(aspirationalGoals);
 
   const calculateProgress = (goals) => {
     return (
@@ -127,21 +126,7 @@ function OverallProgressGoals({ me }) {
         ? calculateProgress(aspirationalGoals) * baseWeights.aspirational
         : 0)) *
     100;
-  console.log(
-    necessaryGoals.length
-      ? calculateProgress(necessaryGoals) * baseWeights.necessary
-      : 0
-  );
-  console.log(
-    importantGoals.length
-      ? calculateProgress(importantGoals) * baseWeights.important
-      : 0
-  );
-  console.log(
-    aspirationalGoals.length
-      ? calculateProgress(aspirationalGoals) * baseWeights.aspirational
-      : 0
-  );
+
   return (
     <>
       <p>
@@ -150,6 +135,55 @@ function OverallProgressGoals({ me }) {
       </p>
     </>
   );
+}
+
+function EmergencySavings({ me }) {
+  const calculateSixMonthsExpenses = (expenses) => {
+    return expenses.reduce((acc, expense) => {
+      return acc + expense.monthlyCost;
+    }, 0);
+  };
+  let oneMonthExpenses = calculateSixMonthsExpenses(me.Expenses);
+  let SixMonthsExpenses = calculateSixMonthsExpenses(me.Expenses) * 6;
+  let savingsAssets = me.Assets.filter(
+    (asset) => asset.assetType === "SAVINGS"
+  );
+  let totalSavings = savingsAssets.reduce(
+    (total, asset) => total + asset.balance,
+    0
+  );
+
+  if (totalSavings >= SixMonthsExpenses) {
+    return (
+      <>
+        <p>
+          It is important to have emergency savings equal to at least 6 months
+          of monthly expenses. Your expenses every month are {oneMonthExpenses},
+          so your expenses for 6 months are {SixMonthsExpenses}.
+        </p>
+        <p>
+          You currently have {totalSavings} in savings, which is greater than or
+          equal to six months of your expenses. Great job! You have a sufficient
+          emergency fund.
+        </p>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <p>
+          It is important to have emergency savings equal to at least 6 months
+          of monthly expenses. Your expenses every month are {oneMonthExpenses},
+          so your expenses for 6 months are {SixMonthsExpenses}.
+        </p>
+        <p>
+          You currently have {totalSavings} in savings, which is less than six
+          months of your expenses. It is recommended that you increase your
+          savings so as to have an appropriatly sized emergency fund.
+        </p>
+      </>
+    );
+  }
 }
 
 export default function StatisticsHome() {
@@ -173,6 +207,7 @@ export default function StatisticsHome() {
               <YearlyIncomeExpenses me={me} />
               <CurrentAssetsLiabilities me={me} />
               <OverallProgressGoals me={me} />
+              <EmergencySavings me={me} />
             </>
           ) : (
             <p>
