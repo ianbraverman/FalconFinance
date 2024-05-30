@@ -29,7 +29,7 @@ function NewIncomeItem({ income, handleNewIncomeChange, handleDeleteIncome }) {
   };
 
   return (
-    <section>
+    <section className="questionnaire">
       <label>
         Name Of Income:
         <input
@@ -78,7 +78,9 @@ function NewIncomeItem({ income, handleNewIncomeChange, handleDeleteIncome }) {
           <option value="OTHER">Other</option>
         </select>
       </label>
-      <button onClick={() => handleDelete()}>Delete Income</button>
+      <button className="buttondelete" onClick={() => handleDelete()}>
+        Delete Income
+      </button>
     </section>
   );
 }
@@ -86,13 +88,13 @@ function NewIncomeItem({ income, handleNewIncomeChange, handleDeleteIncome }) {
 function ExistingIncomeItem({ income, deleteAnIncome }) {
   //delete button will on click delete that Income and send a delete request to delete it
   return (
-    <section>
+    <section className="questionnaire">
       <p> Name: {income?.name}</p>
       <p> Type: {income?.incomeType}</p>
       <p> Income Amount: {income?.amount}</p>
       <p> Yearly Increase: {income?.yearlyIncrease}</p>
       <form onSubmit={(evt) => deleteAnIncome(income, evt)}>
-        <button>Delete</button>
+        <button className="buttondelete">Delete Income</button>
       </form>
     </section>
   );
@@ -176,6 +178,7 @@ export default function Incomes() {
           <p>Please Fill Out The Following Information</p>
           <p>Page 4/6</p>
           <h1>Incomes</h1>
+          {me?.Income.length > 0 ? <h2>Existing Assets:</h2> : <p></p>}
           <section>
             {me?.Income.map((income) => (
               <ExistingIncomeItem
@@ -185,6 +188,7 @@ export default function Incomes() {
               />
             ))}
           </section>
+          {newIncomes.length > 0 ? <h2>New Incomes:</h2> : <p></p>}
           {newIncomes.map((newIncome) => (
             <NewIncomeItem
               key={newIncome.id}

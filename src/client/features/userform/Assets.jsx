@@ -28,7 +28,7 @@ function NewAssetItem({ asset, handleNewAssetChange, handleDeleteAsset }) {
   };
 
   return (
-    <section>
+    <section className="questionnaire">
       <label>
         What Is The Name Of Asset:
         <input
@@ -101,7 +101,9 @@ function NewAssetItem({ asset, handleNewAssetChange, handleDeleteAsset }) {
           <option value="OTHER">Other</option>
         </select>
       </label>
-      <button onClick={() => handleDelete()}>Delete Asset</button>
+      <button className="buttondelete" onClick={() => handleDelete()}>
+        Delete Asset
+      </button>
     </section>
   );
 }
@@ -110,7 +112,7 @@ function ExistingAssetItem({ asset, deleteAnAsset }) {
   //delete button will on click delete that asset and send a delete request to delete it
 
   return (
-    <section>
+    <section className="questionnaire">
       <p> Asset Name: {asset?.name}</p>
       <p> Asset Type: {asset?.assetType}</p>
       <p> Yearly Interest Earned On Asset: {asset?.interest}</p>
@@ -118,7 +120,7 @@ function ExistingAssetItem({ asset, deleteAnAsset }) {
       <p> Physical Or Monetary Asset: {asset?.physMon}</p>
       <p> Asset Balance: {asset?.balance}</p>
       <form onSubmit={(evt) => deleteAnAsset(asset, evt)}>
-        <button>Delete</button>
+        <button className="buttondelete">Delete Asset</button>
       </form>
     </section>
   );
@@ -207,6 +209,7 @@ export default function Assets() {
           <p>Please Fill Out The Following Information</p>
           <p>Page 2/6</p>
           <h1>Assets</h1>
+          {me?.Assets.length > 0 ? <h2>Existing Assets:</h2> : <p></p>}
           <section>
             {me?.Assets.map((asset) => (
               <ExistingAssetItem
@@ -216,6 +219,7 @@ export default function Assets() {
               />
             ))}
           </section>
+          {newAssets.length > 0 ? <h2>New Assets:</h2> : <p></p>}
           {newAssets.map((newAsset) => (
             <NewAssetItem
               key={newAsset.id}

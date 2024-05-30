@@ -31,7 +31,7 @@ function NewExpenseItem({
     handleDeleteExpense(expense.id); // Call the parent component's delete function with the correct index
   };
   return (
-    <section>
+    <section className="questionnaire">
       <label>
         Name Of Expense:
         <input
@@ -83,7 +83,9 @@ function NewExpenseItem({
           <option value="OTHER">Other</option>
         </select>
       </label>
-      <button onClick={() => handleDelete()}>Delete Expense</button>
+      <button className="buttondelete" onClick={() => handleDelete()}>
+        Delete Expense
+      </button>
     </section>
   );
 }
@@ -91,13 +93,13 @@ function NewExpenseItem({
 function ExistingExpenseItem({ expense, deleteAnExpense }) {
   //delete button will on click delete that expense and send a delete request to delete it
   return (
-    <section>
+    <section className="questionnaire">
       <p> Name: {expense?.name}</p>
       <p> Type: {expense?.expenseType}</p>
       <p> Interest Cost: {expense?.interest}</p>
       <p> Monthly Cost: {expense?.monthlyCost}</p>
       <form onSubmit={(evt) => deleteAnExpense(expense, evt)}>
-        <button>Delete</button>
+        <button className="buttondelete">Delete Expense</button>
       </form>
     </section>
   );
@@ -180,6 +182,7 @@ export default function Expenses() {
           <p>Please Fill Out The Following Information</p>
           <p>Page 5/6</p>
           <h1>Expenses</h1>
+          {me?.Expenses.length > 0 ? <h2>Existing Expenses:</h2> : <p></p>}
           <section>
             {me?.Expenses.map((expense) => (
               <ExistingExpenseItem
@@ -188,22 +191,23 @@ export default function Expenses() {
                 deleteAnExpense={deleteAnExpense}
               />
             ))}
-            {newExpenses.map((newExpense) => (
-              <NewExpenseItem
-                key={newExpense.id}
-                expense={newExpense}
-                handleNewExpenseChange={handleNewExpenseChange}
-                handleDeleteExpense={handleDeleteExpense}
-              />
-            ))}
-            <button onClick={handleAddNewExpense}> Add New Expense </button>
-            <button onClick={submitExpensesAndLink}>
-              Save And Continue To Goals
-            </button>
-            <button>
-              <Link to={"/userform/incomes"}>Return To Incomes</Link>
-            </button>
           </section>
+          {newExpenses.length > 0 ? <h2>New Expenses:</h2> : <p></p>}
+          {newExpenses.map((newExpense) => (
+            <NewExpenseItem
+              key={newExpense.id}
+              expense={newExpense}
+              handleNewExpenseChange={handleNewExpenseChange}
+              handleDeleteExpense={handleDeleteExpense}
+            />
+          ))}
+          <button onClick={handleAddNewExpense}> Add New Expense </button>
+          <button onClick={submitExpensesAndLink}>
+            Save And Continue To Goals
+          </button>
+          <button>
+            <Link to={"/userform/incomes"}>Return To Incomes</Link>
+          </button>
         </>
       ) : (
         <p>Please Log In</p>

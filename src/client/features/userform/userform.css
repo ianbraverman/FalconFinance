@@ -1,4 +1,20 @@
 .form-section {
   display: flex;
   flex-direction: column;
+  padding: 1rem;
+  gap: 0.2rem;
+}
+.questionnaire {
+  display: flex;
+  flex-direction: column;
+  border: 0.2rem solid black;
+  padding: 1rem;
+  gap: 0.2rem;
+}
+.buttondelete {
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  width: 100%; /* Makes the button take full width */
+  box-sizing: border-box; /* Ensures padding and border are included in width */
 }
