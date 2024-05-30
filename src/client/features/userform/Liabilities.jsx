@@ -126,13 +126,14 @@ export default function Liabilities() {
     evt.preventDefault();
     try {
       for (let i = 0; i < newLiabilities.length; i++) {
-        await addLiability({
-          name: newLiabilities[i]["name"],
-          interest: newLiabilities[i]["interest"],
-          liabilityType: newLiabilities[i]["liabilityType"],
-          monthlyPayment: newLiabilities[i]["monthlyPayment"],
-          amount: newLiabilities[i]["amount"],
-        });
+        if (newLiabilities[i]["name"] != "")
+          await addLiability({
+            name: newLiabilities[i]["name"],
+            interest: newLiabilities[i]["interest"],
+            liabilityType: newLiabilities[i]["liabilityType"],
+            monthlyPayment: newLiabilities[i]["monthlyPayment"],
+            amount: newLiabilities[i]["amount"],
+          });
       }
       navigate(`/userform/incomes`);
     } catch (error) {

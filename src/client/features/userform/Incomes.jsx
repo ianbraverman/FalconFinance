@@ -110,12 +110,13 @@ export default function Incomes() {
     evt.preventDefault();
     try {
       for (let i = 0; i < newIncomes.length; i++) {
-        await addIncome({
-          name: newIncomes[i]["name"],
-          incomeType: newIncomes[i]["incomeType"],
-          amount: newIncomes[i]["amount"],
-          yearlyIncrease: newIncomes[i]["yearlyIncrease"],
-        });
+        if (newIncomes[i]["name"] != "")
+          await addIncome({
+            name: newIncomes[i]["name"],
+            incomeType: newIncomes[i]["incomeType"],
+            amount: newIncomes[i]["amount"],
+            yearlyIncrease: newIncomes[i]["yearlyIncrease"],
+          });
       }
       navigate(`/userform/expenses`);
     } catch (error) {

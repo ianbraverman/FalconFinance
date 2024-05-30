@@ -172,16 +172,17 @@ export default function Goals() {
     evt.preventDefault();
     try {
       for (let i = 0; i < newGoals.length; i++) {
-        await addGoal({
-          name: newGoals[i]["name"],
-          goalType: newGoals[i]["goalType"],
-          targetAge: newGoals[i]["targetAge"],
-          targetAmount: newGoals[i]["targetAmount"],
-          goalPriority: newGoals[i]["goalPriority"],
-          savingsTowardAmount: newGoals[i]["savingsTowardAmount"],
-          alreadySaved: newGoals[i]["alreadySaved"],
-          annualGrowthRate: newGoals[i]["annualGrowthRate"],
-        });
+        if (newGoals[i]["name"] != "")
+          await addGoal({
+            name: newGoals[i]["name"],
+            goalType: newGoals[i]["goalType"],
+            targetAge: newGoals[i]["targetAge"],
+            targetAmount: newGoals[i]["targetAmount"],
+            goalPriority: newGoals[i]["goalPriority"],
+            savingsTowardAmount: newGoals[i]["savingsTowardAmount"],
+            alreadySaved: newGoals[i]["alreadySaved"],
+            annualGrowthRate: newGoals[i]["annualGrowthRate"],
+          });
       }
       navigate(`/statistics`);
     } catch (error) {

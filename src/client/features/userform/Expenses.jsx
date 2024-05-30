@@ -115,12 +115,13 @@ export default function Expenses() {
     evt.preventDefault();
     try {
       for (let i = 0; i < newExpenses.length; i++) {
-        await addExpense({
-          name: newExpenses[i]["name"],
-          expenseType: newExpenses[i]["expenseType"],
-          monthlyCost: newExpenses[i]["monthlyCost"],
-          interest: newExpenses[i]["interest"],
-        });
+        if (newExpenses[i]["name"] != "")
+          await addExpense({
+            name: newExpenses[i]["name"],
+            expenseType: newExpenses[i]["expenseType"],
+            monthlyCost: newExpenses[i]["monthlyCost"],
+            interest: newExpenses[i]["interest"],
+          });
       }
       navigate(`/userform/goals`);
     } catch (error) {
