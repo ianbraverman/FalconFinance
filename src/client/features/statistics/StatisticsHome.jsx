@@ -87,6 +87,108 @@ function CurrentAssetsLiabilities({ me }) {
   }
 }
 
+function OverallProgressGoals({ me }) {
+  const baseWeights = {
+    necessary: 0.5,
+    important: 0.3,
+    aspirational: 0.2,
+  };
+
+  const necessaryGoals = me.Goals.filter(
+    (goal) => goal.goalPriority === "NECESSARY"
+  );
+
+  const importantGoals = me.Goals.filter(
+    (goal) => goal.goalPriority === "IMPORTANT"
+  );
+
+  const aspirationalGoals = me.Goals.filter(
+    (goal) => goal.goalPriority === "ASPIRATIONAL"
+  );
+
+  const calculateProgress = (goals) => {
+    return (
+      goals.reduce((acc, goal) => {
+        // Here, we use only `alreadySaved` to calculate the current progress.
+        const progress = goal.alreadySaved / goal.targetAmount;
+        return acc + progress; // Sum up progress across goals
+      }, 0) / goals.length
+    ); // Average progress per goal type
+  };
+  const totalProgress =
+    ((necessaryGoals.length
+      ? calculateProgress(necessaryGoals) * baseWeights.necessary
+      : 0) +
+      (importantGoals.length
+        ? calculateProgress(importantGoals) * baseWeights.important
+        : 0) +
+      (aspirationalGoals.length
+        ? calculateProgress(aspirationalGoals) * baseWeights.aspirational
+        : 0)) *
+    100;
+
+  return (
+    <>
+      <p>
+        You are overall {totalProgress.toFixed(2)}% toward achieving your
+        financial goals. This number is weighted based off each goals importance
+      </p>
+      <button>
+        <Link to={"/statistics/goals"}>Breakdown Of Your Financial Goals</Link>
+      </button>
+    </>
+  );
+}
+
+function EmergencySavings({ me }) {
+  const calculateSixMonthsExpenses = (expenses) => {
+    return expenses.reduce((acc, expense) => {
+      return acc + expense.monthlyCost;
+    }, 0);
+  };
+  let oneMonthExpenses = calculateSixMonthsExpenses(me.Expenses);
+  let SixMonthsExpenses = calculateSixMonthsExpenses(me.Expenses) * 6;
+  let savingsAssets = me.Assets.filter(
+    (asset) => asset.assetType === "SAVINGS"
+  );
+  let totalSavings = savingsAssets.reduce(
+    (total, asset) => total + asset.balance,
+    0
+  );
+
+  if (totalSavings >= SixMonthsExpenses) {
+    return (
+      <>
+        <p>
+          It is important to have emergency savings equal to at least 6 months
+          of monthly expenses. Your expenses every month are {oneMonthExpenses},
+          so your expenses for 6 months are {SixMonthsExpenses}.
+        </p>
+        <p>
+          You currently have {totalSavings} in savings, which is greater than or
+          equal to six months of your expenses. Great job! You have a sufficient
+          emergency fund.
+        </p>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <p>
+          It is important to have emergency savings equal to at least 6 months
+          of monthly expenses. Your expenses every month are {oneMonthExpenses},
+          so your expenses for 6 months are {SixMonthsExpenses}.
+        </p>
+        <p>
+          You currently have {totalSavings} in savings, which is less than six
+          months of your expenses. It is recommended that you increase your
+          savings so as to have an appropriatly sized emergency fund.
+        </p>
+      </>
+    );
+  }
+}
+
 export default function StatisticsHome() {
   const { data: me } = useGetUserQuery();
   const token = useSelector(selectToken);
@@ -105,8 +207,16 @@ export default function StatisticsHome() {
                 Here is a breakdown of some of the key aspects of your financial
                 wellness
               </h1>
+              <h2>Yearly Income And Expenses Breakdown</h2>
               <YearlyIncomeExpenses me={me} />
+              <h2>Assets And Liabilities Breakdown</h2>
               <CurrentAssetsLiabilities me={me} />
+              <h2>
+                Overall Progress Toward Achieving Your Financial Goals Breakdown
+              </h2>
+              <OverallProgressGoals me={me} />
+              <h2>Appropriate Emergency Savings Breakdown</h2>
+              <EmergencySavings me={me} />
             </>
           ) : (
             <p>

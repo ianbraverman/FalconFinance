@@ -1,33 +1,5 @@
 const prisma = require("../prisma");
 
-// /** Seeds the database with a user and some tasks */
-// const seed = async () => {
-//   await prisma.user.upsert({
-//     where: {
-//       username: "foo",
-//     },
-//     update: {},
-//     create: {
-//       username: "foo",
-//       password: "bar",
-//       tasks: {
-//         create: [
-//           { description: "task 1" },
-//           { description: "task 2" },
-//           { description: "task 3" },
-//         ],
-//       },
-//     },
-//   });
-// };
-
-// seed()
-//   .then(async () => await prisma.$disconnect())
-//   .catch(async (err) => {
-//     console.error(err);
-//     await prisma.$disconnect();
-//     process.exit(1);
-//   });
 let usersFirst = ["Ian", "Bob", "Joe", "Sarah", "Jeremy"];
 let usersLast = ["Braverman", "Shoeman", "Billman", "Frogman", "Sadman"];
 let usersMarried = [true, false, true, false, true];
@@ -147,6 +119,8 @@ const seed = async () => {
               targetAmount: Math.floor(Math.random() * 700000) + 300000,
               goalPriority: "NECESSARY",
               savingsTowardAmount: Math.floor(Math.random() * 20000) + 10000,
+              alreadySaved: Math.floor(Math.random() * 20000) + 10000,
+              annualGrowthRate: Math.floor(Math.random() * 8) + 1,
             },
             {
               name: "Home Purchase",
@@ -155,6 +129,8 @@ const seed = async () => {
               targetAmount: Math.floor(Math.random() * 200000) + 100000,
               goalPriority: "IMPORTANT",
               savingsTowardAmount: Math.floor(Math.random() * 30000) + 5000,
+              alreadySaved: Math.floor(Math.random() * 20000) + 10000,
+              annualGrowthRate: Math.floor(Math.random() * 8) + 1,
             },
             {
               name: "Travel",
@@ -163,6 +139,8 @@ const seed = async () => {
               targetAmount: Math.floor(Math.random() * 10000) + 5000,
               goalPriority: "ASPIRATIONAL",
               savingsTowardAmount: Math.floor(Math.random() * 1000) + 1000,
+              alreadySaved: Math.floor(Math.random() * 20000) + 10000,
+              annualGrowthRate: Math.floor(Math.random() * 8) + 1,
             },
           ],
         },

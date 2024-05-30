@@ -214,7 +214,12 @@ export default function Liabilities() {
             />
           ))}
           <button onClick={handleAddNewLiability}> Add New Liability </button>
-          <button onClick={submitLiabilitiesAndLink}>To Incomes</button>
+          <button onClick={submitLiabilitiesAndLink}>
+            Save And Continue To Incomes
+          </button>
+          <button>
+            <Link to={"/userform/assets"}>Return To Assets</Link>
+          </button>
         </>
       ) : (
         <p>Please Log In</p>

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { Link, useSearchParams, useNavigate, NavLink } from "react-router-dom";
 import {
   useGetUserQuery,
   useDeleteInfoMutation,
@@ -223,7 +223,12 @@ export default function Assets() {
             />
           ))}
           <button onClick={handleAddNewAsset}> Add New Asset </button>
-          <button onClick={submitAssetsAndLink}>To Liabilites</button>
+          <button onClick={submitAssetsAndLink}>
+            Save And Continue To Liabilites
+          </button>
+          <button>
+            <Link to={"/userform/personalinfo"}>Return To Personal Info</Link>
+          </button>
         </>
       ) : (
         <p>Please Log In</p>

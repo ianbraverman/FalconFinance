@@ -50,6 +50,8 @@ router.post("/", async (req, res, next) => {
       targetAmount,
       goalPriority,
       savingsTowardAmount,
+      alreadySaved,
+      annualGrowthRate,
     } = req.body;
 
     if (!res.locals.user) {
@@ -69,6 +71,8 @@ router.post("/", async (req, res, next) => {
         targetAmount: +targetAmount,
         goalPriority: goalPriority,
         savingsTowardAmount: +savingsTowardAmount,
+        alreadySaved: +alreadySaved,
+        annualGrowthRate: +annualGrowthRate,
       },
     });
     res.json(newGoal);

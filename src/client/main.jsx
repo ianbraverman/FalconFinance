@@ -14,10 +14,10 @@ import Incomes from "./features/userform/Incomes.jsx";
 import PersonalInfo from "./features/userform/PersonalInfo.jsx";
 import Goals from "./features/userform/Goals.jsx";
 import Liabilities from "./features/userform/Liabilities.jsx";
-import Homepage from "./features/homepage/homepage.jsx";
-import About from "./features/homepage/about.jsx";
-import StatisticsHome from "./features/statistics/statisticshome.jsx";
-
+import Homepage from "./features/homepage/Homepage.jsx";
+import About from "./features/homepage/About.jsx";
+import StatisticsHome from "./features/statistics/StatisticsHome.jsx";
+import FinancialGoals from "./features/statistics/FinancialGoals.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -33,8 +33,9 @@ const router = createBrowserRouter([
       { path: "/userform/personalinfo", element: <PersonalInfo /> },
       { path: "/userform/goals", element: <Goals /> },
       { path: "/userform/liabilities", element: <Liabilities /> },
-      { path: "/about", element: <About/>},
-      { path: "/statistics" , element: <StatisticsHome/>}
+      { path: "/about", element: <About /> },
+      { path: "/statistics", element: <StatisticsHome /> },
+      { path: "/statistics/goals", element: <FinancialGoals /> },
     ],
   },
 ]);
