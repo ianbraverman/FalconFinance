@@ -120,6 +120,7 @@ const seed = async () => {
               goalPriority: "NECESSARY",
               savingsTowardAmount: Math.floor(Math.random() * 20000) + 10000,
               alreadySaved: Math.floor(Math.random() * 20000) + 10000,
+              annualGrowthRate: Math.floor(Math.random() * 8) + 1,
             },
             {
               name: "Home Purchase",
@@ -129,6 +130,7 @@ const seed = async () => {
               goalPriority: "IMPORTANT",
               savingsTowardAmount: Math.floor(Math.random() * 30000) + 5000,
               alreadySaved: Math.floor(Math.random() * 20000) + 10000,
+              annualGrowthRate: Math.floor(Math.random() * 8) + 1,
             },
             {
               name: "Travel",
@@ -138,6 +140,7 @@ const seed = async () => {
               goalPriority: "ASPIRATIONAL",
               savingsTowardAmount: Math.floor(Math.random() * 1000) + 1000,
               alreadySaved: Math.floor(Math.random() * 20000) + 10000,
+              annualGrowthRate: Math.floor(Math.random() * 8) + 1,
             },
           ],
         },

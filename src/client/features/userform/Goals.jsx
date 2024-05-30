@@ -24,6 +24,7 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
     goalPriority,
     savingsTowardAmount,
     alreadySaved,
+    annualGrowthRate,
   } = goal;
 
   const handleChange = (e) => {
@@ -74,6 +75,17 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
           type="text"
           name="alreadySaved"
           value={alreadySaved}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        What Is the Annual Growth Rate Percentage For The Assets Allocated
+        Toward This Goal?
+        <input
+          className="input"
+          type="text"
+          name="annualGrowthRate"
+          value={annualGrowthRate}
           onChange={handleChange}
         />
       </label>
@@ -136,6 +148,11 @@ function ExistingGoalItem({ goal, deleteAGoal }) {
       <p> Goal Priority: {goal?.goalPriority}</p>
       <p> Yearly Savings Toward Goal: {goal?.savingsTowardAmount}</p>
       <p> Amount Already Saved Toward This Goal: {goal?.alreadySaved}</p>
+      <p>
+        {" "}
+        Amount Assets Allocated Toward This Goal Grow Year Over Year:{" "}
+        {goal?.annualGrowthRate}%
+      </p>
       <form onSubmit={(evt) => deleteAGoal(goal, evt)}>
         <button>Delete</button>
       </form>
@@ -163,6 +180,7 @@ export default function Goals() {
           goalPriority: newGoals[i]["goalPriority"],
           savingsTowardAmount: newGoals[i]["savingsTowardAmount"],
           alreadySaved: newGoals[i]["alreadySaved"],
+          annualGrowthRate: newGoals[i]["annualGrowthRate"],
         });
       }
       navigate(`/statistics`);
@@ -195,6 +213,7 @@ export default function Goals() {
         goalPriority: "ASPIRATIONAL",
         savingsTowardAmount: 0,
         alreadySaved: 0,
+        annualGrowthRate: 0,
       },
     ]);
   };

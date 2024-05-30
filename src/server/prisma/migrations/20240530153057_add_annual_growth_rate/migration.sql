@@ -91,6 +91,7 @@ CREATE TABLE "Goals" (
     "goalPriority" "GoalPriority" NOT NULL,
     "savingsTowardAmount" INTEGER NOT NULL,
     "alreadySaved" INTEGER NOT NULL,
+    "annualGrowthRate" INTEGER NOT NULL,
 
     CONSTRAINT "Goals_pkey" PRIMARY KEY ("id")
 );

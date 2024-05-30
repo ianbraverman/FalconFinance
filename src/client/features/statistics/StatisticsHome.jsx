@@ -133,6 +133,9 @@ function OverallProgressGoals({ me }) {
         You are overall {totalProgress.toFixed(2)}% toward achieving your
         financial goals. This number is weighted based off each goals importance
       </p>
+      <button>
+        <Link to={"/statistics/goals"}>Breakdown Of Your Financial Goals</Link>
+      </button>
     </>
   );
 }
@@ -204,9 +207,15 @@ export default function StatisticsHome() {
                 Here is a breakdown of some of the key aspects of your financial
                 wellness
               </h1>
+              <h2>Yearly Income And Expenses Breakdown</h2>
               <YearlyIncomeExpenses me={me} />
+              <h2>Assets And Liabilities Breakdown</h2>
               <CurrentAssetsLiabilities me={me} />
+              <h2>
+                Overall Progress Toward Achieving Your Financial Goals Breakdown
+              </h2>
               <OverallProgressGoals me={me} />
+              <h2>Appropriate Emergency Savings Breakdown</h2>
               <EmergencySavings me={me} />
             </>
           ) : (

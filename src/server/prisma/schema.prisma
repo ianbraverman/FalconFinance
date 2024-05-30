@@ -150,6 +150,7 @@ model Goals {
   goalPriority        GoalPriority
   savingsTowardAmount Int
   alreadySaved        Int
+  annualGrowthRate    Int
 }
 
 model Expenses {
