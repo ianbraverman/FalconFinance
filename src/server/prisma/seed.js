@@ -14,10 +14,7 @@ const seed = async () => {
         firstname: usersFirst[i],
         lastname: usersLast[i],
         age: Math.floor(Math.random() * 10) + 20,
-        married: usersMarried[i],
         retired: false,
-        retage: Math.floor(Math.random() * 5) + 60,
-        retincome: Math.floor(Math.random() * 100000) + 60000,
         lifeexpect: Math.floor(Math.random() * 10) + 90,
         inflation: Math.floor(Math.random() * 5) + 1,
         Income: {
@@ -121,6 +118,7 @@ const seed = async () => {
               savingsTowardAmount: Math.floor(Math.random() * 20000) + 10000,
               alreadySaved: Math.floor(Math.random() * 20000) + 10000,
               annualGrowthRate: Math.floor(Math.random() * 8) + 1,
+              goalDuration: Math.floor(Math.random() * 10) + 20,
             },
             {
               name: "Home Purchase",
@@ -131,6 +129,7 @@ const seed = async () => {
               savingsTowardAmount: Math.floor(Math.random() * 30000) + 5000,
               alreadySaved: Math.floor(Math.random() * 20000) + 10000,
               annualGrowthRate: Math.floor(Math.random() * 8) + 1,
+              goalDuration: 1,
             },
             {
               name: "Travel",
@@ -141,6 +140,7 @@ const seed = async () => {
               savingsTowardAmount: Math.floor(Math.random() * 1000) + 1000,
               alreadySaved: Math.floor(Math.random() * 20000) + 10000,
               annualGrowthRate: Math.floor(Math.random() * 8) + 1,
+              goalDuration: 1,
             },
           ],
         },

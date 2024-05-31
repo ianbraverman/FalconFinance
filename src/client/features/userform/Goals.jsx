@@ -25,6 +25,7 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
     savingsTowardAmount,
     alreadySaved,
     annualGrowthRate,
+    goalDuration,
   } = goal;
 
   const handleChange = (e) => {
@@ -49,7 +50,7 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
         />
       </label>
       <label>
-        What Is The Target Age Of This Goal?
+        What Is The Target Age Of This Goal:
         <input
           className="input"
           type="text"
@@ -59,7 +60,7 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
         />
       </label>
       <label>
-        What Is The Target Amount For This Goal?
+        What Is The Target Amount For This Goal:
         <input
           className="input"
           type="text"
@@ -69,7 +70,7 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
         />
       </label>
       <label>
-        How Much Have You Already Saved Toward This Goal?
+        How Much Have You Already Saved Toward This Goal:
         <input
           className="input"
           type="text"
@@ -80,7 +81,7 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
       </label>
       <label>
         What Is the Annual Growth Rate Percentage For The Assets Allocated
-        Toward This Goal?
+        Toward This Goal:
         <input
           className="input"
           type="text"
@@ -90,7 +91,7 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
         />
       </label>
       <label>
-        How Much Are You Saving Yearly Toward This Goal?
+        How Much Are You Saving Yearly Toward This Goal:
         <input
           className="input"
           type="text"
@@ -100,7 +101,7 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
         />
       </label>
       <label>
-        What Is The Priority Of This Goal?
+        What Is The Priority Of This Goal:
         <select
           className="input"
           name="goalPriority"
@@ -111,6 +112,17 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
           <option value="IMPORTANT">Important</option>
           <option value="NECESSARY">Necessary</option>
         </select>
+      </label>
+      <label>
+        What Is The Expected Duration Of This Goal? For Example, The Number Of
+        Years You Expect To Live In Retirement. If Less Than One Year, Enter 1.
+        <input
+          className="input"
+          type="text"
+          name="goalDuration"
+          value={goalDuration}
+          onChange={handleChange}
+        />
       </label>
       <label>
         Type Of Goal:
@@ -143,18 +155,19 @@ function ExistingGoalItem({ goal, deleteAGoal }) {
   //delete button will on click delete that goal and send a delete request to delete it
   return (
     <section className="questionnaire">
-      <p> Name: {goal?.name}</p>
-      <p> Type: {goal?.goalType}</p>
-      <p> Target Age: {goal?.targetAge}</p>
-      <p> Target Amount: {goal?.targetAmount}</p>
+      <p> Goal Name: {goal?.name}</p>
+      <p> Goal Type: {goal?.goalType}</p>
+      <p> Target Age Of Goal: {goal?.targetAge}</p>
+      <p> Target Amount Of Goal: {goal?.targetAmount}</p>
       <p> Goal Priority: {goal?.goalPriority}</p>
       <p> Yearly Savings Toward Goal: {goal?.savingsTowardAmount}</p>
-      <p> Amount Already Saved Toward This Goal: {goal?.alreadySaved}</p>
+      <p> Amount Already Saved Toward Goal: {goal?.alreadySaved}</p>
       <p>
         {" "}
         Amount Assets Allocated Toward This Goal Grow Year Over Year:{" "}
         {goal?.annualGrowthRate}%
       </p>
+      <p> Expected Duration Of This Goal: {goal?.goalDuration}</p>
       <form onSubmit={(evt) => deleteAGoal(goal, evt)}>
         <button className="buttondelete">Delete Goal</button>
       </form>
@@ -184,6 +197,7 @@ export default function Goals() {
             savingsTowardAmount: newGoals[i]["savingsTowardAmount"],
             alreadySaved: newGoals[i]["alreadySaved"],
             annualGrowthRate: newGoals[i]["annualGrowthRate"],
+            goalDuration: newGoals[i]["goalDuration"],
           });
       }
       navigate(`/statistics`);
@@ -217,6 +231,7 @@ export default function Goals() {
         savingsTowardAmount: 0,
         alreadySaved: 0,
         annualGrowthRate: 0,
+        goalDuration: 1,
       },
     ]);
   };

@@ -35,16 +35,8 @@ router.get("/me", async (req, res, next) => {
 
 router.patch("/me", async (req, res, next) => {
   try {
-    const {
-      firstname,
-      lastname,
-      age,
-      retired,
-      retage,
-      retincome,
-      lifeexpect,
-      inflation,
-    } = req.body;
+    const { firstname, lastname, age, retired, lifeexpect, inflation } =
+      req.body;
 
     if (!res.locals.user) {
       return next({
@@ -65,8 +57,6 @@ router.patch("/me", async (req, res, next) => {
         lastname: lastname,
         age: +age,
         retired: retiredBoolean,
-        retage: +retage,
-        retincome: +retincome,
         lifeexpect: +lifeexpect,
         inflation: +inflation,
       },

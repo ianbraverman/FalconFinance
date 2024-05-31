@@ -15,8 +15,6 @@ export default function PersonalInfo() {
     lastname: "",
     age: "",
     retired: "",
-    retage: "",
-    retincome: "",
     lifeexpect: "",
     inflation: "",
   });
@@ -29,8 +27,6 @@ export default function PersonalInfo() {
         lastname: formData["lastname"],
         age: formData["age"],
         retired: formData.retired === "TRUE",
-        retage: formData["retage"],
-        retincome: formData["retincome"],
         lifeexpect: formData["lifeexpect"],
         inflation: formData["inflation"],
       });
@@ -47,8 +43,6 @@ export default function PersonalInfo() {
         lastname: me.lastname || "",
         age: me.age || "",
         retired: me.retired ? "TRUE" : "FALSE",
-        retage: me.retage || "",
-        retincome: me.retincome || "",
         lifeexpect: me.lifeexpect || "",
         inflation: me.inflation || "",
       });
@@ -117,28 +111,6 @@ export default function PersonalInfo() {
                   <option value="TRUE">True</option>
                   <option value="FALSE">False</option>
                 </select>
-              </label>
-              <label>
-                What is your estimated retirement age?
-                <input
-                  className="input"
-                  type="text"
-                  value={formData.retage}
-                  onChange={(e) =>
-                    setFormData({ ...formData, retage: e.target.value })
-                  }
-                />
-              </label>
-              <label>
-                What is your hopeful yearly retirement income?
-                <input
-                  className="input"
-                  type="text"
-                  value={formData.retincome}
-                  onChange={(e) =>
-                    setFormData({ ...formData, retincome: e.target.value })
-                  }
-                />
               </label>
               <label>
                 What is your life expectancy?

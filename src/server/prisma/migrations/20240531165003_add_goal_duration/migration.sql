@@ -27,10 +27,7 @@ CREATE TABLE "User" (
     "firstname" TEXT,
     "lastname" TEXT,
     "age" INTEGER,
-    "married" BOOLEAN,
     "retired" BOOLEAN,
-    "retage" INTEGER,
-    "retincome" INTEGER,
     "lifeexpect" INTEGER,
     "inflation" INTEGER,
 
@@ -92,6 +89,7 @@ CREATE TABLE "Goals" (
     "savingsTowardAmount" INTEGER NOT NULL,
     "alreadySaved" INTEGER NOT NULL,
     "annualGrowthRate" INTEGER NOT NULL,
+    "goalDuration" INTEGER NOT NULL,
 
     CONSTRAINT "Goals_pkey" PRIMARY KEY ("id")
 );
