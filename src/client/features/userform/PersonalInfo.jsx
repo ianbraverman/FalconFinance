@@ -137,7 +137,7 @@ export default function PersonalInfo() {
               </label>
             </section>
           </form>
-          <button onClick={submitPersonalInfoAndLink}>
+          <button className="bottombuttons" onClick={submitPersonalInfoAndLink}>
             Save And Continue To Assets
           </button>
         </>

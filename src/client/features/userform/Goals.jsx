@@ -60,7 +60,8 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
         />
       </label>
       <label>
-        What Is The Target Amount For This Goal:
+        What Is The Target Amount For This Goal? If This Is A Multiple Year Goal
+        Such As Retirement, Then How Much Is The Target Amount Yearly:
         <input
           className="input"
           type="text"
@@ -114,8 +115,9 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
         </select>
       </label>
       <label>
-        What Is The Expected Duration Of This Goal? For Example, The Number Of
-        Years You Expect To Live In Retirement. If Less Than One Year, Enter 1.
+        What Is The Expected Duration Of Years For This Goal? For Example, The
+        Number Of Years You Expect To Live In Retirement. If Less Than One Year,
+        Enter 1.
         <input
           className="input"
           type="text"
@@ -158,7 +160,7 @@ function ExistingGoalItem({ goal, deleteAGoal }) {
       <p> Goal Name: {goal?.name}</p>
       <p> Goal Type: {goal?.goalType}</p>
       <p> Target Age Of Goal: {goal?.targetAge}</p>
-      <p> Target Amount Of Goal: {goal?.targetAmount}</p>
+      <p> Target Amount Of Goal Yearly: {goal?.targetAmount}</p>
       <p> Goal Priority: {goal?.goalPriority}</p>
       <p> Yearly Savings Toward Goal: {goal?.savingsTowardAmount}</p>
       <p> Amount Already Saved Toward Goal: {goal?.alreadySaved}</p>
@@ -167,7 +169,7 @@ function ExistingGoalItem({ goal, deleteAGoal }) {
         Amount Assets Allocated Toward This Goal Grow Year Over Year:{" "}
         {goal?.annualGrowthRate}%
       </p>
-      <p> Expected Duration Of This Goal: {goal?.goalDuration}</p>
+      <p> Expected Duration Of Years For This Goal: {goal?.goalDuration}</p>
       <form onSubmit={(evt) => deleteAGoal(goal, evt)}>
         <button className="buttondelete">Delete Goal</button>
       </form>
@@ -281,15 +283,18 @@ export default function Goals() {
               handleDeleteGoal={handleDeleteGoal}
             />
           ))}
-          <button onClick={handleAddNewGoal}> Add New Goal </button>
+          <button className="bottombuttons" onClick={handleAddNewGoal}>
+            {" "}
+            Add New Goal{" "}
+          </button>
           <p>
             Great job, after completing this page you can see your financial
             breakdown
           </p>
-          <button onClick={submitGoalsAndLink}>
+          <button className="bottombuttons" onClick={submitGoalsAndLink}>
             Save And Continue To Statistics
           </button>
-          <button>
+          <button className="bottombuttons">
             <Link to={"/userform/expenses"}>Return To Expenses</Link>
           </button>
         </>

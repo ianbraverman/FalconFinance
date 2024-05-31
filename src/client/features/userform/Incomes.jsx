@@ -197,11 +197,14 @@ export default function Incomes() {
               handleDeleteIncome={handleDeleteIncome}
             />
           ))}
-          <button onClick={handleAddNewIncome}> Add New Income </button>
-          <button onClick={submitIncomesAndLink}>
+          <button className="bottombuttons" onClick={handleAddNewIncome}>
+            {" "}
+            Add New Income{" "}
+          </button>
+          <button className="bottombuttons" onClick={submitIncomesAndLink}>
             Save And Continue To Expenses
           </button>
-          <button>
+          <button className="bottombuttons">
             <Link to={"/userform/liabilities"}>Return To Liabilities</Link>
           </button>
         </>

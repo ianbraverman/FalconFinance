@@ -205,10 +205,10 @@ export default function Expenses() {
             {" "}
             Add New Expense{" "}
           </button>
-          <button onClick={submitExpensesAndLink}>
+          <button className="bottombuttons" onClick={submitExpensesAndLink}>
             Save And Continue To Goals
           </button>
-          <button>
+          <button className="bottombuttons">
             <Link to={"/userform/incomes"}>Return To Incomes</Link>
           </button>
         </>
