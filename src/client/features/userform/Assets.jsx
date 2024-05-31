@@ -228,11 +228,14 @@ export default function Assets() {
               handleDeleteAsset={handleDeleteAsset}
             />
           ))}
-          <button onClick={handleAddNewAsset}> Add New Asset </button>
-          <button onClick={submitAssetsAndLink}>
+          <button className="bottombuttons" onClick={handleAddNewAsset}>
+            {" "}
+            Add New Asset{" "}
+          </button>
+          <button className="bottombuttons" onClick={submitAssetsAndLink}>
             Save And Continue To Liabilites
           </button>
-          <button>
+          <button className="bottombuttons">
             <Link to={"/userform/personalinfo"}>Return To Personal Info</Link>
           </button>
         </>

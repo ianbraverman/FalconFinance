@@ -201,7 +201,10 @@ export default function Expenses() {
               handleDeleteExpense={handleDeleteExpense}
             />
           ))}
-          <button onClick={handleAddNewExpense}> Add New Expense </button>
+          <button className="bottombuttons" onClick={handleAddNewExpense}>
+            {" "}
+            Add New Expense{" "}
+          </button>
           <button onClick={submitExpensesAndLink}>
             Save And Continue To Goals
           </button>

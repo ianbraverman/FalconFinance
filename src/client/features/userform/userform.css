@@ -18,3 +18,17 @@
   width: 100%; /* Makes the button take full width */
   box-sizing: border-box; /* Ensures padding and border are included in width */
 }
+.bottombuttons {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  width: 100%; /* Makes the button take full width */
+  box-sizing: border-box;
+}
+.bottombuttons a:hover {
+  text-decoration: none; /* Ensure underline is removed on hover */
+}
+
+.bottombuttons a {
+  color: black;
+}
