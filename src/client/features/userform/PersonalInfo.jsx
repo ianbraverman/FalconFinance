@@ -130,7 +130,7 @@ export default function PersonalInfo() {
                 />
               </label>
               <label>
-                What is your hopeful retirement income?
+                What is your hopeful yearly retirement income?
                 <input
                   className="input"
                   type="text"
@@ -152,7 +152,8 @@ export default function PersonalInfo() {
                 />
               </label>
               <label>
-                What is your expected inflation Percentage?
+                What do you estimate inflation to be year over year? Enter as a
+                whole number, for example 2% enter 2.
                 <input
                   className="input"
                   type="text"

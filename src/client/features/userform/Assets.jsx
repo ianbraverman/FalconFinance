@@ -28,9 +28,9 @@ function NewAssetItem({ asset, handleNewAssetChange, handleDeleteAsset }) {
   };
 
   return (
-    <section>
+    <section className="questionnaire">
       <label>
-        Name Of Asset:
+        What Is The Name Of Asset:
         <input
           className="input"
           type="text"
@@ -40,7 +40,7 @@ function NewAssetItem({ asset, handleNewAssetChange, handleDeleteAsset }) {
         />
       </label>
       <label>
-        Balance:
+        What Is The Current Balance Of The Asset:
         <input
           className="input"
           type="text"
@@ -50,7 +50,7 @@ function NewAssetItem({ asset, handleNewAssetChange, handleDeleteAsset }) {
         />
       </label>
       <label>
-        Yearly Interest Percentage:
+        What Is The Yearly Interest Earned On This Asset? If none, enter 0:
         <input
           className="input"
           type="text"
@@ -60,7 +60,7 @@ function NewAssetItem({ asset, handleNewAssetChange, handleDeleteAsset }) {
         />
       </label>
       <label>
-        Yearly Contributions:
+        How Much Are You Contributing Yearly To This Asset? If none, enter 0:
         <input
           className="input"
           type="text"
@@ -70,7 +70,7 @@ function NewAssetItem({ asset, handleNewAssetChange, handleDeleteAsset }) {
         />
       </label>
       <label>
-        Physical Or Monetary Asset?
+        Is This A Physical Or Monetary Asset?
         <select
           className="input"
           name="physMon"
@@ -82,7 +82,7 @@ function NewAssetItem({ asset, handleNewAssetChange, handleDeleteAsset }) {
         </select>
       </label>
       <label>
-        Type Of Asset:
+        What Is The Type Of This Asset?
         <select
           className="input"
           name="type"
@@ -101,7 +101,9 @@ function NewAssetItem({ asset, handleNewAssetChange, handleDeleteAsset }) {
           <option value="OTHER">Other</option>
         </select>
       </label>
-      <button onClick={() => handleDelete()}>Delete Asset</button>
+      <button className="buttondelete" onClick={() => handleDelete()}>
+        Delete Asset
+      </button>
     </section>
   );
 }
@@ -110,15 +112,15 @@ function ExistingAssetItem({ asset, deleteAnAsset }) {
   //delete button will on click delete that asset and send a delete request to delete it
 
   return (
-    <section>
-      <p> Name: {asset?.name}</p>
-      <p> Type: {asset?.assetType}</p>
-      <p> Interest Earned: {asset?.interest}</p>
-      <p> Contributions: {asset?.contributions}</p>
-      <p> Physical Or Monetary: {asset?.physMon}</p>
-      <p> Balance: {asset?.balance}</p>
+    <section className="questionnaire">
+      <p> Asset Name: {asset?.name}</p>
+      <p> Asset Type: {asset?.assetType}</p>
+      <p> Yearly Interest Earned On Asset: {asset?.interest}</p>
+      <p> Yearly Contributions Made To This Asset: {asset?.contributions}</p>
+      <p> Physical Or Monetary Asset: {asset?.physMon}</p>
+      <p> Asset Balance: {asset?.balance}</p>
       <form onSubmit={(evt) => deleteAnAsset(asset, evt)}>
-        <button>Delete</button>
+        <button className="buttondelete">Delete Asset</button>
       </form>
     </section>
   );
@@ -136,15 +138,17 @@ export default function Assets() {
     evt.preventDefault();
     try {
       for (let i = 0; i < newAssets.length; i++) {
-        await addAsset({
-          name: newAssets[i]["name"],
-          assetType: newAssets[i]["type"],
-          balance: newAssets[i]["balance"],
-          interest: newAssets[i]["interest"],
-          contributions: newAssets[i]["contributions"],
-          physMon: newAssets[i]["physMon"],
-        });
+        if (newAssets[i]["name"] != "")
+          await addAsset({
+            name: newAssets[i]["name"],
+            assetType: newAssets[i]["type"],
+            balance: newAssets[i]["balance"],
+            interest: newAssets[i]["interest"],
+            contributions: newAssets[i]["contributions"],
+            physMon: newAssets[i]["physMon"],
+          });
       }
+
       navigate(`/userform/liabilities`);
     } catch (error) {
       console.log(error);
@@ -205,6 +209,7 @@ export default function Assets() {
           <p>Please Fill Out The Following Information</p>
           <p>Page 2/6</p>
           <h1>Assets</h1>
+          {me?.Assets.length > 0 ? <h2>Existing Assets:</h2> : <p></p>}
           <section>
             {me?.Assets.map((asset) => (
               <ExistingAssetItem
@@ -214,6 +219,7 @@ export default function Assets() {
               />
             ))}
           </section>
+          {newAssets.length > 0 ? <h2>New Assets:</h2> : <p></p>}
           {newAssets.map((newAsset) => (
             <NewAssetItem
               key={newAsset.id}
@@ -222,11 +228,14 @@ export default function Assets() {
               handleDeleteAsset={handleDeleteAsset}
             />
           ))}
-          <button onClick={handleAddNewAsset}> Add New Asset </button>
-          <button onClick={submitAssetsAndLink}>
+          <button className="bottombuttons" onClick={handleAddNewAsset}>
+            {" "}
+            Add New Asset{" "}
+          </button>
+          <button className="bottombuttons" onClick={submitAssetsAndLink}>
             Save And Continue To Liabilites
           </button>
-          <button>
+          <button className="bottombuttons">
             <Link to={"/userform/personalinfo"}>Return To Personal Info</Link>
           </button>
         </>

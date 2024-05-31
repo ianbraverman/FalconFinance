@@ -34,9 +34,9 @@ function NewLiabilityItem({
   };
 
   return (
-    <section>
+    <section className="questionnaire">
       <label>
-        Name Of Liability:
+        What Is The Name Of This Liability:
         <input
           className="input"
           type="text"
@@ -46,7 +46,7 @@ function NewLiabilityItem({
         />
       </label>
       <label>
-        What is the monthly payment for this liability? If 0, enter 0.
+        What Is The Montly Payment For This Liability? If None, Enter 0:
         <input
           className="input"
           type="text"
@@ -56,7 +56,8 @@ function NewLiabilityItem({
         />
       </label>
       <label>
-        What is the yearly interest payment percentage for this liability?:
+        What Is The Yearly Interest Percentage Paid For This Liability? If None,
+        Enter 0:
         <input
           className="input"
           type="text"
@@ -66,7 +67,7 @@ function NewLiabilityItem({
         />
       </label>
       <label>
-        What is the amount of this liability?
+        What Is The Balance Of This Liability:
         <input
           className="input"
           type="text"
@@ -76,7 +77,7 @@ function NewLiabilityItem({
         />
       </label>
       <label>
-        Type Of Liability:
+        What Is The Type Of Liability:
         <select
           className="input"
           name="liabilityType"
@@ -93,7 +94,9 @@ function NewLiabilityItem({
           <option value="OTHER">Other</option>
         </select>
       </label>
-      <button onClick={() => handleDelete()}>Delete Liability</button>
+      <button className="buttondelete" onClick={() => handleDelete()}>
+        Delete Liability
+      </button>
     </section>
   );
 }
@@ -101,14 +104,17 @@ function NewLiabilityItem({
 function ExistingLiabilitiesItem({ liability, deleteALiability }) {
   //delete button will on click delete that liabilities and send a delete request to delete it
   return (
-    <section>
-      <p> Name: {liability?.name}</p>
-      <p> Type: {liability?.liabilityType}</p>
-      <p> Interest: {liability?.interest} %</p>
-      <p> Balance: {liability?.amount}</p>
-      <p> Monthly Payment: {liability?.monthlyPayment}</p>
+    <section className="questionnaire">
+      <p> Liability Name: {liability?.name}</p>
+      <p> Liability Type: {liability?.liabilityType}</p>
+      <p> Yearly Interest Paid On This Liability: {liability?.interest} %</p>
+      <p> Balance Of This Liability: {liability?.amount}</p>
+      <p>
+        {" "}
+        Monthly Payment Paid Toward This Liability: {liability?.monthlyPayment}
+      </p>
       <form onSubmit={(evt) => deleteALiability(liability, evt)}>
-        <button>Delete</button>
+        <button className="buttondelete">Delete Liability</button>
       </form>
     </section>
   );
@@ -126,13 +132,14 @@ export default function Liabilities() {
     evt.preventDefault();
     try {
       for (let i = 0; i < newLiabilities.length; i++) {
-        await addLiability({
-          name: newLiabilities[i]["name"],
-          interest: newLiabilities[i]["interest"],
-          liabilityType: newLiabilities[i]["liabilityType"],
-          monthlyPayment: newLiabilities[i]["monthlyPayment"],
-          amount: newLiabilities[i]["amount"],
-        });
+        if (newLiabilities[i]["name"] != "")
+          await addLiability({
+            name: newLiabilities[i]["name"],
+            interest: newLiabilities[i]["interest"],
+            liabilityType: newLiabilities[i]["liabilityType"],
+            monthlyPayment: newLiabilities[i]["monthlyPayment"],
+            amount: newLiabilities[i]["amount"],
+          });
       }
       navigate(`/userform/incomes`);
     } catch (error) {
@@ -196,6 +203,11 @@ export default function Liabilities() {
           <p>Please Fill Out The Following Information</p>
           <p>Page 3/6</p>
           <h1>Liabilities</h1>
+          {me?.Liabilities.length > 0 ? (
+            <h2>Existing Liabilities:</h2>
+          ) : (
+            <p></p>
+          )}
           <section>
             {me?.Liabilities.map((liability) => (
               <ExistingLiabilitiesItem
@@ -205,6 +217,7 @@ export default function Liabilities() {
               />
             ))}
           </section>
+          {newLiabilities.length > 0 ? <h2>New Liabilities:</h2> : <p></p>}
           {newLiabilities.map((newLiability) => (
             <NewLiabilityItem
               key={newLiability.id}
@@ -213,11 +226,14 @@ export default function Liabilities() {
               handleDeleteLiability={handleDeleteLiability}
             />
           ))}
-          <button onClick={handleAddNewLiability}> Add New Liability </button>
-          <button onClick={submitLiabilitiesAndLink}>
+          <button className="bottombuttons" onClick={handleAddNewLiability}>
+            {" "}
+            Add New Liability{" "}
+          </button>
+          <button className="bottombuttons" onClick={submitLiabilitiesAndLink}>
             Save And Continue To Incomes
           </button>
-          <button>
+          <button className="bottombuttons">
             <Link to={"/userform/assets"}>Return To Assets</Link>
           </button>
         </>

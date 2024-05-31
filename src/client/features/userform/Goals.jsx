@@ -37,7 +37,7 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
   };
 
   return (
-    <section>
+    <section className="questionnaire">
       <label>
         Name Of Goal:
         <input
@@ -132,7 +132,9 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
         </select>
       </label>
 
-      <button onClick={() => handleDelete()}>Delete Goal</button>
+      <button className="buttondelete" onClick={() => handleDelete()}>
+        Delete Goal
+      </button>
     </section>
   );
 }
@@ -140,7 +142,7 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
 function ExistingGoalItem({ goal, deleteAGoal }) {
   //delete button will on click delete that goal and send a delete request to delete it
   return (
-    <section>
+    <section className="questionnaire">
       <p> Name: {goal?.name}</p>
       <p> Type: {goal?.goalType}</p>
       <p> Target Age: {goal?.targetAge}</p>
@@ -154,7 +156,7 @@ function ExistingGoalItem({ goal, deleteAGoal }) {
         {goal?.annualGrowthRate}%
       </p>
       <form onSubmit={(evt) => deleteAGoal(goal, evt)}>
-        <button>Delete</button>
+        <button className="buttondelete">Delete Goal</button>
       </form>
     </section>
   );
@@ -172,16 +174,17 @@ export default function Goals() {
     evt.preventDefault();
     try {
       for (let i = 0; i < newGoals.length; i++) {
-        await addGoal({
-          name: newGoals[i]["name"],
-          goalType: newGoals[i]["goalType"],
-          targetAge: newGoals[i]["targetAge"],
-          targetAmount: newGoals[i]["targetAmount"],
-          goalPriority: newGoals[i]["goalPriority"],
-          savingsTowardAmount: newGoals[i]["savingsTowardAmount"],
-          alreadySaved: newGoals[i]["alreadySaved"],
-          annualGrowthRate: newGoals[i]["annualGrowthRate"],
-        });
+        if (newGoals[i]["name"] != "")
+          await addGoal({
+            name: newGoals[i]["name"],
+            goalType: newGoals[i]["goalType"],
+            targetAge: newGoals[i]["targetAge"],
+            targetAmount: newGoals[i]["targetAmount"],
+            goalPriority: newGoals[i]["goalPriority"],
+            savingsTowardAmount: newGoals[i]["savingsTowardAmount"],
+            alreadySaved: newGoals[i]["alreadySaved"],
+            annualGrowthRate: newGoals[i]["annualGrowthRate"],
+          });
       }
       navigate(`/statistics`);
     } catch (error) {
@@ -244,6 +247,7 @@ export default function Goals() {
           <p>Please Fill Out The Following Information</p>
           <p>Page 6/6</p>
           <h1>Goals</h1>
+          {me?.Goals.length > 0 ? <h2>Existing Goals:</h2> : <p></p>}
           <section>
             {me?.Goals.map((goal) => (
               <ExistingGoalItem
@@ -252,26 +256,27 @@ export default function Goals() {
                 deleteAGoal={deleteAGoal}
               />
             ))}
-            {newGoals.map((newGoal) => (
-              <NewGoalItem
-                key={newGoal.id}
-                goal={newGoal}
-                handleNewGoalChange={handleNewGoalChange}
-                handleDeleteGoal={handleDeleteGoal}
-              />
-            ))}
-            <button onClick={handleAddNewGoal}> Add New Goal </button>
-            <p>
-              Great job, after completing this page you can see your financial
-              breakdown
-            </p>
-            <button onClick={submitGoalsAndLink}>
-              Save And Continue To Statistics
-            </button>
-            <button>
-              <Link to={"/userform/expenses"}>Return To Expenses</Link>
-            </button>
           </section>
+          {newGoals.length > 0 ? <h2>New Goals:</h2> : <p></p>}
+          {newGoals.map((newGoal) => (
+            <NewGoalItem
+              key={newGoal.id}
+              goal={newGoal}
+              handleNewGoalChange={handleNewGoalChange}
+              handleDeleteGoal={handleDeleteGoal}
+            />
+          ))}
+          <button onClick={handleAddNewGoal}> Add New Goal </button>
+          <p>
+            Great job, after completing this page you can see your financial
+            breakdown
+          </p>
+          <button onClick={submitGoalsAndLink}>
+            Save And Continue To Statistics
+          </button>
+          <button>
+            <Link to={"/userform/expenses"}>Return To Expenses</Link>
+          </button>
         </>
       ) : (
         <p>Please Log In</p>
