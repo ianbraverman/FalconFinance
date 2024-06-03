@@ -64,6 +64,7 @@ const accountApi = api.injectEndpoints({
         savingsTowardAmount,
         alreadySaved,
         annualGrowthRate,
+        goalDuration,
       }) => ({
         url: `/goals`,
         method: "POST",
@@ -76,6 +77,7 @@ const accountApi = api.injectEndpoints({
           savingsTowardAmount: savingsTowardAmount,
           alreadySaved: alreadySaved,
           annualGrowthRate: annualGrowthRate,
+          goalDuration: goalDuration,
         },
       }),
       invalidatesTags: ["User"],
@@ -113,8 +115,6 @@ const accountApi = api.injectEndpoints({
         lastname,
         age,
         retired,
-        retage,
-        retincome,
         lifeexpect,
         inflation,
       }) => ({
@@ -125,8 +125,6 @@ const accountApi = api.injectEndpoints({
           lastname: lastname,
           age: age,
           retired: retired,
-          retage: retage,
-          retincome: retincome,
           lifeexpect: lifeexpect,
           inflation: inflation,
         },

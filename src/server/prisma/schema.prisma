@@ -89,10 +89,7 @@ model User {
   firstname   String?
   lastname    String?
   age         Int?
-  married     Boolean?
   retired     Boolean?
-  retage      Int?
-  retincome   Int?
   lifeexpect  Int?
   inflation   Int?
   Income      Income[]
@@ -151,6 +148,7 @@ model Goals {
   savingsTowardAmount Int
   alreadySaved        Int
   annualGrowthRate    Int
+  goalDuration        Int
 }
 
 model Expenses {
