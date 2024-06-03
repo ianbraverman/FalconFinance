@@ -1,0 +1,15 @@
+.incomeExpensesTable {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border: 0.1rem solid;
+  border-radius: 1rem;
+  overflow-x: auto;
+  width: 100%;
+  border-collapse: collapse;
+}
+.tableSpace {
+  padding: 0.2rem;
+  text-align: left;
+  border-bottom: 0.1rem solid;
+  border-right: 0.1rem solid;
+}

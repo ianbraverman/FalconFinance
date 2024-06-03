@@ -24,7 +24,11 @@ function YearlyIncomeExpenses({ me }) {
         </p>
         <p>You are earning enough to cover your yearly expenses.</p>
         <p>For a more detailed breakdown press the button below.</p>
-        <button>Income Expenses Breakdown</button>
+        <button>
+          <Link to={"/statistics/incomeexpenses"}>
+            Income Expenses Breakdown
+          </Link>
+        </button>
       </>
     );
   } else {
@@ -39,7 +43,11 @@ function YearlyIncomeExpenses({ me }) {
           There are many ways to manage your expenses. For a more detailed
           breakdown press the button below.
         </p>
-        <button>Income Expenses Breakdown</button>
+        <button>
+          <Link to={"/statistics/incomeexpenses"}>
+            Income Expenses Breakdown
+          </Link>
+        </button>
       </>
     );
   }
