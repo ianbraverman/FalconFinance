@@ -3,6 +3,200 @@ import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { Link, useSearchParams, NavLink } from "react-router-dom";
 import { useGetUserQuery } from "../userform/accountSlice";
+import { Pie, Bar } from "react-chartjs-2";
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  BarElement,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  BarElement
+);
+
+function IncomeExpensesGraph({ me }) {
+  const options = {
+    plugins: {
+      title: {
+        display: true,
+        text: "Income And Expenses Breakdown",
+      },
+    },
+    responsive: true,
+    scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true,
+      },
+    },
+  };
+
+  function getRandomRGBA() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    const a = (Math.random() * (1 - 0.5) + 0.5).toFixed(2); // Alpha value between 0.5 and 1 for better visibility
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
+  }
+
+  const labels = ["Income", "Expenses"];
+
+  const incomeDataset = me.Income.map((income) => ({
+    label: income.name,
+    //by putting the 0 after the comma here, it is correctly assigning these values to the income label
+    data: [income.amount, 0],
+    backgroundColor: getRandomRGBA(),
+  }));
+
+  const expensesDataset = me.Expenses.map((expense) => ({
+    label: expense.name,
+    //by putting the 0 before the comma, it is correctly assigning the values to the expenses label
+    data: [0, expense.monthlyCost * 12],
+    backgroundColor: getRandomRGBA(),
+  }));
+
+  const data = {
+    labels,
+    datasets: [...incomeDataset, ...expensesDataset],
+  };
+
+  return (
+    <>
+      <Bar options={options} data={data} />
+    </>
+  );
+}
+
+function AssetsLiabilitiesGraph({ me }) {
+  const options = {
+    plugins: {
+      title: {
+        display: true,
+        text: "Assets And Liabilities Breakdown",
+      },
+    },
+    responsive: true,
+    scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true,
+      },
+    },
+  };
+
+  function getRandomRGBA() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    const a = (Math.random() * (1 - 0.5) + 0.5).toFixed(2); // Alpha value between 0.5 and 1 for better visibility
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
+  }
+
+  const labels = ["Assets", "Liabilities"];
+
+  const assetsDataset = me.Assets.map((asset) => ({
+    label: asset.name,
+    //by putting the 0 after the comma here, it is correctly assigning these values to the asset label
+    data: [asset.balance, 0],
+    backgroundColor: getRandomRGBA(),
+  }));
+
+  const liabilitiesDataset = me.Liabilities.map((liability) => ({
+    label: liability.name,
+    //by putting the 0 before the comma, it is correctly assigning the values to the liabilities label
+    data: [0, liability.amount],
+    backgroundColor: getRandomRGBA(),
+  }));
+
+  const data = {
+    labels,
+    datasets: [...assetsDataset, ...liabilitiesDataset],
+  };
+
+  return (
+    <>
+      <Bar options={options} data={data} />
+    </>
+  );
+}
+
+function EmergencySavingsGraph({ me }) {
+  const options = {
+    indexAxis: "y", // This makes the bar chart horizontal
+    plugins: {
+      title: {
+        display: true,
+        text: "Emergency Fund Progress",
+      },
+    },
+    responsive: true,
+    scales: {
+      x: {
+        beginAtZero: true,
+      },
+    },
+  };
+  const labels = ["Emergency Savings", "Six Months Expenses"];
+  // calculate the total of 6 months of expenses
+  const calculateSixMonthsExpenses = (expenses) => {
+    return me.Expenses.reduce((acc, expense) => {
+      return acc + expense.monthlyCost;
+    }, 0);
+  };
+  //find all assets titled savings
+  let savingsAssets = me.Assets.filter(
+    (asset) => asset.assetType === "SAVINGS"
+  );
+  //add together all of the balances of those savings assets.
+  const totalSavings = savingsAssets.reduce(
+    (total, asset) => total + asset.balance,
+    0
+  );
+
+  let sixMonthExpenses = calculateSixMonthsExpenses() * 6;
+
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: "Current Savings",
+        data: [totalSavings, 0],
+        backgroundColor: "rgba(75, 192, 192, 0.6)",
+      },
+      {
+        label: "Target Six Months Of Emergency Savings",
+        data: [0, sixMonthExpenses],
+        backgroundColor: "rgba(255, 99, 132, 0.6)",
+      },
+    ],
+  };
+
+  return (
+    <>
+      <Bar options={options} data={data} />
+    </>
+  );
+}
 
 function YearlyIncomeExpenses({ me }) {
   let totalIncome = 0;
@@ -23,8 +217,13 @@ function YearlyIncomeExpenses({ me }) {
           is {surplusDeficit}$.
         </p>
         <p>You are earning enough to cover your yearly expenses.</p>
+        <IncomeExpensesGraph me={me} />
         <p>For a more detailed breakdown press the button below.</p>
-        <button>Income Expenses Breakdown</button>
+        <button>
+          <Link to={"/statistics/incomeexpenses"}>
+            Income Expenses Breakdown
+          </Link>
+        </button>
       </>
     );
   } else {
@@ -35,11 +234,16 @@ function YearlyIncomeExpenses({ me }) {
           your yearly income of {totalIncome}$, you are currently running a
           deficit of {surplusDeficit}$.
         </p>
+        <IncomeExpensesGraph me={me} />
         <p>
           There are many ways to manage your expenses. For a more detailed
           breakdown press the button below.
         </p>
-        <button>Income Expenses Breakdown</button>
+        <button>
+          <Link to={"/statistics/incomeexpenses"}>
+            Income Expenses Breakdown
+          </Link>
+        </button>
       </>
     );
   }
@@ -62,12 +266,17 @@ function CurrentAssetsLiabilities({ me }) {
           Great job, your overall assets of {totalAssets}$ exceeds your overall
           liabilities of {totalLiabilities}$.
         </p>
+        <AssetsLiabilitiesGraph me={me} />
         <p>
           You have done a nice job of not taking on too much debt, and saving
           enough.
         </p>
         <p>For a more detailed breakdown press the button below</p>
-        <button>Assets Liabilities Breakdown</button>
+        <button>
+          <Link to={"/statistics/assetsliabilities"}>
+            Breakdown Of Your Assets And Liabilities
+          </Link>
+        </button>
       </>
     );
   } else {
@@ -77,14 +286,66 @@ function CurrentAssetsLiabilities({ me }) {
           Your total liabilities of {totalLiabilities}$ is currently exceeding
           your overall assets of {totalAssets}$.
         </p>
+        <AssetsLiabilitiesGraph me={me} />
         <p>
           There are many ways to decrease your liabilities and increase your
           assets. For a more detailed breakdown press the button below.
         </p>
-        <button>Assets Liabilities Breakdown</button>
+        <button>
+          <Link to={"/statistics/assetsliabilities"}>
+            Breakdown Of Your Assets And Liabilities
+          </Link>
+        </button>
       </>
     );
   }
+}
+
+function OverallProgressGoalsGraph(
+  necessary,
+  important,
+  aspirational,
+  goalGap
+) {
+  const labels = [
+    "Necessary Goals",
+    "Important Goals",
+    "Aspirational Goals",
+    "Goal Gap",
+  ];
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Percentage Toward Achieving Financial Goals",
+        data: [necessary, important, aspirational, goalGap],
+        backgroundColor: [
+          `rgba(204,188,32,.8)`,
+          `rgba(20,244,7,.8)`,
+          `rgba(153, 102, 255, 1)`,
+          "rgba(75, 192, 192, 0)",
+        ],
+      },
+    ],
+    hoverOffset: 4,
+  };
+  let options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Percentage Toward Achieving Financial Goals",
+      },
+    },
+  };
+  return (
+    <>
+      <Pie data={data} options={options} />
+    </>
+  );
 }
 
 function OverallProgressGoals({ me }) {
@@ -210,6 +471,26 @@ function OverallProgressGoals({ me }) {
       ? calculateProgress(aspirationalGoals) * presentWeights.aspirational
       : 0);
 
+  let necessaryGoalsPercentage = necessaryGoals.length
+    ? calculateProgress(necessaryGoals) * presentWeights.necessary
+    : 0;
+  let importantGoalsPercentage = importantGoals.length
+    ? calculateProgress(importantGoals) * presentWeights.important
+    : 0;
+  let aspirationalGoalsPercentage = aspirationalGoals.length
+    ? calculateProgress(aspirationalGoals) * presentWeights.aspirational
+    : 0;
+  let goalGap = 1 - totalProgress;
+  console.log(
+    "necessary goals",
+    necessaryGoalsPercentage,
+    "important goals",
+    importantGoalsPercentage,
+    "aspirational goals",
+    aspirationalGoalsPercentage,
+    "gap goals",
+    goalGap
+  );
   return (
     <>
       <p>
@@ -217,6 +498,12 @@ function OverallProgressGoals({ me }) {
         financial goals. This number is weighted based off the importance of
         each goal.
       </p>
+      {OverallProgressGoalsGraph(
+        necessaryGoalsPercentage,
+        importantGoalsPercentage,
+        aspirationalGoalsPercentage,
+        goalGap
+      )}
       <button>
         <Link to={"/statistics/goals"}>Breakdown Of Your Financial Goals</Link>
       </button>
@@ -253,6 +540,7 @@ function EmergencySavings({ me }) {
           or equal to six months of your expenses. Great job! You have a
           sufficient emergency fund.
         </p>
+        <EmergencySavingsGraph me={me} />
       </>
     );
   } else {
