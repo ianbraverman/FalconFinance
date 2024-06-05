@@ -19,6 +19,7 @@ import About from "./features/homepage/About.jsx";
 import StatisticsHome from "./features/statistics/StatisticsHome.jsx";
 import FinancialGoals from "./features/statistics/FinancialGoals.jsx";
 import IncomeExpenses from "./features/statistics/IncomeExpenses.jsx";
+import AssetsLiabilities from "./features/statistics/AssetsLiabilities.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
       { path: "/statistics", element: <StatisticsHome /> },
       { path: "/statistics/goals", element: <FinancialGoals /> },
       { path: "/statistics/incomeexpenses", element: <IncomeExpenses /> },
+      { path: "/statistics/assetsliabilities", element: <AssetsLiabilities /> },
     ],
   },
 ]);
