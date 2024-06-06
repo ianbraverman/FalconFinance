@@ -1,6 +1,97 @@
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { useGetUserQuery } from "../userform/accountSlice";
+import { Bar } from "react-chartjs-2";
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  BarElement,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  BarElement
+);
+
+function GoalGraph({ totalGoalCostInflationAdjusted, aCFV, aSFV }) {
+  //I want this graph to show what they currently have saved, and then on top of that what they are slated to grow from there
+  // then also the cost of the goal overall on the right stacked bar graph. so will show how much they already have saved in todays dollars, then on top of that everything else they will save.
+  const options = {
+    plugins: {
+      title: {
+        display: true,
+        text: "Assets And Liabilities Breakdown",
+      },
+    },
+    responsive: true,
+    scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true,
+      },
+    },
+  };
+
+  function getRandomRGBA() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    const a = (Math.random() * (1 - 0.5) + 0.5).toFixed(2); // Alpha value between 0.5 and 1 for better visibility
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
+  }
+
+  const labels = [
+    "Projected Savings For Goal",
+    "Inflation Adjusted Overall Goal Cost",
+  ];
+
+  let savingsDataSet = [
+    //first part of stack of savings is what they have already saved, then it shows future value of that savings - what they already have saved, then
+    // the future value of their annual contributions
+    {
+      label: "Future Value Of Current Savings Toward Goal",
+      data: [aSFV, 0],
+      backgroundColor: getRandomRGBA(),
+    },
+    {
+      label: "Future Value Of Annual Contributions Toward Goal",
+      data: [aCFV, 0],
+      backgroundColor: getRandomRGBA(),
+    },
+    {
+      label: "Inflation Adjusted Future Value Of Goal",
+      data: [0, totalGoalCostInflationAdjusted],
+      backgroundColor: getRandomRGBA(),
+    },
+  ];
+  const data = {
+    labels,
+    datasets: savingsDataSet,
+  };
+
+  return (
+    <>
+      <Bar options={options} data={data} />
+    </>
+  );
+}
 
 function IndividualGoalBreakdown({ goal, me }) {
   //this is the number of years from their current age until the target year of the goal
@@ -71,6 +162,12 @@ function IndividualGoalBreakdown({ goal, me }) {
         the way to reaching your goal. You are projected to save a total of{" "}
         {totalFVSavings.toFixed(2)}.
       </p>
+      <GoalGraph
+        goal={goal}
+        totalGoalCostInflationAdjusted={totalGoalCostInflationAdjusted}
+        aCFV={aCFV}
+        aSFV={aSFV}
+      />
     </>
   );
 }

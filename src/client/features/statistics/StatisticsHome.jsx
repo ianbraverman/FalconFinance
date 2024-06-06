@@ -142,6 +142,7 @@ function AssetsLiabilitiesGraph({ me }) {
     data: [asset.balance, 0],
     backgroundColor: getRandomRGBA(),
   }));
+  console.log(assetsDataset, "assets data set");
 
   const liabilitiesDataset = me.Liabilities.map((liability) => ({
     label: liability.name,
