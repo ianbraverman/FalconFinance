@@ -36,6 +36,15 @@ router.delete("/:id", async (req, res, next) => {
         id: +id,
       },
     });
+
+    //this sets recommendationChangesMade to true, so that next time they go to the statistics page
+    // they have made changes to their user profile so they are eligible to recieve a new
+    // chatgpt recommendation
+    await prisma.user.update({
+      where: { id: userId },
+      data: { recommendationChangesMade: true },
+    });
+
     res.json(deletedGoal);
   } catch (e) {
     next(e);
@@ -77,6 +86,15 @@ router.post("/", async (req, res, next) => {
         goalDuration: +goalDuration,
       },
     });
+
+    //this sets recommendationChangesMade to true, so that next time they go to the statistics page
+    // they have made changes to their user profile so they are eligible to recieve a new
+    // chatgpt recommendation
+    await prisma.user.update({
+      where: { id: userId },
+      data: { recommendationChangesMade: true },
+    });
+
     res.json(newGoal);
   } catch (err) {
     next(err);

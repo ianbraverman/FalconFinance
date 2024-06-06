@@ -83,20 +83,22 @@ enum ExpenseType {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  username    String        @unique
-  password    String
-  firstname   String?
-  lastname    String?
-  age         Int?
-  retired     Boolean?
-  lifeexpect  Int?
-  inflation   Int?
-  Income      Income[]
-  Assets      Assets[]
-  Liabilities Liabilities[]
-  Goals       Goals[]
-  Expenses    Expenses[]
+  id                        Int           @id @default(autoincrement())
+  username                  String        @unique
+  password                  String
+  firstname                 String?
+  lastname                  String?
+  age                       Int?
+  retired                   Boolean?
+  lifeexpect                Int?
+  inflation                 Int?
+  recommendationContent     String?
+  recommendationChangesMade Boolean       @default(false)
+  Income                    Income[]
+  Assets                    Assets[]
+  Liabilities               Liabilities[]
+  Goals                     Goals[]
+  Expenses                  Expenses[]
 }
 
 model Assets {
