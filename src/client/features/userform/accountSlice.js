@@ -12,6 +12,10 @@ const accountApi = api.injectEndpoints({
       query: () => "/user/me",
       providesTags: ["User"],
     }),
+    getRecommendations: builder.query({
+      query: () => "/user/recommendations",
+      providesTags: ["User"],
+    }),
     deleteInfo: builder.mutation({
       query: ({ id, table }) => ({
         url: `/${table}/${id}`,
@@ -143,4 +147,5 @@ export const {
   useAddIncomeMutation,
   useAddLiabilityMutation,
   useUpdatePersonalInfoMutation,
+  useGetRecommendationsQuery,
 } = accountApi;

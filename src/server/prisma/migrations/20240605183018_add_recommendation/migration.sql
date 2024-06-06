@@ -30,6 +30,8 @@ CREATE TABLE "User" (
     "retired" BOOLEAN,
     "lifeexpect" INTEGER,
     "inflation" INTEGER,
+    "recommendationContent" TEXT,
+    "recommendationChangesMade" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

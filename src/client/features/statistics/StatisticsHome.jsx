@@ -2,7 +2,10 @@ import React, { useRef, useState, useEffect } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { Link, useSearchParams, NavLink } from "react-router-dom";
-import { useGetUserQuery } from "../userform/accountSlice";
+import {
+  useGetUserQuery,
+  useGetRecommendationsQuery,
+} from "../userform/accountSlice";
 import { Pie, Bar } from "react-chartjs-2";
 
 import {
@@ -29,6 +32,25 @@ ChartJS.register(
   ArcElement,
   BarElement
 );
+
+function ProvideChatgptRecommendation({ me }) {
+  const { data: recommendation, isFetching } = useGetRecommendationsQuery();
+  //dangerouslySetInnerHTML takes the string recommendation and allows you
+  //to set HTML directly into the dom // checks to see if HTML content is
+  //available, and if it is renders it using danerouslySetInnerHTML, the
+  //recommendation string
+  return (
+    <>
+      <h2>ChatGPT AI Powered Financial Recommendations:</h2>
+
+      {isFetching ? (
+        <p>Loading...</p>
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: recommendation }} />
+      )}
+    </>
+  );
+}
 
 function IncomeExpensesGraph({ me }) {
   const options = {
@@ -589,6 +611,7 @@ export default function StatisticsHome() {
               <OverallProgressGoals me={me} />
               <h2>Appropriate Emergency Savings Breakdown</h2>
               <EmergencySavings me={me} />
+              <ProvideChatgptRecommendation me={me} />
             </>
           ) : (
             <p>
