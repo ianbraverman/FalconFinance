@@ -1,3 +1,5 @@
+/*table css */
+
 .incomeExpensesTable {
   margin: 0.5rem;
   padding: 0.5rem;
@@ -13,3 +15,5 @@
   border-bottom: 0.1rem solid;
   border-right: 0.1rem solid;
 }
+
+/*Home Page CSS */

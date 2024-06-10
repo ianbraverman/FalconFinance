@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logout, selectToken } from "../features/auth/authSlice";
 
-import "./Navbar.less";
+import "./navbar.css";
 
 /**
  * A simple navigation bar that displays "Log In" if the user is not logged in,
@@ -21,35 +21,51 @@ export default function Navbar() {
 
   return (
     <nav className="top">
-      <h1>Budgeting Website</h1>
-      <menu>
+      <img
+        src="https://res.cloudinary.com/dzpne110u/image/upload/v1718034077/FalconFinancial/falconfinancial500500.png"
+        alt="emoji"
+        className="nav-image"
+      />
+      <menu className="links">
         <li>
-          <NavLink to="/">Home</NavLink>
+          <NavLink className="navlink" to="/">
+            Home
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/about">About Us</NavLink>
+          <NavLink className="navlink" to="/about">
+            About Us
+          </NavLink>
         </li>
         {token ? (
           <li>
-            <NavLink to="/userform/personalinfo">User Information Form</NavLink>
+            <NavLink className="navlink" to="/userform/personalinfo">
+              User Information Form
+            </NavLink>
           </li>
         ) : (
           <></>
         )}
         {token ? (
           <li>
-            <NavLink to="/statistics">Financial Breakdown</NavLink>
+            <NavLink className="navlink" to="/statistics">
+              Financial Breakdown
+            </NavLink>
           </li>
         ) : (
           <></>
         )}
         {token ? (
           <li>
-            <a onClick={handleLogout}>Log Out</a>
+            <a className="navlink" onClick={handleLogout}>
+              Log Out
+            </a>
           </li>
         ) : (
           <li>
-            <NavLink to="/login">Log In</NavLink>
+            <NavLink className="navlink" to="/login">
+              Log In
+            </NavLink>
           </li>
         )}
       </menu>

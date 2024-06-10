@@ -1,0 +1,23 @@
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(34, 73, 117, 255);
+}
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-right: 1rem;
+}
+.nav-image {
+  width: 3rem; /* Adjust the width as needed */
+  height: 3rem; /* Adjust the height as needed */
+  object-fit: cover; /* Ensures the image maintains aspect ratio */
+  margin-left: 0.5rem;
+}
+
+.navlink {
+  color: white;
+}

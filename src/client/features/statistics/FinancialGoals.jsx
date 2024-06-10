@@ -109,15 +109,12 @@ function GoalSavingsCostTable({ goal, me }) {
   // this is the goal duration + years till goal so the total number of years this goal will exist
 
   //this makes an array of labels of "Year x" where the length is the total years
-  const labels = Array.from(
-    { length: totalYears },
-    (v, i) => `Year ${me.age + i}`
-  );
+  const labels = Array.from({ length: totalYears }, (v, i) => `${me.age + i}`);
 
   return (
     <>
       <h2>Goal Information</h2>
-      <table>
+      <table className="incomeExpensesTable">
         <thead>
           <tr>
             <th className="tableSpace">Goal</th>
