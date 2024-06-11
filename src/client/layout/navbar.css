@@ -1,9 +1,12 @@
+/* navbar */
+
 .top {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   background-color: rgba(34, 73, 117, 255);
+  border-bottom: grey solid;
 }
 .links {
   display: flex;
@@ -20,4 +23,27 @@
 
 .navlink {
   color: white;
+}
+.leftnavbarside {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.websitename {
+  font-family: georgia;
+  font-size: 2rem;
+}
+
+/* footer */
+.bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(34, 73, 117, 255);
+  border-top: grey solid;
+  padding-top: 3rem;
 }

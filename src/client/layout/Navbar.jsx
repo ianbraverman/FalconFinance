@@ -21,22 +21,17 @@ export default function Navbar() {
 
   return (
     <nav className="top">
-      <img
-        src="https://res.cloudinary.com/dzpne110u/image/upload/v1718034077/FalconFinancial/falconfinancial500500.png"
-        alt="emoji"
-        className="nav-image"
-      />
+      <section className="leftnavbarside">
+        <NavLink to="/">
+          <img
+            src="https://res.cloudinary.com/dzpne110u/image/upload/v1718034077/FalconFinancial/falconfinancial500500.png"
+            alt="emoji"
+            className="nav-image"
+          />
+        </NavLink>
+        <p className="websitename">Falcon Finance </p>
+      </section>
       <menu className="links">
-        <li>
-          <NavLink className="navlink" to="/">
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink className="navlink" to="/about">
-            About Us
-          </NavLink>
-        </li>
         {token ? (
           <li>
             <NavLink className="navlink" to="/userform/personalinfo">
