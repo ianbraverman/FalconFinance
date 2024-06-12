@@ -1,0 +1,47 @@
+@font-face {
+  font-family: Inter;
+  src: url("./assets/Inter.ttf");
+}
+
+:root {
+  font-family: Inter, sans-serif;
+  color: #333;
+  background-color: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol,
+menu {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #428bca;
+  cursor: pointer;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #3572a5; /* Manually darken the color */
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+body,
+#root {
+  /* display: flex; */
+  flex-direction: column;
+  background: linear-gradient(45deg, rgb(223, 228, 247) 30%, white 70%);
+  height: 100%;
+  width: 100%;
+}

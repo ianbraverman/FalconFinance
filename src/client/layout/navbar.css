@@ -1,0 +1,49 @@
+/* navbar */
+
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(34, 73, 117, 255);
+  border-bottom: grey solid;
+}
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-right: 1rem;
+}
+.nav-image {
+  width: 3rem; /* Adjust the width as needed */
+  height: 3rem; /* Adjust the height as needed */
+  object-fit: cover; /* Ensures the image maintains aspect ratio */
+  margin-left: 0.5rem;
+}
+
+.navlink {
+  color: white;
+}
+.leftnavbarside {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.websitename {
+  font-family: georgia;
+  font-size: 2rem;
+}
+
+/* footer */
+.bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(34, 73, 117, 255);
+  border-top: grey solid;
+  padding-top: 3rem;
+}

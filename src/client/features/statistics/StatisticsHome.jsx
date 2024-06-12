@@ -7,6 +7,7 @@ import {
   useGetRecommendationsQuery,
 } from "../userform/accountSlice";
 import { Pie, Bar } from "react-chartjs-2";
+import "./statistics.css";
 
 import {
   Chart as ChartJS,
@@ -102,7 +103,9 @@ function IncomeExpensesGraph({ me }) {
 
   return (
     <>
-      <Bar options={options} data={data} />
+      <section className="incomeexpensesgraphholder">
+        <Bar className="incomeexpensesgraph" options={options} data={data} />
+      </section>
     </>
   );
 }
@@ -142,6 +145,7 @@ function AssetsLiabilitiesGraph({ me }) {
     data: [asset.balance, 0],
     backgroundColor: getRandomRGBA(),
   }));
+  console.log(assetsDataset, "assets data set");
 
   const liabilitiesDataset = me.Liabilities.map((liability) => ({
     label: liability.name,
@@ -157,7 +161,9 @@ function AssetsLiabilitiesGraph({ me }) {
 
   return (
     <>
-      <Bar options={options} data={data} />
+      <section className="incomeexpensesgraphholder">
+        <Bar className="incomeexpensesgraph" options={options} data={data} />
+      </section>
     </>
   );
 }
@@ -215,7 +221,14 @@ function EmergencySavingsGraph({ me }) {
 
   return (
     <>
-      <Bar options={options} data={data} />
+      <section className="incomeexpensesgraphholder">
+        <Bar
+          id="emergencygraph"
+          className="incomeexpensesgraph"
+          options={options}
+          data={data}
+        />
+      </section>
     </>
   );
 }
@@ -232,41 +245,53 @@ function YearlyIncomeExpenses({ me }) {
   let surplusDeficit = totalIncome - totalMonthlyExpenses * 12;
   if (surplusDeficit >= 0) {
     return (
-      <>
-        <p>
-          Great job, your yearly income of {totalIncome}$ exceeds or covers your
-          yearly expenses of {totalMonthlyExpenses * 12}$. Your yearly surplus
-          is {surplusDeficit}$.
-        </p>
-        <p>You are earning enough to cover your yearly expenses.</p>
-        <IncomeExpensesGraph me={me} />
-        <p>For a more detailed breakdown press the button below.</p>
-        <button>
-          <Link to={"/statistics/incomeexpenses"}>
-            Income Expenses Breakdown
-          </Link>
-        </button>
-      </>
+      <section className="incomeexpensesmain">
+        <section className="graphanddescription">
+          <article className="description">
+            <p>
+              Great job, your yearly income of {totalIncome}$ exceeds or covers
+              your yearly expenses of {totalMonthlyExpenses * 12}$. Your yearly
+              surplus is {surplusDeficit}$.
+            </p>
+            <p>You are earning enough to cover your yearly expenses.</p>
+          </article>
+          <IncomeExpensesGraph me={me} />
+        </section>
+        <section className="moredetailedbreakdown">
+          <p>For a more detailed breakdown press the button below.</p>
+          <button className="incomeexpensesbutton">
+            <Link to={"/statistics/incomeexpenses"}>
+              Income Expenses Breakdown
+            </Link>
+          </button>
+        </section>
+      </section>
     );
   } else {
     return (
-      <>
-        <p>
-          Due to your yearly expenses of {totalMonthlyExpenses * 12}$ exceeding
-          your yearly income of {totalIncome}$, you are currently running a
-          deficit of {surplusDeficit}$.
-        </p>
-        <IncomeExpensesGraph me={me} />
-        <p>
-          There are many ways to manage your expenses. For a more detailed
-          breakdown press the button below.
-        </p>
-        <button>
-          <Link to={"/statistics/incomeexpenses"}>
-            Income Expenses Breakdown
-          </Link>
-        </button>
-      </>
+      <section className="incomeexpensesmain">
+        <section className="graphanddescription">
+          <article className="description">
+            <p>
+              Due to your yearly expenses of {totalMonthlyExpenses * 12}$
+              exceeding your yearly income of {totalIncome}$, you are currently
+              running a deficit of {surplusDeficit}$.
+            </p>
+          </article>
+          <IncomeExpensesGraph me={me} />
+        </section>
+        <section className="moredetailedbreakdown">
+          <p>
+            There are many ways to manage your expenses. For a more detailed
+            breakdown press the button below.
+          </p>
+          <button className="incomeexpensesbutton">
+            <Link to={"/statistics/incomeexpenses"}>
+              Income Expenses Breakdown
+            </Link>
+          </button>
+        </section>
+      </section>
     );
   }
 }
@@ -283,23 +308,29 @@ function CurrentAssetsLiabilities({ me }) {
   let breakdown = totalAssets - totalLiabilities;
   if (breakdown >= 0) {
     return (
-      <>
-        <p>
-          Great job, your overall assets of {totalAssets}$ exceeds your overall
-          liabilities of {totalLiabilities}$.
-        </p>
-        <AssetsLiabilitiesGraph me={me} />
-        <p>
-          You have done a nice job of not taking on too much debt, and saving
-          enough.
-        </p>
-        <p>For a more detailed breakdown press the button below</p>
-        <button>
-          <Link to={"/statistics/assetsliabilities"}>
-            Breakdown Of Your Assets And Liabilities
-          </Link>
-        </button>
-      </>
+      <section className="incomeexpensesmain">
+        <section className="graphanddescription">
+          <article className="description">
+            <p>
+              Great job, your overall assets of {totalAssets}$ exceeds your
+              overall liabilities of {totalLiabilities}$.
+            </p>
+            <p>
+              You have done a nice job of not taking on too much debt, and
+              saving enough.
+            </p>
+          </article>
+          <AssetsLiabilitiesGraph me={me} />
+        </section>
+        <section className="moredetailedbreakdown">
+          <p>For a more detailed breakdown press the button below.</p>
+          <button className="incomeexpensesbutton">
+            <Link to={"/statistics/assetsliabilities"}>
+              Breakdown Of Your Assets And Liabilities
+            </Link>
+          </button>
+        </section>
+      </section>
     );
   } else {
     return (
@@ -365,7 +396,9 @@ function OverallProgressGoalsGraph(
   };
   return (
     <>
-      <Pie data={data} options={options} />
+      <section className="incomeexpensesgraphholder">
+        <Pie className="incomeexpensesgraph" options={options} data={data} />
+      </section>
     </>
   );
 }
@@ -514,22 +547,31 @@ function OverallProgressGoals({ me }) {
     goalGap
   );
   return (
-    <>
-      <p>
-        You are overall {totalProgress.toFixed(2) * 100}% toward achieving your
-        financial goals. This number is weighted based off the importance of
-        each goal.
-      </p>
-      {OverallProgressGoalsGraph(
-        necessaryGoalsPercentage,
-        importantGoalsPercentage,
-        aspirationalGoalsPercentage,
-        goalGap
-      )}
-      <button>
-        <Link to={"/statistics/goals"}>Breakdown Of Your Financial Goals</Link>
-      </button>
-    </>
+    <section className="incomeexpensesmain">
+      <section className="graphanddescription">
+        <article className="description">
+          <p>
+            You are overall {totalProgress.toFixed(2) * 100}% toward achieving
+            your financial goals. This number is weighted based off the
+            importance of each goal.
+          </p>
+        </article>
+        {OverallProgressGoalsGraph(
+          necessaryGoalsPercentage,
+          importantGoalsPercentage,
+          aspirationalGoalsPercentage,
+          goalGap
+        )}
+      </section>
+      <section className="moredetailedbreakdown">
+        <p>For a more detailed breakdown press the button below.</p>
+        <button className="incomeexpensesbutton">
+          <Link to={"/statistics/goals"}>
+            Breakdown Of Your Financial Goals
+          </Link>
+        </button>
+      </section>
+    </section>
   );
 }
 
@@ -551,19 +593,24 @@ function EmergencySavings({ me }) {
 
   if (totalSavings >= SixMonthsExpenses) {
     return (
-      <>
-        <p>
-          It is important to have emergency savings equal to at least 6 months
-          of monthly expenses. Your expenses every month are {oneMonthExpenses}
-          $, so your expenses for 6 months are {SixMonthsExpenses}$.
-        </p>
-        <p>
-          You currently have {totalSavings}$ in savings, which is greater than
-          or equal to six months of your expenses. Great job! You have a
-          sufficient emergency fund.
-        </p>
-        <EmergencySavingsGraph me={me} />
-      </>
+      <section id="bottomright" className="incomeexpensesmain">
+        <section className="graphanddescription">
+          <article className="description">
+            <p>
+              It is important to have emergency savings equal to at least 6
+              months of monthly expenses. Your expenses every month are{" "}
+              {oneMonthExpenses}
+              $, so your expenses for 6 months are {SixMonthsExpenses}$.
+            </p>
+            <p>
+              You currently have {totalSavings}$ in savings, which is greater
+              than or equal to six months of your expenses. Great job! You have
+              a sufficient emergency fund.
+            </p>
+          </article>
+          <EmergencySavingsGraph me={me} />
+        </section>
+      </section>
     );
   } else {
     return (
@@ -578,6 +625,7 @@ function EmergencySavings({ me }) {
           months of your expenses. It is recommended that you increase your
           savings so as to have an appropriatly sized emergency fund.
         </p>
+        <EmergencySavingsGraph me={me} />
       </>
     );
   }
@@ -597,21 +645,44 @@ export default function StatisticsHome() {
           me.Income.length > 0 &&
           me.Liabilities.length > 0 ? (
             <>
-              <h1>
-                Here is a breakdown of some of the key aspects of your financial
-                wellness
-              </h1>
-              <h2>Yearly Income And Expenses Breakdown</h2>
-              <YearlyIncomeExpenses me={me} />
-              <h2>Assets And Liabilities Breakdown</h2>
-              <CurrentAssetsLiabilities me={me} />
-              <h2>
-                Overall Progress Toward Achieving Your Financial Goals Breakdown
-              </h2>
-              <OverallProgressGoals me={me} />
-              <h2>Appropriate Emergency Savings Breakdown</h2>
-              <EmergencySavings me={me} />
-              <ProvideChatgptRecommendation me={me} />
+              <section className="mainsection">
+                <h1 className="mainheadertop">
+                  Here is a breakdown of some of the key aspects of your
+                  financial wellness
+                </h1>
+                <section className="fourquadrants">
+                  <article className="toparea">
+                    <section className="eachquandrant">
+                      <h2 className="mainheader">
+                        Yearly Income And Expenses Breakdown
+                      </h2>
+                      <YearlyIncomeExpenses me={me} />
+                    </section>
+                    <section className="eachquandrant">
+                      <h2 className="mainheader">
+                        Assets And Liabilities Breakdown
+                      </h2>
+                      <CurrentAssetsLiabilities me={me} />
+                    </section>
+                  </article>
+                  <article className="bottomarea">
+                    <section className="eachquandrant">
+                      <h2 className="mainheader">
+                        Overall Progress Toward Achieving Your Financial Goals
+                        Breakdown
+                      </h2>
+                      <OverallProgressGoals me={me} />
+                    </section>
+                    <section className="eachquandrant">
+                      <h2 className="mainheader">
+                        Appropriate Emergency Savings Breakdown
+                      </h2>
+                      <EmergencySavings me={me} />
+                    </section>
+                  </article>
+                </section>
+                <ProvideChatgptRecommendation me={me} />
+              </section>
             </>
           ) : (
             <p>
