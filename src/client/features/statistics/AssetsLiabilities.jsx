@@ -3,7 +3,7 @@ import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { Link, useSearchParams, NavLink } from "react-router-dom";
 import { useGetUserQuery } from "../userform/accountSlice";
-import "./statistics.css";
+// import "./statistics.css";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,

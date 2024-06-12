@@ -7,7 +7,9 @@ import {
   useGetRecommendationsQuery,
 } from "../userform/accountSlice";
 import { Pie, Bar } from "react-chartjs-2";
-import "./statistics.css";
+
+import "./foo.css";
+// import "./statistics.css";
 
 import {
   Chart as ChartJS,

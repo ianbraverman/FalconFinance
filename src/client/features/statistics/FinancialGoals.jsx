@@ -2,7 +2,7 @@ import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { useGetUserQuery } from "../userform/accountSlice";
 import { Bar } from "react-chartjs-2";
-import "./statistics.css";
+// import "./statistics.css";
 
 import {
   Chart as ChartJS,
