@@ -111,13 +111,15 @@ router.get("/recommendations", async (req, res, next) => {
         where: { id: userId },
         data: {
           recommendationChangesMade: false,
-          recommendationContent: recommendations.message.content,
+          recommendationContent: JSON.stringify(
+            recommendations.message.content
+          ),
         },
       });
 
-      res.json({ content: recommendations.message.content });
+      res.json(recommendations.message.content);
     } else {
-      res.json(user.recommendationContent);
+      res.json(JSON.parse(user.recommendationContent));
     }
   } catch (e) {
     next(e);

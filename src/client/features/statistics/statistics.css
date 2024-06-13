@@ -40,8 +40,8 @@
   display: flex;
 }
 .eachquandrant {
-  /* flex: 1;
-  gap: 1rem; */
+  flex: 1;
+  gap: 1rem;
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc;

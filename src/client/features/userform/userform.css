@@ -32,3 +32,16 @@
 .bottombuttons a {
   color: black;
 }
+
+.toparea {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+  border-bottom: grey solid;
+}
+#currentpage {
+  border-left: grey solid;
+  border-left: grey solid;
+}

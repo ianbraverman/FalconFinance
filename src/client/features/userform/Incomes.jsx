@@ -172,11 +172,13 @@ export default function Incomes() {
     <>
       {token ? (
         <>
-          <p>
-            Hello {me?.firstname} {me?.lastname}
-          </p>
-          <p>Please Fill Out The Following Information</p>
-          <p>Page 4/6</p>
+          <section className="toparea">
+            <p>
+              Hello {me?.firstname} {me?.lastname}
+            </p>
+            <p>Please Fill Out The Following Information</p>
+            <p id="currentpage">Page 4/6</p>
+          </section>
           <h1>Incomes</h1>
           {me?.Income.length > 0 ? <h2>Existing Assets:</h2> : <p></p>}
           <section>

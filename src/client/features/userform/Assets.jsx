@@ -203,11 +203,13 @@ export default function Assets() {
     <>
       {token ? (
         <>
-          <p>
-            Hello {me?.firstname} {me?.lastname}
-          </p>
-          <p>Please Fill Out The Following Information</p>
-          <p>Page 2/6</p>
+          <section className="toparea">
+            <p>
+              Hello {me?.firstname} {me?.lastname}
+            </p>
+            <p>Please Fill Out The Following Information</p>
+            <p id="currentpage">Page 2/6</p>
+          </section>
           <h1>Assets</h1>
           {me?.Assets.length > 0 ? <h2>Existing Assets:</h2> : <p></p>}
           <section>

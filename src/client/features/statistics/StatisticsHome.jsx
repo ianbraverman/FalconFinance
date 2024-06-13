@@ -8,8 +8,7 @@ import {
 } from "../userform/accountSlice";
 import { Pie, Bar } from "react-chartjs-2";
 
-import "./foo.css";
-// import "./statistics.css";
+import "./statistics.css";
 
 import {
   Chart as ChartJS,
@@ -224,12 +223,7 @@ function EmergencySavingsGraph({ me }) {
   return (
     <>
       <section className="incomeexpensesgraphholder">
-        <Bar
-          id="emergencygraph"
-          className="incomeexpensesgraph"
-          options={options}
-          data={data}
-        />
+        <Bar className="incomeexpensesgraph" options={options} data={data} />
       </section>
     </>
   );
@@ -604,14 +598,14 @@ function EmergencySavings({ me }) {
               {oneMonthExpenses}
               $, so your expenses for 6 months are {SixMonthsExpenses}$.
             </p>
-            <p>
-              You currently have {totalSavings}$ in savings, which is greater
-              than or equal to six months of your expenses. Great job! You have
-              a sufficient emergency fund.
-            </p>
           </article>
           <EmergencySavingsGraph me={me} />
         </section>
+        <p>
+          You currently have {totalSavings}$ in savings, which is greater than
+          or equal to six months of your expenses. Great job! You have a
+          sufficient emergency fund.
+        </p>
       </section>
     );
   } else {
@@ -653,7 +647,7 @@ export default function StatisticsHome() {
                   financial wellness
                 </h1>
                 <section className="fourquadrants">
-                  <article className="toparea">
+                  <section className="toparea">
                     <section className="eachquandrant">
                       <h2 className="mainheader">
                         Yearly Income And Expenses Breakdown
@@ -666,22 +660,21 @@ export default function StatisticsHome() {
                       </h2>
                       <CurrentAssetsLiabilities me={me} />
                     </section>
-                  </article>
-                  <article className="bottomarea">
+                  </section>
+                  <section className="bottomarea">
                     <section className="eachquandrant">
                       <h2 className="mainheader">
-                        Overall Progress Toward Achieving Your Financial Goals
-                        Breakdown
+                        Overall Progress Toward Your Financial Goals Breakdown
                       </h2>
                       <OverallProgressGoals me={me} />
                     </section>
                     <section className="eachquandrant">
                       <h2 className="mainheader">
-                        Appropriate Emergency Savings Breakdown
+                        Appropriate Six Months Emergency Savings Breakdown
                       </h2>
                       <EmergencySavings me={me} />
                     </section>
-                  </article>
+                  </section>
                 </section>
                 <ProvideChatgptRecommendation me={me} />
               </section>

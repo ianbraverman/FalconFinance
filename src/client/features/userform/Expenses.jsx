@@ -176,11 +176,13 @@ export default function Expenses() {
     <>
       {token ? (
         <>
-          <p>
-            Hello {me?.firstname} {me?.lastname}
-          </p>
-          <p>Please Fill Out The Following Information</p>
-          <p>Page 5/6</p>
+          <section className="toparea">
+            <p>
+              Hello {me?.firstname} {me?.lastname}
+            </p>
+            <p>Please Fill Out The Following Information</p>
+            <p id="currentpage">Page 5/6</p>
+          </section>
           <h1>Expenses</h1>
           {me?.Expenses.length > 0 ? <h2>Existing Expenses:</h2> : <p></p>}
           <section>
