@@ -241,7 +241,7 @@ function YearlyIncomeExpenses({ me }) {
   let surplusDeficit = totalIncome - totalMonthlyExpenses * 12;
   if (surplusDeficit >= 0) {
     return (
-      <section className="incomeexpensesmain">
+      <section className="incomeexpensesmain quadrant-content">
         <section className="graphanddescription">
           <article className="description">
             <p>
@@ -265,7 +265,7 @@ function YearlyIncomeExpenses({ me }) {
     );
   } else {
     return (
-      <section className="incomeexpensesmain">
+      <section className="incomeexpensesmain quadrant-content">
         <section className="graphanddescription">
           <article className="description">
             <p>
@@ -304,7 +304,7 @@ function CurrentAssetsLiabilities({ me }) {
   let breakdown = totalAssets - totalLiabilities;
   if (breakdown >= 0) {
     return (
-      <section className="incomeexpensesmain">
+      <section className="incomeexpensesmain quadrant-content">
         <section className="graphanddescription">
           <article className="description">
             <p>
@@ -331,20 +331,28 @@ function CurrentAssetsLiabilities({ me }) {
   } else {
     return (
       <>
-        <p>
-          Your total liabilities of {totalLiabilities}$ is currently exceeding
-          your overall assets of {totalAssets}$.
-        </p>
-        <AssetsLiabilitiesGraph me={me} />
-        <p>
-          There are many ways to decrease your liabilities and increase your
-          assets. For a more detailed breakdown press the button below.
-        </p>
-        <button>
-          <Link to={"/statistics/assetsliabilities"}>
-            Breakdown Of Your Assets And Liabilities
-          </Link>
-        </button>
+        <section className="incomeexpensesmain quadrant-content">
+          <section className="graphanddescription">
+            <article className="description">
+              <p>
+                Your total liabilities of {totalLiabilities}$ is currently
+                exceeding your overall assets of {totalAssets}$.
+              </p>
+            </article>
+            <AssetsLiabilitiesGraph me={me} />
+          </section>
+          <section className="moredetailedbreakdown">
+            <p>
+              There are many ways to decrease your liabilities and increase your
+              assets. For a more detailed breakdown press the button below.
+            </p>
+            <button>
+              <Link to={"/statistics/assetsliabilities"}>
+                Breakdown Of Your Assets And Liabilities
+              </Link>
+            </button>
+          </section>
+        </section>
       </>
     );
   }
@@ -543,7 +551,7 @@ function OverallProgressGoals({ me }) {
     goalGap
   );
   return (
-    <section className="incomeexpensesmain">
+    <section className="incomeexpensesmain quadrant-content">
       <section className="graphanddescription">
         <article className="description">
           <p>
@@ -616,7 +624,7 @@ function EmergencySavings({ me }) {
           of monthly expenses. Your expenses every month are {oneMonthExpenses}
           $, so your expenses for 6 months are {SixMonthsExpenses}$.
         </p>
-        <p>
+        <p id="emergencysavingspadding">
           You currently have {totalSavings}$ in savings, which is less than six
           months of your expenses. It is recommended that you increase your
           savings so as to have an appropriatly sized emergency fund.
@@ -672,7 +680,9 @@ export default function StatisticsHome() {
                       <h2 className="mainheader">
                         Appropriate Six Months Emergency Savings Breakdown
                       </h2>
-                      <EmergencySavings me={me} />
+                      <section className="quadrantpadding">
+                        <EmergencySavings me={me} />
+                      </section>
                     </section>
                   </section>
                 </section>

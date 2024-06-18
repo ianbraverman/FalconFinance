@@ -113,41 +113,51 @@ function GoalSavingsCostTable({ goal, me }) {
 
   return (
     <>
-      <h2>Goal Information</h2>
-      <table className="incomeExpensesTable">
-        <thead>
-          <tr>
-            <th className="tableSpace">Goal</th>
-            <th className="tableSpace">{me.firstname}'s Age</th>
-            <th className="tableSpace">Inflation Rate</th>
-            <th className="tableSpace">Annual Growth Rate Of Assets</th>
-            <th className="tableSpace">Yearly Contributions</th>
-            <th className="tableSpace">Total Savings Toward Goal</th>
-            <th className="tableSpace">Inflation Adjusted Yearly Goal Cost</th>
-          </tr>
-        </thead>
-        <tbody>
-          {labels.map((label, index) => (
-            <tr key={index}>
-              <td className="tableSpace">{goal.name}</td>
-              <td className="tableSpace">{labels[index]}</td>
-              <td className="tableSpace">{(me.inflation / 100).toFixed(2)}</td>
-              <td className="tableSpace">
-                {(goal.annualGrowthRate / 100).toFixed(2)}
-              </td>
-              <td className="tableSpace">
-                {index < goal.targetAge - me.age ? goal.savingsTowardAmount : 0}
-              </td>
-              <td className="tableSpace">
-                {savingsGrowingDecreasing[index].toFixed(2)}
-              </td>
-              <td className="tableSpace">
-                {inflationAdjustedGoalCost[index].toFixed(2)}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <section>
+        <h2>Goal Information</h2>
+        <section className="fulltablearea">
+          <table className="incomeExpensesTable">
+            <thead>
+              <tr>
+                <th className="tableSpace">Goal</th>
+                <th className="tableSpace">{me.firstname}'s Age</th>
+                <th className="tableSpace">Inflation Rate</th>
+                <th className="tableSpace">Annual Growth Rate Of Assets</th>
+                <th className="tableSpace">Yearly Contributions</th>
+                <th className="tableSpace">Total Savings Toward Goal</th>
+                <th className="tableSpace">
+                  Inflation Adjusted Yearly Goal Cost
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {labels.map((label, index) => (
+                <tr key={index}>
+                  <td className="tableSpace">{goal.name}</td>
+                  <td className="tableSpace">{labels[index]}</td>
+                  <td className="tableSpace">
+                    {(me.inflation / 100).toFixed(2)}
+                  </td>
+                  <td className="tableSpace">
+                    {(goal.annualGrowthRate / 100).toFixed(2)}
+                  </td>
+                  <td className="tableSpace">
+                    {index < goal.targetAge - me.age
+                      ? goal.savingsTowardAmount
+                      : 0}
+                  </td>
+                  <td className="tableSpace">
+                    {savingsGrowingDecreasing[index].toFixed(2)}
+                  </td>
+                  <td className="tableSpace">
+                    {inflationAdjustedGoalCost[index].toFixed(2)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      </section>
     </>
   );
 }
@@ -159,10 +169,11 @@ function GoalGraph({ totalGoalCostInflationAdjusted, totalFVSavings }) {
     plugins: {
       title: {
         display: true,
-        text: "Assets And Liabilities Breakdown",
+        text: "Goal Breakdown",
       },
     },
     responsive: true,
+    maintainAspectRatio: false, // This allows the chart to take the full height and width of the container
     scales: {
       x: {
         stacked: true,
@@ -207,7 +218,9 @@ function GoalGraph({ totalGoalCostInflationAdjusted, totalFVSavings }) {
 
   return (
     <>
-      <Bar options={options} data={data} />
+      <section className="financialchartholder">
+        <Bar options={options} data={data} />
+      </section>
     </>
   );
 }
@@ -271,31 +284,40 @@ function IndividualGoalBreakdown({ goal, me }) {
 
   return (
     <>
-      <h2>Breakdown of Your Progress Toward the Goal: {goal.name}</h2>
-      <p>
-        Your goal, {goal.name}, has a target amount of {goal.targetAmount} per
-        year. With an inflation rate of {me.inflation}% over the next{" "}
-        {yearsTillGoal} years until you reach your target age, the
-        inflation-adjusted annual amount you will need is{" "}
-        {fVGoalInflationAdjusted.toFixed(2)}.
-      </p>
-      <p>
-        Considering the duration of {goal.goalDuration} years for this goal, the
-        total cost, adjusted for inflation, is estimated to be{" "}
-        {totalGoalCostInflationAdjusted.toFixed(2)}.
-      </p>
-      <p>
-        With an estimated annual growth rate of {goal.annualGrowthRate}% on the
-        savings for this goal, you are currently {percentToGoal.toFixed(2)}% of
-        the way to reaching your goal. You are projected to save a total of{" "}
-        {totalFVSavings.toFixed(2)}.
-      </p>
-      <GoalGraph
-        goal={goal}
-        totalGoalCostInflationAdjusted={totalGoalCostInflationAdjusted}
-        totalFVSavings={totalFVSavings}
-      />
-      <GoalSavingsCostTable goal={goal} me={me} />
+      <section>
+        <h2 className="financialgoalsheader">
+          Breakdown of Your Progress Toward{" "}
+          {goal.name.charAt(0).toUpperCase() + goal.name.slice(1)}:
+        </h2>
+        <div className="financialgoalsmain">
+          <section className="financialgoalsdescription">
+            <p>
+              Your goal, {goal.name}, has a target amount of {goal.targetAmount}{" "}
+              per year. With an inflation rate of {me.inflation}% over the next{" "}
+              {yearsTillGoal} years until you reach your target age, the
+              inflation-adjusted annual amount you will need is{" "}
+              {fVGoalInflationAdjusted.toFixed(2)}.
+            </p>
+            <p>
+              Considering the duration of {goal.goalDuration} years for this
+              goal, the total cost, adjusted for inflation, is estimated to be{" "}
+              {totalGoalCostInflationAdjusted.toFixed(2)}.
+            </p>
+            <p>
+              With an estimated annual growth rate of {goal.annualGrowthRate}%
+              on the savings for this goal, you are currently{" "}
+              {percentToGoal.toFixed(2)}% of the way to reaching your goal. You
+              are projected to save a total of {totalFVSavings.toFixed(2)}.
+            </p>
+          </section>
+          <GoalGraph
+            goal={goal}
+            totalGoalCostInflationAdjusted={totalGoalCostInflationAdjusted}
+            totalFVSavings={totalFVSavings}
+          />
+          <GoalSavingsCostTable goal={goal} me={me} />
+        </div>
+      </section>
     </>
   );
 }
@@ -308,7 +330,7 @@ export default function FinancialGoals() {
     <>
       {token ? (
         <>
-          <h1>
+          <h1 className="financialgoalsmainheader">
             Here Is How You Are Tracking Toward Achieving Your Financial Goals
           </h1>
           <section>

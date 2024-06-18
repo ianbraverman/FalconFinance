@@ -43,7 +43,7 @@
 .loginformtyping {
   height: 3rem; /* Set the height of the input fields */
   padding: 0.5rem; /* Add padding for better appearance */
-  font-size: 1rem; /* Adjust font size if necessary */
+  font-size: 1.5rem; /* Adjust font size if necessary */
   border: 1px solid #ccc; /* Optional: add border */
   border-radius: 0.25rem; /* Optional: add border radius */
   width: 100%; /* Ensure input takes full width */

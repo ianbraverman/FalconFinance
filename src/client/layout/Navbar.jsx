@@ -29,7 +29,9 @@ export default function Navbar() {
             className="nav-image"
           />
         </NavLink>
-        <p className="websitename">Falcon Finance </p>
+        <NavLink className="navlink" to="/">
+          <p className="websitename">Falcon Finance </p>
+        </NavLink>
       </section>
       <menu className="links">
         {token ? (
