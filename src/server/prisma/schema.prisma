@@ -151,6 +151,7 @@ model Goals {
   alreadySaved        Int
   annualGrowthRate    Int
   goalDuration        Int
+  continueToSave      Boolean
 }
 
 model Expenses {
@@ -161,5 +162,4 @@ model Expenses {
   createdAt   DateTime    @default(now())
   expenseType ExpenseType
   monthlyCost Int
-  interest    Int
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { Link, useSearchParams, useNavigate, NavLink } from "react-router-dom";
 import { useGetUserQuery, useUpdatePersonalInfoMutation } from "./accountSlice";
 import "./userform.css";
 
@@ -123,8 +123,8 @@ export default function PersonalInfo() {
                       }
                       className="personalinfoinput"
                     >
-                      <option value="TRUE">True</option>
-                      <option value="FALSE">False</option>
+                      <option value="TRUE">Yes</option>
+                      <option value="FALSE">No</option>
                     </select>
                   </label>
                   <label>
@@ -162,7 +162,12 @@ export default function PersonalInfo() {
           </div>
         </>
       ) : (
-        <p>Please Log In</p>
+        <section className="pleaseloginarea">
+          <p className="pleaselogin">Please Log In</p>
+          <button className="link">
+            <NavLink to="/login">Log In Or Register</NavLink>
+          </button>
+        </section>
       )}
     </>
   );

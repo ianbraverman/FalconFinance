@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { Link, useSearchParams, useNavigate, NavLink } from "react-router-dom";
 import {
   useGetUserQuery,
   useDeleteInfoMutation,
@@ -42,16 +42,7 @@ function NewExpenseItem({
           onChange={handleChange}
         />
       </label>
-      <label>
-        Yearly Interest Percentage:
-        <input
-          className="input"
-          type="text"
-          name="interest"
-          value={interest}
-          onChange={handleChange}
-        />
-      </label>
+
       <label>
         Monthly Cost Of Expense:
         <input
@@ -94,10 +85,9 @@ function ExistingExpenseItem({ expense, deleteAnExpense }) {
   //delete button will on click delete that expense and send a delete request to delete it
   return (
     <section className="questionnaire">
-      <p> Name: {expense?.name}</p>
-      <p> Type: {expense?.expenseType}</p>
-      <p> Interest Cost: {expense?.interest}</p>
-      <p> Monthly Cost: {expense?.monthlyCost}</p>
+      <p> Name Of Expense: {expense?.name}</p>
+      <p> Type Of Expense: {expense?.expenseType}</p>
+      <p> Monthly Cost Of Expense: {expense?.monthlyCost}</p>
       <form onSubmit={(evt) => deleteAnExpense(expense, evt)}>
         <button className="buttondelete">Delete Expense</button>
       </form>
@@ -122,7 +112,6 @@ export default function Expenses() {
             name: newExpenses[i]["name"],
             expenseType: newExpenses[i]["expenseType"],
             monthlyCost: newExpenses[i]["monthlyCost"],
-            interest: newExpenses[i]["interest"],
           });
       }
       navigate(`/userform/goals`);
@@ -151,7 +140,6 @@ export default function Expenses() {
         name: "",
         expenseType: "HOUSING",
         monthlyCost: 0,
-        interest: 0,
       },
     ]);
   };
@@ -183,39 +171,88 @@ export default function Expenses() {
             <p>Please Fill Out The Following Information</p>
             <p id="currentpage">Page 5/6</p>
           </section>
-          <h1>Expenses</h1>
-          {me?.Expenses.length > 0 ? <h2>Existing Expenses:</h2> : <p></p>}
-          <section>
-            {me?.Expenses.map((expense) => (
-              <ExistingExpenseItem
-                key={expense.id}
-                expense={expense}
-                deleteAnExpense={deleteAnExpense}
-              />
-            ))}
-          </section>
-          {newExpenses.length > 0 ? <h2>New Expenses:</h2> : <p></p>}
-          {newExpenses.map((newExpense) => (
-            <NewExpenseItem
-              key={newExpense.id}
-              expense={newExpense}
-              handleNewExpenseChange={handleNewExpenseChange}
-              handleDeleteExpense={handleDeleteExpense}
-            />
-          ))}
-          <button className="bottombuttons" onClick={handleAddNewExpense}>
-            {" "}
-            Add New Expense{" "}
-          </button>
-          <button className="bottombuttons" onClick={submitExpensesAndLink}>
-            Save And Continue To Goals
-          </button>
-          <button className="bottombuttons">
-            <Link to={"/userform/incomes"}>Return To Incomes</Link>
-          </button>
+          <div className="threeareasectionuserform">
+            <section className="leftsideuserform">
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718734573/FalconFinancial/userformsection/falcongroceries_nllscp.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718734662/FalconFinancial/userformsection/falconpoker_rgbymv.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718734767/FalconFinancial/userformsection/falconmedicalbill_dtbpsl.webp"
+                />
+              </article>
+            </section>
+            <section className="centeruserform">
+              <h1 className="userformsectionheader">Expenses</h1>
+              {me?.Expenses.length > 0 ? <h2>Existing Expenses:</h2> : <p></p>}
+              <section>
+                {me?.Expenses.map((expense) => (
+                  <ExistingExpenseItem
+                    key={expense.id}
+                    expense={expense}
+                    deleteAnExpense={deleteAnExpense}
+                  />
+                ))}
+              </section>
+              {newExpenses.length > 0 ? <h2>New Expenses:</h2> : <p></p>}
+              {newExpenses.map((newExpense) => (
+                <NewExpenseItem
+                  key={newExpense.id}
+                  expense={newExpense}
+                  handleNewExpenseChange={handleNewExpenseChange}
+                  handleDeleteExpense={handleDeleteExpense}
+                />
+              ))}
+              <button className="bottombuttons" onClick={handleAddNewExpense}>
+                {" "}
+                Add New Expense{" "}
+              </button>
+              <button className="bottombuttons" onClick={submitExpensesAndLink}>
+                Save And Continue To Goals
+              </button>
+              <button className="bottombuttons">
+                <Link to={"/userform/incomes"}>Return To Incomes</Link>
+              </button>
+            </section>
+            <section className="rightsideuserform">
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718734864/FalconFinancial/userformsection/falconrestaurant_iwu5le.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718735061/FalconFinancial/userformsection/falconplumber_j5ywhc.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718735164/FalconFinancial/userformsection/falconhaircut_kv7kes.webp"
+                />
+              </article>
+            </section>
+          </div>
         </>
       ) : (
-        <p>Please Log In</p>
+        <section className="pleaseloginarea">
+          <p className="pleaselogin">Please Log In</p>
+          <button className="link">
+            <NavLink to="/login">Log In Or Register</NavLink>
+          </button>
+        </section>
       )}
     </>
   );

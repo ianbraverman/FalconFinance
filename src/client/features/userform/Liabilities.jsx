@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { Link, useSearchParams, useNavigate, NavLink } from "react-router-dom";
 import {
   useGetUserQuery,
   useDeleteInfoMutation,
@@ -204,43 +204,95 @@ export default function Liabilities() {
             <p>Please Fill Out The Following Information</p>
             <p id="currentpage">Page 3/6</p>
           </section>
-          <h1>Liabilities</h1>
-          {me?.Liabilities.length > 0 ? (
-            <h2>Existing Liabilities:</h2>
-          ) : (
-            <p></p>
-          )}
-          <section>
-            {me?.Liabilities.map((liability) => (
-              <ExistingLiabilitiesItem
-                key={liability.id}
-                liability={liability}
-                deleteALiability={deleteALiability}
-              />
-            ))}
-          </section>
-          {newLiabilities.length > 0 ? <h2>New Liabilities:</h2> : <p></p>}
-          {newLiabilities.map((newLiability) => (
-            <NewLiabilityItem
-              key={newLiability.id}
-              liability={newLiability}
-              handleNewLiabilityChange={handleNewLiabilityChange}
-              handleDeleteLiability={handleDeleteLiability}
-            />
-          ))}
-          <button className="bottombuttons" onClick={handleAddNewLiability}>
-            {" "}
-            Add New Liability{" "}
-          </button>
-          <button className="bottombuttons" onClick={submitLiabilitiesAndLink}>
-            Save And Continue To Incomes
-          </button>
-          <button className="bottombuttons">
-            <Link to={"/userform/assets"}>Return To Assets</Link>
-          </button>
+          <div className="threeareasectionuserform">
+            <section className="leftsideuserform">
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718726693/FalconFinancial/userformsection/falcontaxes_qayktk.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718733116/FalconFinancial/userformsection/falconmedicalbills_bdl5zq.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718733217/FalconFinancial/userformsection/falconcarloan_k8lxka.webp"
+                />
+              </article>
+            </section>
+            <section className="centeruserform">
+              <h1 className="userformsectionheader">Liabilities</h1>
+              {me?.Liabilities.length > 0 ? (
+                <h2>Existing Liabilities:</h2>
+              ) : (
+                <p></p>
+              )}
+              <section>
+                {me?.Liabilities.map((liability) => (
+                  <ExistingLiabilitiesItem
+                    key={liability.id}
+                    liability={liability}
+                    deleteALiability={deleteALiability}
+                  />
+                ))}
+              </section>
+              {newLiabilities.length > 0 ? <h2>New Liabilities:</h2> : <p></p>}
+              {newLiabilities.map((newLiability) => (
+                <NewLiabilityItem
+                  key={newLiability.id}
+                  liability={newLiability}
+                  handleNewLiabilityChange={handleNewLiabilityChange}
+                  handleDeleteLiability={handleDeleteLiability}
+                />
+              ))}
+              <button className="bottombuttons" onClick={handleAddNewLiability}>
+                {" "}
+                Add New Liability{" "}
+              </button>
+              <button
+                className="bottombuttons"
+                onClick={submitLiabilitiesAndLink}
+              >
+                Save And Continue To Incomes
+              </button>
+              <button className="bottombuttons">
+                <Link to={"/userform/assets"}>Return To Assets</Link>
+              </button>
+            </section>
+            <section className="rightsideuserform">
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718733331/FalconFinancial/userformsection/falconstudentloan_reqg7y.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718733424/FalconFinancial/userformsection/falconmortgage_hs1hq0.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718733567/FalconFinancial/userformsection/falconpersonalloan_plzwf2.webp"
+                />
+              </article>
+            </section>
+          </div>
         </>
       ) : (
-        <p>Please Log In</p>
+        <section className="pleaseloginarea">
+          <p className="pleaselogin">Please Log In</p>
+          <button className="link">
+            <NavLink to="/login">Log In Or Register</NavLink>
+          </button>
+        </section>
       )}
     </>
   );

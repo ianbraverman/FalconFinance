@@ -111,10 +111,19 @@ function NewAssetItem({ asset, handleNewAssetChange, handleDeleteAsset }) {
 function ExistingAssetItem({ asset, deleteAnAsset }) {
   //delete button will on click delete that asset and send a delete request to delete it
 
+  function checkIfFOUR01K() {
+    if (asset?.assetType === "FOUR01K") {
+      return "401K";
+    } else {
+      console.log(asset);
+      return asset?.assetType;
+    }
+  }
+
   return (
     <section className="questionnaire">
       <p> Asset Name: {asset?.name}</p>
-      <p> Asset Type: {asset?.assetType}</p>
+      <p> Asset Type: {checkIfFOUR01K()}</p>
       <p> Yearly Interest Earned On Asset: {asset?.interest}</p>
       <p> Yearly Contributions Made To This Asset: {asset?.contributions}</p>
       <p> Physical Or Monetary Asset: {asset?.physMon}</p>
@@ -210,39 +219,90 @@ export default function Assets() {
             <p>Please Fill Out The Following Information</p>
             <p id="currentpage">Page 2/6</p>
           </section>
-          <h1>Assets</h1>
-          {me?.Assets.length > 0 ? <h2>Existing Assets:</h2> : <p></p>}
-          <section>
-            {me?.Assets.map((asset) => (
-              <ExistingAssetItem
-                key={asset.id}
-                asset={asset}
-                deleteAnAsset={deleteAnAsset}
-              />
-            ))}
-          </section>
-          {newAssets.length > 0 ? <h2>New Assets:</h2> : <p></p>}
-          {newAssets.map((newAsset) => (
-            <NewAssetItem
-              key={newAsset.id}
-              asset={newAsset}
-              handleNewAssetChange={handleNewAssetChange}
-              handleDeleteAsset={handleDeleteAsset}
-            />
-          ))}
-          <button className="bottombuttons" onClick={handleAddNewAsset}>
-            {" "}
-            Add New Asset{" "}
-          </button>
-          <button className="bottombuttons" onClick={submitAssetsAndLink}>
-            Save And Continue To Liabilites
-          </button>
-          <button className="bottombuttons">
-            <Link to={"/userform/personalinfo"}>Return To Personal Info</Link>
-          </button>
+          <div className="threeareasectionuserform">
+            <section className="leftsideuserform">
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718725539/FalconFinancial/userformsection/falconfamilyhouse2_xokxx9.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718725810/FalconFinancial/userformsection/falconinvesting_hbtn3o.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718725934/FalconFinancial/userformsection/falconcar_cwj5cb.webp"
+                />
+              </article>
+            </section>
+            <section className="centeruserform">
+              <h1 className="userformsectionheader">Assets</h1>
+              {me?.Assets.length > 0 ? <h2>Existing Assets:</h2> : <p></p>}
+              <section>
+                {me?.Assets.map((asset) => (
+                  <ExistingAssetItem
+                    key={asset.id}
+                    asset={asset}
+                    deleteAnAsset={deleteAnAsset}
+                  />
+                ))}
+              </section>
+              {newAssets.length > 0 ? <h2>New Assets:</h2> : <p></p>}
+              {newAssets.map((newAsset) => (
+                <NewAssetItem
+                  key={newAsset.id}
+                  asset={newAsset}
+                  handleNewAssetChange={handleNewAssetChange}
+                  handleDeleteAsset={handleDeleteAsset}
+                />
+              ))}
+              <button className="bottombuttons" onClick={handleAddNewAsset}>
+                {" "}
+                Add New Asset{" "}
+              </button>
+              <button className="bottombuttons" onClick={submitAssetsAndLink}>
+                Save And Continue To Liabilites
+              </button>
+              <button className="bottombuttons">
+                <Link to={"/userform/personalinfo"}>
+                  Return To Personal Info
+                </Link>
+              </button>
+            </section>
+            <section className="rightsideuserform">
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718726061/FalconFinancial/userformsection/falconcollectibles_awx9ya.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718726154/FalconFinancial/userformsection/falconsavingsaccount_l7nate.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718726324/FalconFinancial/userformsection/falcon401k_apftz5.webp"
+                />
+              </article>
+            </section>
+          </div>
         </>
       ) : (
-        <p>Please Log In</p>
+        <section className="pleaseloginarea">
+          <p className="pleaselogin">Please Log In</p>
+          <button className="link">
+            <NavLink to="/login">Log In Or Register</NavLink>
+          </button>
+        </section>
       )}
     </>
   );

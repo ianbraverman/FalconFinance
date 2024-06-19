@@ -226,7 +226,12 @@ export default function IncomeExpenses() {
           </article>
         </>
       ) : (
-        <p>Please Log In</p>
+        <section className="pleaseloginarea">
+          <p className="pleaselogin">Please Log In</p>
+          <button className="link">
+            <NavLink to="/login">Log In Or Register</NavLink>
+          </button>
+        </section>
       )}
     </>
   );

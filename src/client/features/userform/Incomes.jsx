@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { Link, useSearchParams, useNavigate, NavLink } from "react-router-dom";
 import {
   useGetUserQuery,
   useDeleteInfoMutation,
@@ -179,39 +179,88 @@ export default function Incomes() {
             <p>Please Fill Out The Following Information</p>
             <p id="currentpage">Page 4/6</p>
           </section>
-          <h1>Incomes</h1>
-          {me?.Income.length > 0 ? <h2>Existing Assets:</h2> : <p></p>}
-          <section>
-            {me?.Income.map((income) => (
-              <ExistingIncomeItem
-                key={income.id}
-                income={income}
-                deleteAnIncome={deleteAnIncome}
-              />
-            ))}
-          </section>
-          {newIncomes.length > 0 ? <h2>New Incomes:</h2> : <p></p>}
-          {newIncomes.map((newIncome) => (
-            <NewIncomeItem
-              key={newIncome.id}
-              income={newIncome}
-              handleNewIncomeChange={handleNewIncomeChange}
-              handleDeleteIncome={handleDeleteIncome}
-            />
-          ))}
-          <button className="bottombuttons" onClick={handleAddNewIncome}>
-            {" "}
-            Add New Income{" "}
-          </button>
-          <button className="bottombuttons" onClick={submitIncomesAndLink}>
-            Save And Continue To Expenses
-          </button>
-          <button className="bottombuttons">
-            <Link to={"/userform/liabilities"}>Return To Liabilities</Link>
-          </button>
+          <div className="threeareasectionuserform">
+            <section className="leftsideuserform">
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718733813/FalconFinancial/userformsection/falconsalary_nwhunr.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718733996/FalconFinancial/userformsection/falconrentalincome_std4cf.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718734082/FalconFinancial/userformsection/falconbartender_jr3lxm.webp"
+                />
+              </article>
+            </section>
+            <section className="centeruserform">
+              <h1 className="userformsectionheader">Incomes</h1>
+              {me?.Income.length > 0 ? <h2>Existing Incomes:</h2> : <p></p>}
+              <section>
+                {me?.Income.map((income) => (
+                  <ExistingIncomeItem
+                    key={income.id}
+                    income={income}
+                    deleteAnIncome={deleteAnIncome}
+                  />
+                ))}
+              </section>
+              {newIncomes.length > 0 ? <h2>New Incomes:</h2> : <p></p>}
+              {newIncomes.map((newIncome) => (
+                <NewIncomeItem
+                  key={newIncome.id}
+                  income={newIncome}
+                  handleNewIncomeChange={handleNewIncomeChange}
+                  handleDeleteIncome={handleDeleteIncome}
+                />
+              ))}
+              <button className="bottombuttons" onClick={handleAddNewIncome}>
+                {" "}
+                Add New Income{" "}
+              </button>
+              <button className="bottombuttons" onClick={submitIncomesAndLink}>
+                Save And Continue To Expenses
+              </button>
+              <button className="bottombuttons">
+                <Link to={"/userform/liabilities"}>Return To Liabilities</Link>
+              </button>
+            </section>
+            <section className="rightsideuserform">
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718734163/FalconFinancial/userformsection/falcondividends_nc2ca1.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718734240/FalconFinancial/userformsection/falconbonus_kyrq6l.webp"
+                />
+              </article>
+              <article className="userformimagecontainer">
+                <img
+                  className="userformimages"
+                  src="https://res.cloudinary.com/dzpne110u/image/upload/v1718734330/FalconFinancial/userformsection/falconpassiveincome_bs9z19.webp"
+                />
+              </article>
+            </section>
+          </div>
         </>
       ) : (
-        <p>Please Log In</p>
+        <section className="pleaseloginarea">
+          <p className="pleaselogin">Please Log In</p>
+          <button className="link">
+            <NavLink to="/login">Log In Or Register</NavLink>
+          </button>
+        </section>
       )}
     </>
   );

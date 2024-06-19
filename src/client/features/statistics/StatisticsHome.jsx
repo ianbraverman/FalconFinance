@@ -43,12 +43,17 @@ function ProvideChatgptRecommendation({ me }) {
   //recommendation string
   return (
     <>
-      <h2>ChatGPT AI Powered Financial Recommendations:</h2>
+      <h2 className="chatgptheader">
+        ChatGPT AI Powered Financial Recommendations:
+      </h2>
 
       {isFetching ? (
         <p>Loading...</p>
       ) : (
-        <div dangerouslySetInnerHTML={{ __html: recommendation }} />
+        <div
+          className="chatgptrecommendations"
+          dangerouslySetInnerHTML={{ __html: recommendation }}
+        />
       )}
     </>
   );
@@ -146,7 +151,6 @@ function AssetsLiabilitiesGraph({ me }) {
     data: [asset.balance, 0],
     backgroundColor: getRandomRGBA(),
   }));
-  console.log(assetsDataset, "assets data set");
 
   const liabilitiesDataset = me.Liabilities.map((liability) => ({
     label: liability.name,
@@ -430,60 +434,88 @@ function OverallProgressGoals({ me }) {
     return (
       goals.reduce((acc, goal) => {
         //this takes into account if the goal is a multi year goal, for example if it is retirement and not 100000 one time but 100000 for 20 years
-        console.log("goal name", goal.name);
-        let yearsTillGoal = goal.targetAge - me.age;
-        console.log("years till goal", yearsTillGoal);
+
+        //this is to ensure that years till goal is never 0, which can cause an empty array and break things
+        let yearsTillGoal;
+        if (goal.targetAge - me.age <= 0) {
+          yearsTillGoal = 1;
+        } else {
+          yearsTillGoal = goal.targetAge - me.age;
+        }
+
         //this is converting the annual growth rate to be a decimal instead of a whole number percentage
         let annualGrowthRateDecimal = goal.annualGrowthRate / 100;
-        console.log("annual growth rate decimal", annualGrowthRateDecimal);
+
         // future value of assets already saved toward this goal. this is calculated by taking the
         // the already saved value, then multiplying it by the annual growth rate + 1
         // to the power of the years till the goal.
-        let aSFV =
-          goal.alreadySaved * (1 + annualGrowthRateDecimal) ** yearsTillGoal;
-        console.log("already saved future value", aSFV);
+
+        // Calculate future value of already saved amount
+        let alreadySavedFutureValue = goal.alreadySaved;
+        for (let i = 0; i < yearsTillGoal; i++) {
+          alreadySavedFutureValue *= 1 + annualGrowthRateDecimal;
+        }
+
         // this is the future value of the annual contributions. this first takes the savings toward amount every year,
         //then multiplies it by future value of a series of annual contributions. the (1+annualgrowthrate)^n is the growth
         //factor over n years, then subtract 1. then multiple by the growth rate at the end 1+annual growth rate reflects
         //the final years growth.
-        let aCFV =
-          goal.savingsTowardAmount *
-          (((1 + annualGrowthRateDecimal) ** yearsTillGoal - 1) /
-            annualGrowthRateDecimal);
-        //
-        console.log("annual contributions future value", aCFV);
-        let totalFVSavings = aSFV + aCFV;
-        console.log("total savings future value", totalFVSavings);
+        let annualContributionsFutureValue = 0;
+        if (annualGrowthRateDecimal === 0) {
+          annualContributionsFutureValue =
+            goal.savingsTowardAmount * yearsTillGoal;
+        } else {
+          for (let i = 0; i < yearsTillGoal; i++) {
+            annualContributionsFutureValue +=
+              goal.savingsTowardAmount * (1 + annualGrowthRateDecimal) ** i;
+          }
+        }
+
+        let totalFutureValueSavings =
+          alreadySavedFutureValue + annualContributionsFutureValue;
+
+        // Adjust total future value savings for goal duration if continueToSave is false
+        //if not continue to save, then just adjust for the goal duration for the annual growth rate.
+        // if true, then adjust by growth rate AND also the savings toward amount for the goal duration
+        if (goal.continueToSave === false) {
+          // Change here
+          for (let i = 0; i < goal.goalDuration; i++) {
+            totalFutureValueSavings *= 1 + annualGrowthRateDecimal;
+          }
+        } else {
+          // Change here
+          for (let i = 0; i < yearsTillGoal + goal.goalDuration; i++) {
+            // Change here
+            totalFutureValueSavings *= 1 + annualGrowthRateDecimal;
+            totalFutureValueSavings += goal.savingsTowardAmount;
+          }
+        }
+
         //this converts the whole number inflation rate into a decimal
         let inflationRateDecimal = me.inflation / 100;
-        console.log("inflation rate decimal", inflationRateDecimal);
+
         //this is the future value of the target amount adjusted for a yearly inflation rate
         //after a number of years
-        let fVGoalInflationAdjusted =
-          goal.targetAmount * (1 + inflationRateDecimal) ** yearsTillGoal;
-        console.log(
-          "future value goal inflation adjusted",
-          fVGoalInflationAdjusted
-        );
+        // Calculate future value of target amount adjusted for inflation
+        let futureValueGoalInflationAdjusted = goal.targetAmount;
+        for (let i = 0; i < yearsTillGoal; i++) {
+          futureValueGoalInflationAdjusted *= 1 + inflationRateDecimal;
+        }
         // Total cost of the goal adjusted for the entire duration, considering inflation over the distribution period
+        // Calculate total goal cost adjusted for inflation
         let totalGoalCostInflationAdjusted = 0;
         for (let i = 0; i < goal.goalDuration; i++) {
           totalGoalCostInflationAdjusted +=
-            fVGoalInflationAdjusted * (1 + inflationRateDecimal) ** i;
+            futureValueGoalInflationAdjusted * (1 + inflationRateDecimal) ** i;
         }
-        console.log(
-          "total goal cost inflation adjusted",
-          totalGoalCostInflationAdjusted
-        );
+
         // this is your overall percentage the user is tracking toward each financial goal, calculated
         // by dividing the amount they are slated to save by the inflation adjusted cost of the goal
-        let progressUnchanged = totalFVSavings / totalGoalCostInflationAdjusted;
-        console.log("not adjusted progress", progressUnchanged);
-        const progress = Math.min(
-          totalFVSavings / totalGoalCostInflationAdjusted,
-          1
-        );
-        console.log("progress", progress);
+
+        // Calculate progress towards the goal
+        let progress = totalFutureValueSavings / totalGoalCostInflationAdjusted;
+        progress = Math.min(progress, 1);
+
         return acc + progress; // Sum up progress across goals
       }, 0) / goals.length
     ); // Average progress per goal type
@@ -540,16 +572,7 @@ function OverallProgressGoals({ me }) {
     ? calculateProgress(aspirationalGoals) * presentWeights.aspirational
     : 0;
   let goalGap = 1 - totalProgress;
-  console.log(
-    "necessary goals",
-    necessaryGoalsPercentage,
-    "important goals",
-    importantGoalsPercentage,
-    "aspirational goals",
-    aspirationalGoalsPercentage,
-    "gap goals",
-    goalGap
-  );
+
   return (
     <section className="incomeexpensesmain quadrant-content">
       <section className="graphanddescription">
@@ -643,11 +666,7 @@ export default function StatisticsHome() {
     <>
       {token ? (
         me ? (
-          me.Expenses.length > 0 &&
-          me.Assets.length > 0 &&
-          me.Goals.length > 0 &&
-          me.Income.length > 0 &&
-          me.Liabilities.length > 0 ? (
+          me.Goals.length > 0 ? (
             <>
               <section className="mainsection">
                 <h1 className="mainheadertop">
@@ -678,7 +697,7 @@ export default function StatisticsHome() {
                     </section>
                     <section className="eachquandrant">
                       <h2 className="mainheader">
-                        Appropriate Six Months Emergency Savings Breakdown
+                        Six Months Of Emergency Savings Breakdown
                       </h2>
                       <section className="quadrantpadding">
                         <EmergencySavings me={me} />
@@ -690,16 +709,28 @@ export default function StatisticsHome() {
               </section>
             </>
           ) : (
-            <p>
-              Please Fill Out The User Form For A Full Statistical Breakdown Of
-              Your Finances
-            </p>
+            <section className="pleaseloginarea">
+              <p className="pleaselogin">
+                Please Fill Out The User Form For A Full Statistical Breakdown
+                Of Your Finances
+              </p>
+              <button className="link">
+                <NavLink to="../userform/personalinfo">
+                  User Information Form
+                </NavLink>
+              </button>
+            </section>
           )
         ) : (
           <p>Loading...</p>
         )
       ) : (
-        <p>Please Log In</p>
+        <section className="pleaseloginarea">
+          <p className="pleaselogin">Please Log In</p>
+          <button className="link">
+            <NavLink to="/login">Log In Or Register</NavLink>
+          </button>
+        </section>
       )}
     </>
   );

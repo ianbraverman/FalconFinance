@@ -53,7 +53,7 @@ router.delete("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { name, expenseType, monthlyCost, interest } = req.body;
+    const { name, expenseType, monthlyCost } = req.body;
 
     if (!res.locals.user) {
       return next({
@@ -69,7 +69,6 @@ router.post("/", async (req, res, next) => {
         name: name,
         expenseType: expenseType,
         monthlyCost: +monthlyCost,
-        interest: +interest,
       },
     });
 

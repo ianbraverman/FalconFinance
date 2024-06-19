@@ -2,6 +2,7 @@ import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { useGetUserQuery } from "../userform/accountSlice";
 import { Bar } from "react-chartjs-2";
+import { NavLink } from "react-router-dom";
 // import "./statistics.css";
 
 import {
@@ -38,17 +39,45 @@ function GoalSavingsCostTable({ goal, me }) {
   // then after they reach the goal, the time till goal passes, it will subtract the inflation adjusted goal cost from the savings amount every year for the duration of the goal cost.
 
   function calculateSavingsByYear(goal, me) {
-    let yearsTillGoal = goal.targetAge - me.age;
-    let annualGrowthRateDecimal = goal.annualGrowthRate / 100;
-    let allIncreasingSavings = [];
-    let increasedSavings = goal.alreadySaved; // Initial lump sum already saved
-
-    for (let i = 0; i < yearsTillGoal; i++) {
-      increasedSavings *= 1 + annualGrowthRateDecimal; // Apply growth rate
-      increasedSavings += goal.savingsTowardAmount; // Add contribution every year
-      allIncreasingSavings.push(increasedSavings);
+    //this is to ensure that years till goal is never 0, which can cause an empty array and break things
+    let yearsTillGoal = 0;
+    if (goal.targetAge - me.age <= 0) {
+      yearsTillGoal = 1;
+    } else {
+      yearsTillGoal = goal.targetAge - me.age;
     }
-    return allIncreasingSavings;
+    //this is for if they are not going to be continuing to fund the goal during the goal duration.
+    //however, the goal value will continue to increase during goal duration by the growth rate
+    if (goal?.continueToSave === false) {
+      let annualGrowthRateDecimal = goal.annualGrowthRate / 100;
+      let allIncreasingSavings = [];
+      let increasedSavings = goal.alreadySaved; // Initial lump sum already saved
+      //for the years till goal will add to savings, and also increase by annual growth rate decimal
+      for (let i = 0; i < yearsTillGoal; i++) {
+        increasedSavings *= 1 + annualGrowthRateDecimal; // Apply growth rate
+        increasedSavings += goal.savingsTowardAmount; // Add contribution every year
+        allIncreasingSavings.push(increasedSavings);
+      }
+      //for the goal duration will just increase by the annual growth rate
+      for (let i = 0; i < goal.goalDuration; i++) {
+        increasedSavings *= 1 + annualGrowthRateDecimal; // Apply growth rate
+        allIncreasingSavings.push(increasedSavings); //this will just be pushing the growth with the growth rate no savings added
+      }
+      return allIncreasingSavings;
+      //if they continue to save through the duration, continueToSave = true
+    } else {
+      let annualGrowthRateDecimal = goal.annualGrowthRate / 100;
+      let allIncreasingSavings = [];
+      let increasedSavings = goal.alreadySaved; // Initial lump sum already saved
+      //for the years till goal  AND the goal duration will add to savings, and also increase by annual growth rate decimal
+      for (let i = 0; i < yearsTillGoal + goal.goalDuration; i++) {
+        increasedSavings *= 1 + annualGrowthRateDecimal; // Apply growth rate
+        increasedSavings += goal.savingsTowardAmount; // Add contribution every year
+        allIncreasingSavings.push(increasedSavings);
+      }
+
+      return allIncreasingSavings;
+    }
   }
 
   let savingsByYear = calculateSavingsByYear(goal, me);
@@ -73,7 +102,6 @@ function GoalSavingsCostTable({ goal, me }) {
   }
   let inflationAdjustedGoalCost = calculateInflationAdjustedGoalCost(goal, me);
 
-  console.log("inflation adjusted goal cost", inflationAdjustedGoalCost);
   // this is the goal duration + years till goal so the total number of years this goal will exist
   let totalYears = goal.targetAge - me.age + goal.goalDuration;
 
@@ -84,28 +112,35 @@ function GoalSavingsCostTable({ goal, me }) {
     savingsByYear,
     goal
   ) {
-    let lastYearSavings = savingsByYear[savingsByYear.length - 1];
-    let indexOfLastYearSavings = savingsByYear.length;
-    let savingsByYearContinued = [...savingsByYear];
+    //the last year of savings in the scenario where they no longer are saving during the duration
+    // is the years till goal of savings by year
+    let lastYearSavings = savingsByYear[goal.targetAge - me.age - 1];
+
+    let indexOfLastYearSavings = savingsByYear[goal.targetAge - me.age - 1];
+    let savingsByYearUpdated = [...savingsByYear];
     //this is the array but it only includes the inflation adjusted yearly goal costs of the indexes when spending down the savings
 
-    //this will be to keep track of the savings number as it decreases
-    let currentSavingsNumber = lastYearSavings;
-    //this adds on to savings by year array by taking the savings and removing the associated years inflation adjusted goal cost
-    for (let i = 0; i < goal.goalDuration; i++) {
-      currentSavingsNumber =
-        currentSavingsNumber -
-        inflationAdjustedGoalCost[indexOfLastYearSavings + i];
-      savingsByYearContinued.push(currentSavingsNumber);
+    //this will keep track of total subtracted to from savings
+    let totalsubtracted = 0;
+
+    //this will update the savingsbyYearUpdated by for every index of it, subtracting from the savingsbyyearupdated at index the total subtracted
+    // then adding to total subtracted the amount that was just subtracted
+    for (
+      let i = goal.targetAge - me.age;
+      i < goal.targetAge - me.age + goal.goalDuration;
+      i++
+    ) {
+      totalsubtracted = totalsubtracted + inflationAdjustedGoalCost[i];
+      savingsByYearUpdated[i] = savingsByYearUpdated[i] - totalsubtracted;
     }
-    return savingsByYearContinued;
+    return savingsByYearUpdated;
   }
   let savingsGrowingDecreasing = spendingSavingsOnGoal(
     inflationAdjustedGoalCost,
     savingsByYear,
     goal
   );
-  console.log("savingsgrowingdecreasing", savingsGrowingDecreasing);
+
   // this is the goal duration + years till goal so the total number of years this goal will exist
 
   //this makes an array of labels of "Year x" where the length is the total years
@@ -114,7 +149,7 @@ function GoalSavingsCostTable({ goal, me }) {
   return (
     <>
       <section>
-        <h2>Goal Information</h2>
+        <h2>Inflation Adjusted Yearly Breakdown Of Goal</h2>
         <section className="fulltablearea">
           <table className="incomeExpensesTable">
             <thead>
@@ -227,12 +262,12 @@ function GoalGraph({ totalGoalCostInflationAdjusted, totalFVSavings }) {
 
 function IndividualGoalBreakdown({ goal, me }) {
   //this is the number of years from their current age until the target year of the goal
-  console.log("goal name", goal.name);
+
   let yearsTillGoal = goal.targetAge - me.age;
-  console.log("years till goal", yearsTillGoal);
+
   //this is converting the annual growth rate to be a decimal instead of a whole number percentage
   let annualGrowthRateDecimal = goal.annualGrowthRate / 100;
-  console.log("annual growth rate decimal", annualGrowthRateDecimal);
+
   // future value of assets already saved toward this goal. this is calculated by taking the
   // the already saved value, then multiplying it by the annual growth rate + 1
   // to the power of the years till the goal.
@@ -240,28 +275,48 @@ function IndividualGoalBreakdown({ goal, me }) {
   //this iterative function calculates over the duration of the build up period until the the goals target date
   // how much is expected to be saved in total.
   function calculateSavingsByYear(goal, me) {
-    let yearsTillGoal = goal.targetAge - me.age;
-    let annualGrowthRateDecimal = goal.annualGrowthRate / 100;
+    //this makes sense if they are not saving more during the duration of the goal.
+    //however, if they are saving more during the duration of the goal, need to account for that. during duration of the goal though, the
+    // assets continue to grow year by year by the growth factor
+    if (goal?.continueToSave === false) {
+      let yearsTillGoal = goal.targetAge - me.age;
+      let annualGrowthRateDecimal = goal.annualGrowthRate / 100;
 
-    let increasedSavings = goal.alreadySaved; // Initial lump sum already saved
+      let increasedSavings = goal.alreadySaved; // Initial lump sum already saved
 
-    for (let i = 0; i < yearsTillGoal; i++) {
-      increasedSavings *= 1 + annualGrowthRateDecimal; // Apply growth rate
-      increasedSavings += goal.savingsTowardAmount; // Add contribution every year
+      for (let i = 0; i < yearsTillGoal; i++) {
+        increasedSavings *= 1 + annualGrowthRateDecimal; // Apply growth rate
+        increasedSavings += goal.savingsTowardAmount; // Add contribution every year until reaching goal
+      }
+      //even for the duration of the goal while not contributing more to savings, it continues to grow in value
+      for (let i = 0; i < goal.goalDuration; i++) {
+        increasedSavings *= 1 + annualGrowthRateDecimal; // Apply growth rate
+      }
+      return increasedSavings;
+      //if they do continue to save for the goal during the duration
+    } else {
+      let yearsTillGoal = goal.targetAge - me.age;
+      let annualGrowthRateDecimal = goal.annualGrowthRate / 100;
+
+      let increasedSavings = goal.alreadySaved; // Initial lump sum already saved
+      //for the years till goal and the goal duration
+      for (let i = 0; i < yearsTillGoal + goal.goalDuration; i++) {
+        increasedSavings *= 1 + annualGrowthRateDecimal; // Apply growth rate
+        increasedSavings += goal.savingsTowardAmount; // Add contribution every year for entirety of duration of goal
+      }
+      return increasedSavings;
     }
-    return increasedSavings;
   }
   let totalFVSavings = calculateSavingsByYear(goal, me);
 
-  console.log("total savings future value", totalFVSavings);
   //this converts the whole number inflation rate into a decimal
   let inflationRateDecimal = me.inflation / 100;
-  console.log("inflation rate decimal", inflationRateDecimal);
+
   //this is the future value of the target amount adjusted for a yearly inflation rate
   //after a number of years
   let fVGoalInflationAdjusted =
     goal.targetAmount * (1 + inflationRateDecimal) ** yearsTillGoal;
-  console.log("future value goal inflation adjusted", fVGoalInflationAdjusted);
+
   // Total cost of the goal adjusted for the entire duration, considering inflation over the distribution period
   let totalGoalCostInflationAdjusted = 0;
   //this assumes that they will not be saving more during the duration of the goal. The goal cost continues to increase during
@@ -273,14 +328,30 @@ function IndividualGoalBreakdown({ goal, me }) {
     totalGoalCostInflationAdjusted +=
       fVGoalInflationAdjusted * (1 + inflationRateDecimal) ** i;
   }
-  console.log(
-    "total goal cost inflation adjusted",
-    totalGoalCostInflationAdjusted
-  );
+
   // this is your overall percentage the user is tracking toward each financial goal, calculated
   // by dividing the amount they are slated to save by the inflation adjusted cost of the goal
   let percentToGoal = (totalFVSavings / totalGoalCostInflationAdjusted) * 100;
-  console.log("percent to goal", percentToGoal);
+
+  function ContinueToSaveOrNot() {
+    if (goal.continueToSave === true) {
+      return (
+        <p>
+          You are currently contributing {goal.savingsTowardAmount} every year
+          toward this goal, and plan to continue contributing this amount
+          throughout the duration of the goal.
+        </p>
+      );
+    } else {
+      return (
+        <p>
+          You are currently contributing {goal.savingsTowardAmount} every year
+          toward this goal, but will stop contributing to the goal upon reaching
+          the target year of the goal.
+        </p>
+      );
+    }
+  }
 
   return (
     <>
@@ -292,17 +363,20 @@ function IndividualGoalBreakdown({ goal, me }) {
         <div className="financialgoalsmain">
           <section className="financialgoalsdescription">
             <p>
-              Your goal, {goal.name}, has a target amount of {goal.targetAmount}{" "}
-              per year. With an inflation rate of {me.inflation}% over the next{" "}
-              {yearsTillGoal} years until you reach your target age, the
-              inflation-adjusted annual amount you will need is{" "}
-              {fVGoalInflationAdjusted.toFixed(2)}.
+              Your {goal.goalPriority} goal, {goal.name}, has a target amount of{" "}
+              {goal.targetAmount} per year. With an inflation rate of{" "}
+              {me.inflation}% over the next {yearsTillGoal} years until you
+              reach your target age, the inflation-adjusted annual amount you
+              will need is {fVGoalInflationAdjusted.toFixed(2)} on the target
+              age. This amount continues to increase for the duration of the
+              goal.
             </p>
             <p>
               Considering the duration of {goal.goalDuration} years for this
               goal, the total cost, adjusted for inflation, is estimated to be{" "}
               {totalGoalCostInflationAdjusted.toFixed(2)}.
             </p>
+            {ContinueToSaveOrNot()}
             <p>
               With an estimated annual growth rate of {goal.annualGrowthRate}%
               on the savings for this goal, you are currently{" "}
@@ -340,7 +414,12 @@ export default function FinancialGoals() {
           </section>
         </>
       ) : (
-        <p>Please log in</p>
+        <section className="pleaseloginarea">
+          <p className="pleaselogin">Please Log In</p>
+          <button className="link">
+            <NavLink to="/login">Log In Or Register</NavLink>
+          </button>
+        </section>
       )}
     </>
   );
