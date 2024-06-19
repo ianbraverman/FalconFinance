@@ -3,7 +3,8 @@
 .fullpage {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  /* min-height: 100vh; */
+  height: 100%;
 }
 
 .threeareasection {
@@ -66,6 +67,7 @@
   cursor: pointer;
   width: 50%; /* Makes the button take full width */
   box-sizing: border-box; /* Ensures padding and border are included in width */
+  font-size: 1.5rem;
 }
 .happytohaveyou {
   flex: 2;

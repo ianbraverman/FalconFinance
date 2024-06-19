@@ -92,6 +92,7 @@ CREATE TABLE "Goals" (
     "alreadySaved" INTEGER NOT NULL,
     "annualGrowthRate" INTEGER NOT NULL,
     "goalDuration" INTEGER NOT NULL,
+    "continueToSave" BOOLEAN NOT NULL,
 
     CONSTRAINT "Goals_pkey" PRIMARY KEY ("id")
 );
@@ -104,7 +105,6 @@ CREATE TABLE "Expenses" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "expenseType" "ExpenseType" NOT NULL,
     "monthlyCost" INTEGER NOT NULL,
-    "interest" INTEGER NOT NULL,
 
     CONSTRAINT "Expenses_pkey" PRIMARY KEY ("id")
 );

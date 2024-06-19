@@ -66,7 +66,7 @@ export default function Homepage() {
               way.
             </p>
             <button className="link">
-              <NavLink to="/about">To About Us</NavLink>
+              <NavLink to="/about">About Us</NavLink>
             </button>
           </article>
         </section>

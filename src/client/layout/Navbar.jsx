@@ -29,7 +29,9 @@ export default function Navbar() {
             className="nav-image"
           />
         </NavLink>
-        <p className="websitename">Falcon Finance </p>
+        <NavLink className="navlink" to="/">
+          <p className="websitename">Falcon Finance </p>
+        </NavLink>
       </section>
       <menu className="links">
         {token ? (
@@ -59,7 +61,7 @@ export default function Navbar() {
         ) : (
           <li>
             <NavLink className="navlink" to="/login">
-              Log In
+              Log In/Register
             </NavLink>
           </li>
         )}

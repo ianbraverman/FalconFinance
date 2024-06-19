@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation, useRegisterMutation } from "./authSlice";
+import "./authform.css";
 
 /** This form allows users to register or log in. */
 export default function AuthForm() {
@@ -43,33 +44,45 @@ export default function AuthForm() {
 
   return (
     <>
-      <h1>{authAction}</h1>
-      <form onSubmit={attemptAuth}>
-        <label>
-          Username
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            autoComplete="username"
+      <article className="mainsection">
+        <h1 className="logo">Falcon Finance</h1>
+        <div className="imagecontainer">
+          <img
+            className="falconimageauthform "
+            src="https://res.cloudinary.com/dzpne110u/image/upload/v1718305040/FalconFinancial/falconloginlogout_xuwohh.webp"
           />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="current-password"
-          />
-        </label>
-        <button>{authAction}</button>
-      </form>
-      <a onClick={() => setIsLogin(!isLogin)}>{altCopy}</a>
+        </div>
+        <section className="loginlogoutmain">
+          <form className="loginlogoutformarea" onSubmit={attemptAuth}>
+            <label className="usernamepasswordindividual">
+              Username:
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                autoComplete="username"
+                className="loginformtyping"
+              />
+            </label>
+            <label className="usernamepasswordindividual">
+              Password:
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+                className="loginformtyping"
+              />
+            </label>
+            <button className="authformbutton">{authAction}</button>
+          </form>
+          <a onClick={() => setIsLogin(!isLogin)}>{altCopy}</a>
 
-      {(loginLoading || registerLoading) && <p>Please wait...</p>}
-      {loginError && <p role="alert">{loginError}</p>}
-      {registerError && <p role="alert">{registerError}</p>}
+          {(loginLoading || registerLoading) && <p>Please wait...</p>}
+          {loginError && <p role="alert">{loginError}</p>}
+          {registerError && <p role="alert">{registerError}</p>}
+        </section>
+      </article>
     </>
   );
 }

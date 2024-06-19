@@ -3,7 +3,7 @@ import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { Link, useSearchParams, NavLink } from "react-router-dom";
 import { useGetUserQuery } from "../userform/accountSlice";
-import "./statistics.css";
+// import "./statistics.css";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -33,36 +33,40 @@ function AssetsBreakdown({ me }) {
 
   return (
     <>
-      <h2>Assets Breakdown</h2>
-      <table className="incomeExpensesTable">
-        <thead>
-          <tr>
-            <th className="tableSpace">Asset</th>
-            <th className="tableSpace">Asset Type</th>
-            <th className="tableSpace">Balance</th>
-            <th className="tableSpace">Yearly Earned Interest</th>
-            <th className="tableSpace">Yearly Contributions</th>
-            <th className="tableSpace">Physical Or Monetary</th>
-            <th className="tableSpace">Percentage Of Overall Assets</th>
-          </tr>
-        </thead>
-        <tbody>
-          {me?.Assets.map((asset, index) => (
-            <tr key={index}>
-              <td className="tableSpace">{asset.name}</td>
-              <td className="tableSpace">{asset.assetType}</td>
-              <td className="tableSpace">{asset.balance}</td>
-              <td className="tableSpace">{asset.interest}</td>
-              <td className="tableSpace">{asset.contributions}</td>
-              <td className="tableSpace">{asset.physMon}</td>
-              <td className="tableSpace">
-                {((asset.balance / totalAssets) * 100).toFixed(2)}%
-              </td>
+      <section className="fulltablearea">
+        <h2 className="breakdownheader">Assets Breakdown</h2>
+        <table className="incomeExpensesTable">
+          <thead>
+            <tr>
+              <th className="tableSpace">Asset</th>
+              <th className="tableSpace">Asset Type</th>
+              <th className="tableSpace">Balance</th>
+              <th className="tableSpace">Yearly Earned Interest</th>
+              <th className="tableSpace">Yearly Contributions</th>
+              <th className="tableSpace">Physical Or Monetary</th>
+              <th className="tableSpace">Percentage Of Overall Assets</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <p>Your Total Assets Are: {totalAssets}</p>
+          </thead>
+          <tbody>
+            {me?.Assets.map((asset, index) => (
+              <tr key={index}>
+                <td className="tableSpace">{asset.name}</td>
+                <td className="tableSpace">{asset.assetType}</td>
+                <td className="tableSpace">{asset.balance}</td>
+                <td className="tableSpace">{asset.interest}</td>
+                <td className="tableSpace">{asset.contributions}</td>
+                <td className="tableSpace">{asset.physMon}</td>
+                <td className="tableSpace">
+                  {((asset.balance / totalAssets) * 100).toFixed(2)}%
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p className="totalamountsbreakdown">
+          Your Total Assets Are: {totalAssets}
+        </p>
+      </section>
     </>
   );
 }
@@ -75,34 +79,38 @@ function LiabilitiesBreakdown({ me }) {
 
   return (
     <>
-      <h2>Liabilities Breakdown</h2>
-      <table className="incomeExpensesTable">
-        <thead>
-          <tr>
-            <th className="tableSpace">Liability</th>
-            <th className="tableSpace">Yearly Earned Owed</th>
-            <th className="tableSpace">Liability Type</th>
-            <th className="tableSpace">Monthly Payment</th>
-            <th className="tableSpace">Balance</th>
-            <th className="tableSpace">Percentage Of Overall Liabilities</th>
-          </tr>
-        </thead>
-        <tbody>
-          {me?.Liabilities.map((liability, index) => (
-            <tr key={index}>
-              <td className="tableSpace">{liability.name}</td>
-              <td className="tableSpace">{liability.interest}</td>
-              <td className="tableSpace">{liability.liabilityType}</td>
-              <td className="tableSpace">{liability.monthlyPayment}</td>
-              <td className="tableSpace">{liability.amount}</td>
-              <td className="tableSpace">
-                {((liability.amount / totalLiabilities) * 100).toFixed(2)}%
-              </td>
+      <section className="fulltablearea">
+        <h2 className="breakdownheader">Liabilities Breakdown</h2>
+        <table className="incomeExpensesTable">
+          <thead>
+            <tr>
+              <th className="tableSpace">Liability</th>
+              <th className="tableSpace">Yearly Earned Owed</th>
+              <th className="tableSpace">Liability Type</th>
+              <th className="tableSpace">Monthly Payment</th>
+              <th className="tableSpace">Balance</th>
+              <th className="tableSpace">Percentage Of Overall Liabilities</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <p>Your Total Liabilities Are: {totalLiabilities}</p>
+          </thead>
+          <tbody>
+            {me?.Liabilities.map((liability, index) => (
+              <tr key={index}>
+                <td className="tableSpace">{liability.name}</td>
+                <td className="tableSpace">{liability.interest}</td>
+                <td className="tableSpace">{liability.liabilityType}</td>
+                <td className="tableSpace">{liability.monthlyPayment}</td>
+                <td className="tableSpace">{liability.amount}</td>
+                <td className="tableSpace">
+                  {((liability.amount / totalLiabilities) * 100).toFixed(2)}%
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p className="totalamountsbreakdown">
+          Your Total Liabilities Are: {totalLiabilities}
+        </p>
+      </section>
     </>
   );
 }
@@ -202,7 +210,9 @@ function AssetsIncreasing({ me }) {
 
   return (
     <>
-      <Line options={options} data={data} />
+      <section className="incomeexpensesgraphholder">
+        <Line options={options} data={data} />
+      </section>
     </>
   );
 }
@@ -215,12 +225,21 @@ export default function AssetsLiabilities() {
       {token ? (
         <>
           <h1>Here Is A Break Down Of Your Assets</h1>
-          {me && <AssetsBreakdown me={me} />}
-          {me && <LiabilitiesBreakdown me={me} />}
-          {me && <AssetsIncreasing me={me} />}
+          <article className="assetsliabilitiesmainsection">
+            <section>
+              {me && <AssetsBreakdown me={me} />}
+              {me && <LiabilitiesBreakdown me={me} />}
+            </section>
+            {me && <AssetsIncreasing me={me} />}
+          </article>
         </>
       ) : (
-        <p>Please Log In</p>
+        <section className="pleaseloginarea">
+          <p className="pleaselogin">Please Log In</p>
+          <button className="link">
+            <NavLink to="/login">Log In Or Register</NavLink>
+          </button>
+        </section>
       )}
     </>
   );

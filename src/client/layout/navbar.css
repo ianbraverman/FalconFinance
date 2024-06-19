@@ -13,6 +13,7 @@
   flex-direction: row;
   gap: 1rem;
   margin-right: 1rem;
+  font-size: 1.3rem;
 }
 .nav-image {
   width: 3rem; /* Adjust the width as needed */
@@ -23,6 +24,7 @@
 
 .navlink {
   color: white;
+  font-size: 1.3rem;
 }
 .leftnavbarside {
   display: flex;
@@ -46,4 +48,34 @@
   background-color: rgba(34, 73, 117, 255);
   border-top: grey solid;
   padding-top: 3rem;
+  padding: 1rem;
+}
+
+#leftfooter {
+  margin-left: 0.5rem;
+}
+#rightfooter {
+  margin-right: 0.5rem;
+}
+.social_media_logo {
+  height: 45px; /* Adjusted height */
+  width: 45px; /* Ensure it maintains aspect ratio */
+  margin-right: 1rem;
+}
+.leftside {
+  display: flex;
+  align-items: center;
+}
+
+/* general layout */
+#root {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  overflow: auto;
 }

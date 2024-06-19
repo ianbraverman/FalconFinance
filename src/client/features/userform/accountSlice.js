@@ -46,14 +46,13 @@ const accountApi = api.injectEndpoints({
       invalidatesTags: ["User"],
     }),
     addExpense: builder.mutation({
-      query: ({ name, expenseType, monthlyCost, interest }) => ({
+      query: ({ name, expenseType, monthlyCost }) => ({
         url: `/expenses`,
         method: "POST",
         body: {
           name: name,
           expenseType: expenseType,
           monthlyCost: monthlyCost,
-          interest: interest,
         },
       }),
       invalidatesTags: ["User"],
@@ -69,6 +68,7 @@ const accountApi = api.injectEndpoints({
         alreadySaved,
         annualGrowthRate,
         goalDuration,
+        continueToSave,
       }) => ({
         url: `/goals`,
         method: "POST",
@@ -82,6 +82,7 @@ const accountApi = api.injectEndpoints({
           alreadySaved: alreadySaved,
           annualGrowthRate: annualGrowthRate,
           goalDuration: goalDuration,
+          continueToSave: continueToSave,
         },
       }),
       invalidatesTags: ["User"],

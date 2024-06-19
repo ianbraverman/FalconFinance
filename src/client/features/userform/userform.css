@@ -32,3 +32,81 @@
 .bottombuttons a {
   color: black;
 }
+
+.toparea {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.8rem;
+  border-bottom: grey solid;
+}
+#currentpage {
+  border-left: grey solid;
+}
+
+.descriptionForm {
+  font-size: 1.5rem;
+}
+
+.personalinfolayout {
+  display: flex;
+  flex-direction: column;
+  gap: 7rem;
+}
+
+.personalinfoquestions {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.2rem;
+  font-size: 1.5rem;
+}
+
+.personalinfoinput {
+  height: 3rem; /* Set the height of the input fields */
+  padding: 0.5rem; /* Add padding for better appearance */
+  font-size: 1.5rem; /* Adjust font size if necessary */
+  border: 1px solid #ccc; /* Optional: add border */
+  border-radius: 0.25rem; /* Optional: add border radius */
+  box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+.threeareasectionuserform {
+  display: flex;
+  flex-direction: row;
+}
+.leftsideuserform {
+  flex: 1;
+}
+
+.centeruserform {
+  flex: 2.5;
+}
+.rightsideuserform {
+  flex: 1;
+}
+.userformimages {
+  max-width: 100%;
+  max-height: 100%;
+}
+.userformimagecontainer {
+  flex: 1;
+}
+.userformsectionheader {
+  text-align: center;
+  font-size: 2rem;
+}
+
+/* please log in */
+.pleaselogin {
+  font-size: 4rem;
+  text-align: center;
+}
+.pleaseloginarea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
+  gap: 2rem;
+}

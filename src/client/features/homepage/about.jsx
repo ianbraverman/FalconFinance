@@ -3,7 +3,7 @@ import { selectToken } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { Link, useSearchParams, NavLink } from "react-router-dom";
 import { useGetUserQuery } from "../userform/accountSlice";
-import "./home.css";
+// import "./home.css";
 
 export default function About() {
   const { data: me } = useGetUserQuery();

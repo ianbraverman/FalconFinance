@@ -62,6 +62,7 @@ router.post("/", async (req, res, next) => {
       alreadySaved,
       annualGrowthRate,
       goalDuration,
+      continueToSave,
     } = req.body;
 
     if (!res.locals.user) {
@@ -84,6 +85,7 @@ router.post("/", async (req, res, next) => {
         alreadySaved: +alreadySaved,
         annualGrowthRate: +annualGrowthRate,
         goalDuration: +goalDuration,
+        continueToSave: continueToSave,
       },
     });
 
