@@ -128,6 +128,7 @@ function IncomesBreakdown({ me }) {
     <>
       <section className="fulltablearea">
         <h2 className="breakdownheader">Income Breakdown</h2>
+
         <table className="incomeExpensesTable">
           <thead>
             <tr>
@@ -152,6 +153,7 @@ function IncomesBreakdown({ me }) {
             ))}
           </tbody>
         </table>
+
         <p className="totalamountsbreakdown">
           Your Total Income Is: {totalIncome}
         </p>

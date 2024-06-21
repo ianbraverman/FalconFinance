@@ -135,7 +135,7 @@
   padding: 0.5rem 1rem;
   border-radius: 0.3rem;
   cursor: pointer;
-  width: 60%; /* Makes the button take full width */
+  width: 60%;
   box-sizing: border-box; /* Ensures padding and border are included in width */
 }
 .moredetailedbreakdown p {
@@ -151,6 +151,85 @@
   text-align: center;
 }
 
+@media (max-width: 1500px) {
+  .graphanddescription {
+    flex-direction: column;
+  }
+  .description {
+    text-align: center;
+    width: 80%;
+  }
+  .incomeexpensesgraphholder {
+    position: relative;
+    height: 900px;
+    width: 400px;
+  }
+  .mainheadertop {
+    font-size: 2rem;
+  }
+  .eachquandrant {
+    height: 1000px; /* Ensure max width for each quadrant */
+    width: 500px;
+  }
+}
+
+@media (max-width: 950px) {
+  .graphanddescription {
+    flex-direction: column;
+  }
+  .description {
+    text-align: center;
+    width: 80%;
+  }
+  .incomeexpensesgraphholder {
+    position: relative;
+    height: 1000px;
+    width: 500px;
+  }
+  .mainheadertop {
+    font-size: 2rem;
+  }
+  .eachquandrant {
+    height: 1000px; /* Ensure max width for each quadrant */
+    width: 500px;
+  }
+  .toparea {
+    flex-direction: column;
+  }
+  .bottomarea {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 555px) {
+  .graphanddescription {
+    flex-direction: column;
+  }
+  .description {
+    text-align: center;
+    width: 50%;
+  }
+  .incomeexpensesgraphholder {
+    position: relative;
+    height: 550px;
+    width: 350px;
+  }
+  .mainheadertop {
+    font-size: 1.5rem;
+  }
+  .eachquandrant {
+    height: 100px; /* Ensure max width for each quadrant */
+    width: 300px;
+  }
+  .toparea {
+    flex-direction: column;
+  }
+  .bottomarea {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 /*assets liabilities page */
 .assetsliabilitiesmainsection {
   display: flex;
@@ -163,6 +242,10 @@
 }
 
 /*financial goals page */
+
+.financialGoalsTableHeader {
+  text-align: center;
+}
 
 .financialgoalsmain {
   display: flex;
@@ -199,6 +282,44 @@
   margin-left: 1rem;
   gap: 2rem;
   font-size: 1.2rem;
+}
+
+@media (max-width: 1500px) {
+  .assetsliabilitiesmainsection {
+    flex-direction: column;
+  }
+  .fulltablearea {
+    width: 100vw;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .incomeExpensesTable {
+    display: block;
+    width: 100%; /* Ensure the table takes the full width available */
+  }
+
+  .tableSpace {
+    word-wrap: break-word; /* Break long words if necessary */
+  }
+}
+
+@media (max-width: 1600px) {
+  .financialgoalsmain {
+    flex-direction: column;
+  }
+  .financialchartholder {
+    width: 100%;
+  }
+  .fulltablearea {
+    width: 100vw;
+    height: auto;
+    padding: 1rem;
+  }
+  .incomeExpensesTable {
+    display: block;
+    width: 100%; /* Ensure the table takes the full width available */
+  }
 }
 
 /* please log in */

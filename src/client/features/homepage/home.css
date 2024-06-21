@@ -15,6 +15,13 @@
   color: white;
   flex: 1;
 }
+
+@media (max-width: 555px) {
+  .threeareasection {
+    flex-direction: column;
+  }
+}
+
 .leftsideinformation {
   flex: 1;
   justify-content: center;

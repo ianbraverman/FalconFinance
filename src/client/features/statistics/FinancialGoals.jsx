@@ -149,7 +149,9 @@ function GoalSavingsCostTable({ goal, me }) {
   return (
     <>
       <section>
-        <h2>Inflation Adjusted Yearly Breakdown Of Goal</h2>
+        <h2 className="financialGoalsTableHeader">
+          Inflation Adjusted Yearly Breakdown Of Goal
+        </h2>
         <section className="fulltablearea">
           <table className="incomeExpensesTable">
             <thead>

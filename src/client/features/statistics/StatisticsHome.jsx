@@ -632,7 +632,7 @@ function EmergencySavings({ me }) {
           </article>
           <EmergencySavingsGraph me={me} />
         </section>
-        <p>
+        <p id="emergencysavingspadding">
           You currently have {totalSavings}$ in savings, which is greater than
           or equal to six months of your expenses. Great job! You have a
           sufficient emergency fund.
@@ -641,19 +641,24 @@ function EmergencySavings({ me }) {
     );
   } else {
     return (
-      <>
-        <p>
-          It is important to have emergency savings equal to at least 6 months
-          of monthly expenses. Your expenses every month are {oneMonthExpenses}
-          $, so your expenses for 6 months are {SixMonthsExpenses}$.
-        </p>
+      <section id="bottomright" className="incomeexpensesmain">
+        <section className="graphanddescription">
+          <article className="description">
+            <p>
+              It is important to have emergency savings equal to at least 6
+              months of monthly expenses. Your expenses every month are{" "}
+              {oneMonthExpenses}
+              $, so your expenses for 6 months are {SixMonthsExpenses}$.
+            </p>
+          </article>
+          <EmergencySavingsGraph me={me} />
+        </section>
         <p id="emergencysavingspadding">
           You currently have {totalSavings}$ in savings, which is less than six
           months of your expenses. It is recommended that you increase your
           savings so as to have an appropriatly sized emergency fund.
         </p>
-        <EmergencySavingsGraph me={me} />
-      </>
+      </section>
     );
   }
 }
