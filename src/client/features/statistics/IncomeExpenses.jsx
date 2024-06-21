@@ -110,7 +110,6 @@ function IncomeIncreasing({ me }) {
     labels,
     datasets: datasetInformation,
   };
-  console.log(data);
 
   return (
     <>

@@ -580,7 +580,8 @@ function OverallProgressGoals({ me }) {
           <p>
             You are overall {totalProgress.toFixed(2) * 100}% toward achieving
             your financial goals. This number is weighted based off the
-            importance of each goal.
+            importance of each goal. Necessary goals are weighted 50%, important
+            goals 30%, and aspirational goals 20%
           </p>
         </article>
         {OverallProgressGoalsGraph(
