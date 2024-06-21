@@ -176,7 +176,7 @@ function NewGoalItem({ goal, handleNewGoalChange, handleDeleteGoal }) {
 
 function ExistingGoalItem({ goal, deleteAGoal }) {
   //delete button will on click delete that goal and send a delete request to delete it
-  console.log(goal);
+
   function continueToSave(goal) {
     if (goal.continueToSave === true) {
       return "True";

@@ -63,7 +63,9 @@ export default function PersonalInfo() {
             ) : (
               <p>Hello User</p>
             )}
-            <p>Please Fill Out The Following Information</p>
+            <p className="userformfilloutfollowinginfo">
+              Please Fill Out The Following Information
+            </p>
             <p id="currentpage">Page 1/6</p>
           </section>
           <div className="personalinfolayout">

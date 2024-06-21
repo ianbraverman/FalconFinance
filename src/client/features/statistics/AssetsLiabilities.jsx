@@ -206,7 +206,6 @@ function AssetsIncreasing({ me }) {
     labels,
     datasets: datasetInformation,
   };
-  console.log(data);
 
   return (
     <>

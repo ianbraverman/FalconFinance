@@ -115,7 +115,6 @@ function ExistingAssetItem({ asset, deleteAnAsset }) {
     if (asset?.assetType === "FOUR01K") {
       return "401K";
     } else {
-      console.log(asset);
       return asset?.assetType;
     }
   }

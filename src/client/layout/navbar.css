@@ -8,6 +8,7 @@
   background-color: rgba(34, 73, 117, 255);
   border-bottom: grey solid;
 }
+
 .links {
   display: flex;
   flex-direction: row;
@@ -15,6 +16,16 @@
   margin-right: 1rem;
   font-size: 1.3rem;
 }
+
+@media (max-width: 555px) {
+  .top {
+    flex-direction: column;
+  }
+  .links {
+    flex-direction: column;
+  }
+}
+
 .nav-image {
   width: 3rem; /* Adjust the width as needed */
   height: 3rem; /* Adjust the height as needed */
@@ -78,4 +89,10 @@
 main {
   flex: 1;
   overflow: auto;
+}
+
+@media (max-width: 555px) {
+  .bottom {
+    flex-direction: column;
+  }
 }

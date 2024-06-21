@@ -41,8 +41,22 @@
   font-size: 1.8rem;
   border-bottom: grey solid;
 }
+
 #currentpage {
   border-left: grey solid;
+}
+
+@media (max-width: 555px) {
+  .toparea {
+    flex-direction: column;
+  }
+  .userformfilloutfollowinginfo {
+    text-align: center;
+  }
+  #currentpage {
+    border-top: grey solid;
+    border-right: grey solid;
+  }
 }
 
 .descriptionForm {
@@ -96,6 +110,18 @@
 .userformsectionheader {
   text-align: center;
   font-size: 2rem;
+}
+
+@media (max-width: 555px) {
+  .userformimagecontainer {
+    margin-bottom: 2rem;
+  }
+  .rightsideuserform {
+    flex: 2;
+  }
+  .leftsideuserform {
+    flex: 2;
+  }
 }
 
 /* please log in */
