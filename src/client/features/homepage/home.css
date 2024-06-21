@@ -161,6 +161,11 @@
   object-fit: cover; /* Added */
   margin-left: 8rem;
 }
+#aboutsectionheaders {
+  font-size: 1.8rem;
+  text-decoration: underline;
+}
+
 @media (max-width: 555px) {
   .aboutphotoandinfo {
     flex-direction: column;
