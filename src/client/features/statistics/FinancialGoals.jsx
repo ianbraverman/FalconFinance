@@ -146,6 +146,14 @@ function GoalSavingsCostTable({ goal, me }) {
   //this makes an array of labels of "Year x" where the length is the total years
   const labels = Array.from({ length: totalYears }, (v, i) => `${me.age + i}`);
 
+  function showSavingsTowardDuration() {
+    if (goal.continueToSave) {
+      return goal.savingsTowardAmount;
+    } else {
+      return 0;
+    }
+  }
+
   return (
     <>
       <section>
@@ -181,7 +189,7 @@ function GoalSavingsCostTable({ goal, me }) {
                   <td className="tableSpace">
                     {index < goal.targetAge - me.age
                       ? goal.savingsTowardAmount
-                      : 0}
+                      : showSavingsTowardDuration()}
                   </td>
                   <td className="tableSpace">
                     {savingsGrowingDecreasing[index].toFixed(2)}
