@@ -141,8 +141,9 @@ export default function PersonalInfo() {
                     />
                   </label>
                   <label>
-                    What do you estimate inflation to be year over year? Enter
-                    as a whole number, for example 2% enter 2.
+                    What do you estimate inflation to be year over year? The
+                    U.S. central bank strives to keep inflation as close to 2%
+                    as possible.
                     <input
                       type="text"
                       value={formData.inflation}

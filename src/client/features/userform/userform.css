@@ -39,24 +39,16 @@
   justify-content: space-between;
   align-items: center;
   font-size: 1.8rem;
-  border-bottom: grey solid;
+  margin-left: 0.7rem;
+  margin-right: 0.7rem;
 }
 
 #currentpage {
   border-left: grey solid;
 }
 
-@media (max-width: 555px) {
-  .toparea {
-    flex-direction: column;
-  }
-  .userformfilloutfollowinginfo {
-    text-align: center;
-  }
-  #currentpage {
-    border-top: grey solid;
-    border-right: grey solid;
-  }
+.existingnewthingheader {
+  margin-left: 1rem;
 }
 
 .descriptionForm {
@@ -89,6 +81,7 @@
 .threeareasectionuserform {
   display: flex;
   flex-direction: row;
+  border-top: grey solid;
 }
 .leftsideuserform {
   flex: 1;
@@ -111,6 +104,11 @@
   text-align: center;
   font-size: 2rem;
 }
+.userformsectionheaderdescription {
+  margin: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
 
 @media (max-width: 555px) {
   .userformimagecontainer {
@@ -121,6 +119,19 @@
   }
   .leftsideuserform {
     flex: 2;
+  }
+  .toparea {
+    flex-direction: column;
+  }
+  .userformfilloutfollowinginfo {
+    text-align: center;
+  }
+  #currentpage {
+    border-top: grey solid;
+    border-right: grey solid;
+  }
+  .userformsectionheaderdescription {
+    font-size: 0.8rem;
   }
 }
 

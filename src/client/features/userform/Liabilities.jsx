@@ -128,7 +128,7 @@ export default function Liabilities() {
   const navigate = useNavigate();
   const [newLiabilities, setNewLiabilities] = useState([]);
 
-  const submitLiabilitiesAndLink = async (evt) => {
+  const submitLiabilitiesAndLinkNext = async (evt) => {
     evt.preventDefault();
     try {
       for (let i = 0; i < newLiabilities.length; i++) {
@@ -142,6 +142,25 @@ export default function Liabilities() {
           });
       }
       navigate(`/userform/incomes`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const submitLiabilitiesAndLinkPrevious = async (evt) => {
+    evt.preventDefault();
+    try {
+      for (let i = 0; i < newLiabilities.length; i++) {
+        if (newLiabilities[i]["name"] != "")
+          await addLiability({
+            name: newLiabilities[i]["name"],
+            interest: newLiabilities[i]["interest"],
+            liabilityType: newLiabilities[i]["liabilityType"],
+            monthlyPayment: newLiabilities[i]["monthlyPayment"],
+            amount: newLiabilities[i]["amount"],
+          });
+      }
+      navigate(`/userform/assets`);
     } catch (error) {
       console.log(error);
     }
@@ -227,8 +246,19 @@ export default function Liabilities() {
             </section>
             <section className="centeruserform">
               <h1 className="userformsectionheader">Liabilities</h1>
+              <h1 className="userformsectionheaderdescription">
+                If you have existing liabilities in our system, they will show
+                up below. Clicking "Delete Liability" on an existing liability
+                will immediately remove it from our system. You can also add new
+                liabilities by clicking the "Add New Liability" button below.
+                Clicking "Save And Continue To Incomes" or "Save And Return To
+                Assets" will save your newly entered liabilities in the system
+                and direct you to the appropriate page.
+              </h1>
               {me?.Liabilities.length > 0 ? (
-                <h2>Existing Liabilities:</h2>
+                <h2 className="existingnewthingheader">
+                  Existing Liabilities:
+                </h2>
               ) : (
                 <p></p>
               )}
@@ -241,7 +271,11 @@ export default function Liabilities() {
                   />
                 ))}
               </section>
-              {newLiabilities.length > 0 ? <h2>New Liabilities:</h2> : <p></p>}
+              {newLiabilities.length > 0 ? (
+                <h2 className="existingnewthingheader">New Liabilities:</h2>
+              ) : (
+                <p></p>
+              )}
               {newLiabilities.map((newLiability) => (
                 <NewLiabilityItem
                   key={newLiability.id}
@@ -256,12 +290,15 @@ export default function Liabilities() {
               </button>
               <button
                 className="bottombuttons"
-                onClick={submitLiabilitiesAndLink}
+                onClick={submitLiabilitiesAndLinkNext}
               >
                 Save And Continue To Incomes
               </button>
-              <button className="bottombuttons">
-                <Link to={"/userform/assets"}>Return To Assets</Link>
+              <button
+                className="bottombuttons"
+                onClick={submitLiabilitiesAndLinkPrevious}
+              >
+                Save And Return To Assets
               </button>
             </section>
             <section className="rightsideuserform">

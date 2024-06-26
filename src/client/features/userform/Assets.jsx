@@ -142,7 +142,7 @@ export default function Assets() {
   const token = useSelector(selectToken);
   const [newAssets, setNewAssets] = useState([]);
 
-  const submitAssetsAndLink = async (evt) => {
+  const submitAssetsAndLinkNext = async (evt) => {
     evt.preventDefault();
     try {
       for (let i = 0; i < newAssets.length; i++) {
@@ -158,6 +158,27 @@ export default function Assets() {
       }
 
       navigate(`/userform/liabilities`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const submitAssetsAndLinkPrevious = async (evt) => {
+    evt.preventDefault();
+    try {
+      for (let i = 0; i < newAssets.length; i++) {
+        if (newAssets[i]["name"] != "")
+          await addAsset({
+            name: newAssets[i]["name"],
+            assetType: newAssets[i]["type"],
+            balance: newAssets[i]["balance"],
+            interest: newAssets[i]["interest"],
+            contributions: newAssets[i]["contributions"],
+            physMon: newAssets[i]["physMon"],
+          });
+      }
+
+      navigate(`/userform/personalinfo`);
     } catch (error) {
       console.log(error);
     }
@@ -241,7 +262,20 @@ export default function Assets() {
             </section>
             <section className="centeruserform">
               <h1 className="userformsectionheader">Assets</h1>
-              {me?.Assets.length > 0 ? <h2>Existing Assets:</h2> : <p></p>}
+              <h1 className="userformsectionheaderdescription">
+                If you have existing assets in our system, they will show up
+                below. Clicking "Delete Asset" on an existing asset will
+                immediately remove it from our system. You can also add new
+                assets by clicking the "Add New Asset" button below. Clicking
+                "Save And Continue To Liabilities" or "Save And Return To
+                Personal Info" will save your newly entered assets in the system
+                and direct you to the appropriate page.
+              </h1>
+              {me?.Assets.length > 0 ? (
+                <h2 className="existingnewthingheader">Existing Assets:</h2>
+              ) : (
+                <p></p>
+              )}
               <section>
                 {me?.Assets.map((asset) => (
                   <ExistingAssetItem
@@ -251,7 +285,11 @@ export default function Assets() {
                   />
                 ))}
               </section>
-              {newAssets.length > 0 ? <h2>New Assets:</h2> : <p></p>}
+              {newAssets.length > 0 ? (
+                <h2 className="existingnewthingheader">New Assets:</h2>
+              ) : (
+                <p></p>
+              )}
               {newAssets.map((newAsset) => (
                 <NewAssetItem
                   key={newAsset.id}
@@ -264,13 +302,17 @@ export default function Assets() {
                 {" "}
                 Add New Asset{" "}
               </button>
-              <button className="bottombuttons" onClick={submitAssetsAndLink}>
+              <button
+                className="bottombuttons"
+                onClick={submitAssetsAndLinkNext}
+              >
                 Save And Continue To Liabilites
               </button>
-              <button className="bottombuttons">
-                <Link to={"/userform/personalinfo"}>
-                  Return To Personal Info
-                </Link>
+              <button
+                className="bottombuttons"
+                onClick={submitAssetsAndLinkPrevious}
+              >
+                Save And Return To Personal Info
               </button>
             </section>
             <section className="rightsideuserform">

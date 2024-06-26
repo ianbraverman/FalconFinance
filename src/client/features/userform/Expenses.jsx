@@ -103,7 +103,7 @@ export default function Expenses() {
   const navigate = useNavigate();
   const [newExpenses, setNewExpenses] = useState([]);
 
-  const submitExpensesAndLink = async (evt) => {
+  const submitExpensesAndLinkNext = async (evt) => {
     evt.preventDefault();
     try {
       for (let i = 0; i < newExpenses.length; i++) {
@@ -115,6 +115,23 @@ export default function Expenses() {
           });
       }
       navigate(`/userform/goals`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const submitExpensesAndLinkPrevious = async (evt) => {
+    evt.preventDefault();
+    try {
+      for (let i = 0; i < newExpenses.length; i++) {
+        if (newExpenses[i]["name"] != "")
+          await addExpense({
+            name: newExpenses[i]["name"],
+            expenseType: newExpenses[i]["expenseType"],
+            monthlyCost: newExpenses[i]["monthlyCost"],
+          });
+      }
+      navigate(`/userform/incomes`);
     } catch (error) {
       console.log(error);
     }
@@ -194,7 +211,20 @@ export default function Expenses() {
             </section>
             <section className="centeruserform">
               <h1 className="userformsectionheader">Expenses</h1>
-              {me?.Expenses.length > 0 ? <h2>Existing Expenses:</h2> : <p></p>}
+              <h1 className="userformsectionheaderdescription">
+                If you have existing expenses in our system, they will show up
+                below. Clicking "Delete Expense" on an existing expense will
+                immediately remove it from our system. You can also add new
+                expenses by clicking the "Add New Expense" button below.
+                Clicking "Save And Continue To Goals" or "Save And Return To
+                Incomes" will save your newly entered expenses in the system and
+                direct you to the appropriate page.
+              </h1>
+              {me?.Expenses.length > 0 ? (
+                <h2 className="existingnewthingheader">Existing Expenses:</h2>
+              ) : (
+                <p></p>
+              )}
               <section>
                 {me?.Expenses.map((expense) => (
                   <ExistingExpenseItem
@@ -204,7 +234,11 @@ export default function Expenses() {
                   />
                 ))}
               </section>
-              {newExpenses.length > 0 ? <h2>New Expenses:</h2> : <p></p>}
+              {newExpenses.length > 0 ? (
+                <h2 className="existingnewthingheader">New Expenses:</h2>
+              ) : (
+                <p></p>
+              )}
               {newExpenses.map((newExpense) => (
                 <NewExpenseItem
                   key={newExpense.id}
@@ -217,11 +251,17 @@ export default function Expenses() {
                 {" "}
                 Add New Expense{" "}
               </button>
-              <button className="bottombuttons" onClick={submitExpensesAndLink}>
+              <button
+                className="bottombuttons"
+                onClick={submitExpensesAndLinkNext}
+              >
                 Save And Continue To Goals
               </button>
-              <button className="bottombuttons">
-                <Link to={"/userform/incomes"}>Return To Incomes</Link>
+              <button
+                className="bottombuttons"
+                onClick={submitExpensesAndLinkPrevious}
+              >
+                Save And Return To Incomes
               </button>
             </section>
             <section className="rightsideuserform">

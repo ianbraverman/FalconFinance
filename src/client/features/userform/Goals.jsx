@@ -215,7 +215,7 @@ export default function Goals() {
   const [newGoals, setNewGoals] = useState([]);
   const [addGoal] = useAddGoalsMutation();
 
-  const submitGoalsAndLink = async (evt) => {
+  const submitGoalsAndLinkNext = async (evt) => {
     evt.preventDefault();
     try {
       for (let i = 0; i < newGoals.length; i++) {
@@ -234,6 +234,30 @@ export default function Goals() {
           });
       }
       navigate(`/statistics`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const submitGoalsAndLinkPrevious = async (evt) => {
+    evt.preventDefault();
+    try {
+      for (let i = 0; i < newGoals.length; i++) {
+        if (newGoals[i]["name"] != "" && newGoals[i]["targetAmount"] > 0)
+          await addGoal({
+            name: newGoals[i]["name"],
+            goalType: newGoals[i]["goalType"],
+            targetAge: newGoals[i]["targetAge"],
+            targetAmount: newGoals[i]["targetAmount"],
+            goalPriority: newGoals[i]["goalPriority"],
+            savingsTowardAmount: newGoals[i]["savingsTowardAmount"],
+            alreadySaved: newGoals[i]["alreadySaved"],
+            annualGrowthRate: newGoals[i]["annualGrowthRate"],
+            goalDuration: newGoals[i]["goalDuration"],
+            continueToSave: newGoals[i]["continueToSave"],
+          });
+      }
+      navigate(`/userform/expenses`);
     } catch (error) {
       console.log(error);
     }
@@ -320,7 +344,21 @@ export default function Goals() {
             </section>
             <section className="centeruserform">
               <h1 className="userformsectionheader">Goals</h1>
-              {me?.Goals.length > 0 ? <h2>Existing Goals:</h2> : <p></p>}
+              <h1 className="userformsectionheaderdescription">
+                If you have existing goals in our system, they will show up
+                below. Clicking "Delete Goal" on an existing goal will
+                immediately remove it from our system. You can also add new
+                goals by clicking the "Add New Goal" button below. Clicking
+                "Save And Continue To Statistics" or "Save And Return To
+                Expenses" will save your newly entered goals in the system and
+                direct you to the appropriate page. After completing this page
+                you are able to view your statistical breakdown.
+              </h1>
+              {me?.Goals.length > 0 ? (
+                <h2 className="existingnewthingheader">Existing Goals:</h2>
+              ) : (
+                <p></p>
+              )}
               <section>
                 {me?.Goals.map((goal) => (
                   <ExistingGoalItem
@@ -330,7 +368,11 @@ export default function Goals() {
                   />
                 ))}
               </section>
-              {newGoals.length > 0 ? <h2>New Goals:</h2> : <p></p>}
+              {newGoals.length > 0 ? (
+                <h2 className="existingnewthingheader">New Goals:</h2>
+              ) : (
+                <p></p>
+              )}
               {newGoals.map((newGoal) => (
                 <NewGoalItem
                   key={newGoal.id}
@@ -345,11 +387,17 @@ export default function Goals() {
                 Add New Goal{" "}
               </button>
 
-              <button className="bottombuttons" onClick={submitGoalsAndLink}>
+              <button
+                className="bottombuttons"
+                onClick={submitGoalsAndLinkNext}
+              >
                 Save And Continue To Statistics
               </button>
-              <button className="bottombuttons">
-                <Link to={"/userform/expenses"}>Return To Expenses</Link>
+              <button
+                className="bottombuttons"
+                onClick={submitGoalsAndLinkPrevious}
+              >
+                Save And Return To Expenses
               </button>
             </section>
             <section className="rightsideuserform">

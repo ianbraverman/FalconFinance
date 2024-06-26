@@ -108,7 +108,7 @@ export default function Incomes() {
   const navigate = useNavigate();
   const [newIncomes, setNewIncomes] = useState([]);
 
-  const submitIncomesAndLink = async (evt) => {
+  const submitIncomesAndLinkNext = async (evt) => {
     evt.preventDefault();
     try {
       for (let i = 0; i < newIncomes.length; i++) {
@@ -121,6 +121,24 @@ export default function Incomes() {
           });
       }
       navigate(`/userform/expenses`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const submitIncomesAndLinkPrevious = async (evt) => {
+    evt.preventDefault();
+    try {
+      for (let i = 0; i < newIncomes.length; i++) {
+        if (newIncomes[i]["name"] != "")
+          await addIncome({
+            name: newIncomes[i]["name"],
+            incomeType: newIncomes[i]["incomeType"],
+            amount: newIncomes[i]["amount"],
+            yearlyIncrease: newIncomes[i]["yearlyIncrease"],
+          });
+      }
+      navigate(`/userform/liabilities`);
     } catch (error) {
       console.log(error);
     }
@@ -202,7 +220,20 @@ export default function Incomes() {
             </section>
             <section className="centeruserform">
               <h1 className="userformsectionheader">Incomes</h1>
-              {me?.Income.length > 0 ? <h2>Existing Incomes:</h2> : <p></p>}
+              <h1 className="userformsectionheaderdescription">
+                If you have existing Incomes in our system, they will show up
+                below. Clicking "Delete Income" on an existing income will
+                immediately remove it from our system. You can also add new
+                incomes by clicking the "Add New Income" button below. Clicking
+                "Save And Continue To Expenses" or "Save And Return To
+                Liabilities" will save your newly entered incomes in the system
+                and direct you to the appropriate page.
+              </h1>
+              {me?.Income.length > 0 ? (
+                <h2 className="existingnewthingheader">Existing Incomes:</h2>
+              ) : (
+                <p></p>
+              )}
               <section>
                 {me?.Income.map((income) => (
                   <ExistingIncomeItem
@@ -212,7 +243,11 @@ export default function Incomes() {
                   />
                 ))}
               </section>
-              {newIncomes.length > 0 ? <h2>New Incomes:</h2> : <p></p>}
+              {newIncomes.length > 0 ? (
+                <h2 className="existingnewthingheader">New Incomes:</h2>
+              ) : (
+                <p></p>
+              )}
               {newIncomes.map((newIncome) => (
                 <NewIncomeItem
                   key={newIncome.id}
@@ -225,11 +260,17 @@ export default function Incomes() {
                 {" "}
                 Add New Income{" "}
               </button>
-              <button className="bottombuttons" onClick={submitIncomesAndLink}>
+              <button
+                className="bottombuttons"
+                onClick={submitIncomesAndLinkNext}
+              >
                 Save And Continue To Expenses
               </button>
-              <button className="bottombuttons">
-                <Link to={"/userform/liabilities"}>Return To Liabilities</Link>
+              <button
+                className="bottombuttons"
+                onClick={submitIncomesAndLinkPrevious}
+              >
+                Save And Return To Liabilities
               </button>
             </section>
             <section className="rightsideuserform">
