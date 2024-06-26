@@ -256,7 +256,9 @@ export default function Liabilities() {
                 and direct you to the appropriate page.
               </h1>
               {me?.Liabilities.length > 0 ? (
-                <h2>Existing Liabilities:</h2>
+                <h2 className="existingnewthingheader">
+                  Existing Liabilities:
+                </h2>
               ) : (
                 <p></p>
               )}
@@ -269,7 +271,11 @@ export default function Liabilities() {
                   />
                 ))}
               </section>
-              {newLiabilities.length > 0 ? <h2>New Liabilities:</h2> : <p></p>}
+              {newLiabilities.length > 0 ? (
+                <h2 className="existingnewthingheader">New Liabilities:</h2>
+              ) : (
+                <p></p>
+              )}
               {newLiabilities.map((newLiability) => (
                 <NewLiabilityItem
                   key={newLiability.id}

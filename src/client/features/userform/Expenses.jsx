@@ -220,7 +220,11 @@ export default function Expenses() {
                 Incomes" will save your newly entered expenses in the system and
                 direct you to the appropriate page.
               </h1>
-              {me?.Expenses.length > 0 ? <h2>Existing Expenses:</h2> : <p></p>}
+              {me?.Expenses.length > 0 ? (
+                <h2 className="existingnewthingheader">Existing Expenses:</h2>
+              ) : (
+                <p></p>
+              )}
               <section>
                 {me?.Expenses.map((expense) => (
                   <ExistingExpenseItem
@@ -230,7 +234,11 @@ export default function Expenses() {
                   />
                 ))}
               </section>
-              {newExpenses.length > 0 ? <h2>New Expenses:</h2> : <p></p>}
+              {newExpenses.length > 0 ? (
+                <h2 className="existingnewthingheader">New Expenses:</h2>
+              ) : (
+                <p></p>
+              )}
               {newExpenses.map((newExpense) => (
                 <NewExpenseItem
                   key={newExpense.id}

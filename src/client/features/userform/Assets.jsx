@@ -271,7 +271,11 @@ export default function Assets() {
                 Personal Info" will save your newly entered assets in the system
                 and direct you to the appropriate page.
               </h1>
-              {me?.Assets.length > 0 ? <h2>Existing Assets:</h2> : <p></p>}
+              {me?.Assets.length > 0 ? (
+                <h2 className="existingnewthingheader">Existing Assets:</h2>
+              ) : (
+                <p></p>
+              )}
               <section>
                 {me?.Assets.map((asset) => (
                   <ExistingAssetItem
@@ -281,7 +285,11 @@ export default function Assets() {
                   />
                 ))}
               </section>
-              {newAssets.length > 0 ? <h2>New Assets:</h2> : <p></p>}
+              {newAssets.length > 0 ? (
+                <h2 className="existingnewthingheader">New Assets:</h2>
+              ) : (
+                <p></p>
+              )}
               {newAssets.map((newAsset) => (
                 <NewAssetItem
                   key={newAsset.id}

@@ -217,14 +217,16 @@ export default function IncomeExpenses() {
     <>
       {token ? (
         <>
-          <h1>Here Is A Break Down Of Your Incomes</h1>
-          <article className="assetsliabilitiesmainsection">
-            <section>
-              {me && <IncomesBreakdown me={me} />}
-              {me && <ExpensesBreakdown me={me} />}
-            </section>
-            {me && <IncomeIncreasing me={me} />}
-          </article>
+          <section className="entireassetsliabilities">
+            <h1>Here Is A Break Down Of Your Incomes</h1>
+            <article className="assetsliabilitiesmainsection">
+              <section>
+                {me && <IncomesBreakdown me={me} />}
+                {me && <ExpensesBreakdown me={me} />}
+              </section>
+              {me && <IncomeIncreasing me={me} />}
+            </article>
+          </section>
         </>
       ) : (
         <section className="pleaseloginarea">

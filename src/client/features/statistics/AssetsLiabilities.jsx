@@ -223,14 +223,16 @@ export default function AssetsLiabilities() {
     <>
       {token ? (
         <>
-          <h1>Here Is A Break Down Of Your Assets</h1>
-          <article className="assetsliabilitiesmainsection">
-            <section>
-              {me && <AssetsBreakdown me={me} />}
-              {me && <LiabilitiesBreakdown me={me} />}
-            </section>
-            {me && <AssetsIncreasing me={me} />}
-          </article>
+          <section className="entireassetsliabilities">
+            <h1>Here Is A Break Down Of Your Assets</h1>
+            <article className="assetsliabilitiesmainsection">
+              <section>
+                {me && <AssetsBreakdown me={me} />}
+                {me && <LiabilitiesBreakdown me={me} />}
+              </section>
+              {me && <AssetsIncreasing me={me} />}
+            </article>
+          </section>
         </>
       ) : (
         <section className="pleaseloginarea">

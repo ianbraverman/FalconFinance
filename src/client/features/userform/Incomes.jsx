@@ -229,7 +229,11 @@ export default function Incomes() {
                 Liabilities" will save your newly entered incomes in the system
                 and direct you to the appropriate page.
               </h1>
-              {me?.Income.length > 0 ? <h2>Existing Incomes:</h2> : <p></p>}
+              {me?.Income.length > 0 ? (
+                <h2 className="existingnewthingheader">Existing Incomes:</h2>
+              ) : (
+                <p></p>
+              )}
               <section>
                 {me?.Income.map((income) => (
                   <ExistingIncomeItem
@@ -239,7 +243,11 @@ export default function Incomes() {
                   />
                 ))}
               </section>
-              {newIncomes.length > 0 ? <h2>New Incomes:</h2> : <p></p>}
+              {newIncomes.length > 0 ? (
+                <h2 className="existingnewthingheader">New Incomes:</h2>
+              ) : (
+                <p></p>
+              )}
               {newIncomes.map((newIncome) => (
                 <NewIncomeItem
                   key={newIncome.id}

@@ -354,7 +354,11 @@ export default function Goals() {
                 direct you to the appropriate page. After completing this page
                 you are able to view your statistical breakdown.
               </h1>
-              {me?.Goals.length > 0 ? <h2>Existing Goals:</h2> : <p></p>}
+              {me?.Goals.length > 0 ? (
+                <h2 className="existingnewthingheader">Existing Goals:</h2>
+              ) : (
+                <p></p>
+              )}
               <section>
                 {me?.Goals.map((goal) => (
                   <ExistingGoalItem
@@ -364,7 +368,11 @@ export default function Goals() {
                   />
                 ))}
               </section>
-              {newGoals.length > 0 ? <h2>New Goals:</h2> : <p></p>}
+              {newGoals.length > 0 ? (
+                <h2 className="existingnewthingheader">New Goals:</h2>
+              ) : (
+                <p></p>
+              )}
               {newGoals.map((newGoal) => (
                 <NewGoalItem
                   key={newGoal.id}
